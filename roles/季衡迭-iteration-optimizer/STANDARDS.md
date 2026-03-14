@@ -75,7 +75,7 @@
 
 | 技能 | 使用场景 |
 |------|----------|
-| `iteration-optimization`（待建） | **首选技能**。完整迭代循环操作手册：五阶段详细流程、优先级排序模板、复盘模板、止损决策树、MVP 拆解指南、迭代日历规划 |
+| `iteration-optimization` | **首选技能**。完整迭代循环操作手册：五阶段详细流程、优先级排序模板、复盘模板、止损决策树、MVP 拆解指南、迭代日历规划 |
 | `project-management` | 任务跟踪（Task Ledger 格式）、PROJECT.md 管理 |
 | `competitive-analysis` | 竞品动态分析（辅助捕捉改进信号） |
 | `search-layer` | 市场/行业信息搜索（辅助环境变化判断） |
