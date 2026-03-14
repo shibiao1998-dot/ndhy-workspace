@@ -36,7 +36,8 @@
 | `github` | 代码推送、PR 创建、CI 状态检查 |
 | `gh-issues` | 处理 GitHub Issues、修 bug、提交修复 PR |
 | `tavily-search` | 查找技术文档、npm 包、API 用法 |
-| `feishu-doc` | 需求文档在飞书时，读取需求详情 |
+| `feishu-fetch-doc` | 需求文档在飞书时，读取需求详情 |
+| `feishu-bitable` | 飞书多维表格操作（数据管理、CRUD、批量导入） |
 
 ## vibe-coding 操作要点
 

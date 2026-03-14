@@ -46,7 +46,7 @@
 | `content-extract` | URL → 干净 Markdown。反爬站点（微信/知乎）自动降级 MinerU 解析 |
 | `tavily-search` | search-layer 不可用时的备选搜索工具 |
 | `agent-browser` | 网页深度调研、需要交互式浏览获取信息时（表单、动态页面、登录后内容） |
-| `feishu-doc` | 将调研报告写入飞书共享，或从飞书读取需求背景 |
-| `feishu-wiki` | 将调研成果沉淀到知识库供后续参考 |
+| `feishu-fetch-doc` | 获取飞书云文档内容（读取需求背景、源材料） |
+| `feishu-bitable` | 飞书多维表格操作（调研数据整理、对比矩阵、结果导入） |
 | `github` | 调研开源项目时，查看仓库信息、star、issue 活跃度 |
 | `session-logs` | 回顾历史调研结论，避免重复调研 |

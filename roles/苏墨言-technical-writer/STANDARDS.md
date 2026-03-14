@@ -28,8 +28,9 @@
 
 | 技能 | 使用场景 |
 |------|----------|
-| `feishu-doc` | 将文档写入飞书云文档，或从飞书读取源材料 |
-| `feishu-wiki` | 整理知识到飞书知识库 |
+| `feishu-create-doc` | 创建新的飞书云文档（从 Markdown 生成） |
+| `feishu-fetch-doc` | 获取飞书云文档内容（读取源材料） |
+| `feishu-update-doc` | 更新已有飞书云文档（追加、覆盖、定位替换等 7 种模式） |
 | `tavily-search` | 调研背景资料、查证技术细节 |
 | `session-logs` | 回顾历史会话，提取需要文档化的决策和教训 |
 | `github` | 将文档提交到 GitHub 仓库 |
