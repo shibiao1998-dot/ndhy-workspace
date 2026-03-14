@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-autonomy-kit": {
+      "version": "1.0.0",
+      "installedAt": 1773409813044
+    },
+    "agent-team-orchestration": {
+      "version": "1.0.0",
+      "installedAt": 1773409822303
+    },
+    "multi-agent-cn": {
+      "version": "1.2.0",
+      "installedAt": 1773409830260
+    },
+    "skill-vetter": {
+      "version": "1.0.0",
+      "installedAt": 1773467923784
+    },
+    "self-improving": {
+      "version": "1.2.16",
+      "installedAt": 1773468064207
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1773471585863
+    },
+    "using-superpowers": {
+      "version": "0.1.0",
+      "installedAt": 1773472191691
+    },
+    "react-best-practices": {
+      "version": "1.0.0",
+      "installedAt": 1773472828651
+    },
+    "frontend": {
+      "version": "1.0.2",
+      "installedAt": 1773473119383
+    },
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1773473414329
+    }
+  }
+}

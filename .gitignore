@@ -1,0 +1,16 @@
+# 临时文件
+_repos/
+*.tmp
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 敏感信息（凭证由环境变量管理，不入库）
+.openclaw/credentials/
+
+# 编辑器
+.vscode/
+.idea/
