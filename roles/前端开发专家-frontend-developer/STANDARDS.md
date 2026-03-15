@@ -163,4 +163,4 @@ claude --permission-mode bypassPermissions --print "你的任务描述"
 - **先激进后自适应**：Sub-agent 并行策略开局最大化并行，遇 rate limit 再降级
 - **不限 token**：遵循三高规则（高价值、高复用、高质量），不因节省 token 降低质量
 - **自动验证**：每步完成后运行 `tsc --noEmit` + `eslint .` + `test`，全绿才推进
-- **项目路径**：所有新项目建在 `D:\code\` 下
+- **项目路径**：所有新项目建在 `D:\code\openclaw-home\workspace\projects\` 下
