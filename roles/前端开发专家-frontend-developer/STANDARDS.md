@@ -157,6 +157,25 @@ claude --permission-mode bypassPermissions --print "你的任务描述"
 
 **不用 PTY 模式**：Claude Code 用 `--print` 模式，不需要 `pty:true`。
 
+### Claude Code 工作模式（GSD）
+
+默认使用 GSD（Get Shit Done）模式执行所有 Claude Code 前端开发任务。
+
+**标准流程**：
+- 完整功能开发：`/gsd:new-project` → `discuss-phase` → `plan-phase` → `execute-phase` → `verify-work`
+- 快速任务（bug修复/小功能/样式调整）：`/gsd:quick`
+- 已有代码库：先 `/gsd:map-codebase` 分析现有前端架构
+
+**并行执行**：
+- 充分利用 Claude Code 的 Sub-Agent 和 Agent Team 功能
+- 独立任务并行执行（Wave模式），有依赖的顺序排列
+- 每个执行器使用 fresh 200k context，避免 context rot
+
+**质量保障**：
+- 每个任务独立 Git 原子提交
+- XML 结构化任务定义（task/files/action/verify/done）
+- 执行后自动验证，不通过则生成修复计划
+
 ### 开发纪律
 
 - **分步增量开发**：不一次性生成大段代码。每完成一个组件/功能 -> 运行验证 -> 记录日志 -> 下一步

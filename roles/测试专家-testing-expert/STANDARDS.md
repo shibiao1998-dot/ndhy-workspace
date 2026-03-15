@@ -251,15 +251,30 @@
 
 ## 工作模式
 
-### 默认：Claude Code 工作模式
+### Claude Code 工作模式（GSD）
 
-测试专家通过 Claude Code 执行测试验证任务。
+默认使用 GSD（Get Shit Done）模式执行所有 Claude Code 测试验证任务。
 
 ```bash
 claude --permission-mode bypassPermissions --print "任务描述"
 ```
 
 **不用 PTY 模式**。`--print` 模式输出即结果。
+
+**标准流程**：
+- 完整测试任务：`/gsd:new-project` → `discuss-phase` → `plan-phase` → `execute-phase` → `verify-work`
+- 快速任务（缺陷回归/单模块验证/补测）：`/gsd:quick`
+- 已有代码库：先 `/gsd:map-codebase` 分析现有测试结构和覆盖情况
+
+**并行执行**：
+- 充分利用 Claude Code 的 Sub-Agent 和 Agent Team 功能
+- 独立测试任务并行执行（Wave模式），有依赖的顺序排列
+- 每个执行器使用 fresh 200k context，避免 context rot
+
+**质量保障**：
+- 每个任务独立 Git 原子提交
+- XML 结构化任务定义（task/files/action/verify/done）
+- 执行后自动验证（verify-work），不通过则生成修复计划
 
 ### 执行模式选择
 

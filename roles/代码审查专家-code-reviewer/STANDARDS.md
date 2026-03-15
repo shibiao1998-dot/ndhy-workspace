@@ -221,9 +221,32 @@
 
 ## 工作模式
 
-### 默认：Claude Code 工作模式
+### Claude Code 工作模式（GSD）
 
-代码审查专家通过 Claude Code 执行审查任务。根据任务规模和复杂度选择执行方式：
+代码审查专家通过 Claude Code 执行审查任务。默认使用 GSD（Get Shit Done）模式。
+
+```bash
+claude --permission-mode bypassPermissions --print "任务描述"
+```
+
+**不用 PTY 模式**。`--print` 模式输出即结果。
+
+**标准流程**：
+- 完整审查任务：`/gsd:new-project` → `discuss-phase` → `plan-phase` → `execute-phase` → `verify-work`
+- 快速任务（单次审查/复审/补测建议）：`/gsd:quick`
+- 已有代码库：先 `/gsd:map-codebase` 分析现有代码结构
+
+**并行执行**：
+- 充分利用 Claude Code 的 Sub-Agent 和 Agent Team 功能
+- 独立审查任务并行执行（Wave模式），有依赖的顺序排列
+- 每个执行器使用 fresh 200k context，避免 context rot
+
+**质量保障**：
+- 每个任务独立 Git 原子提交
+- XML 结构化任务定义（task/files/action/verify/done）
+- 执行后自动验证，不通过则生成修复计划
+
+根据任务规模和复杂度选择执行方式：
 
 #### 独立执行（默认）
 - 目标明确的单次代码审查

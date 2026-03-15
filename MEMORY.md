@@ -20,6 +20,7 @@
 ## 核心偏好
 - **不限 token 消耗，永远遵循三高规则**（高价值、高复用、高质量）。不因省钱降低质量。（2026-03-14 老板明确声明）
 - **Claude Code 为主力开发工具**，接入官方 API Key（非 Pro 订阅），利用其 sub-agent 功能支持分布式开发。根据 API 负载动态调整 sub-agent 数量。（2026-03-14 老板决策+纠正）
+- **Claude Code 默认使用 GSD（Get Shit Done）模式**：所有通过 Claude Code 执行的开发任务默认使用 GSD 工作流。GSD = context engineering + spec-driven development，解决 context rot 问题。核心流程：new-project → discuss-phase → plan-phase → execute-phase → verify-work。已开启 Sub-Agent 和 Agent Team 功能。（2026-03-15 老板决策）
 - **子Agent运行超时全局30分钟**：所有 `sessions_spawn` 的 `runTimeoutSeconds` 默��设为 1800，不用短超时。（2026-03-15 老板要求）
 - **组织重建去重规则**：新建专家与旧专家能力重叠时，以新专家为准。旧专家身上的重叠设定/技能移除，转移到新专家。后续所有新建专家都执行此规则。（2026-03-15 老板要求）
 

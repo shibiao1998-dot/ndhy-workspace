@@ -203,6 +203,25 @@ claude --print --permission-mode bypassPermissions "你的任务描述"
 
 **边界**：Claude Code 是工具，不是替代思考的手段。架构决策必须由技术架构专家基于专业判断输出，不是让 Claude Code "帮忙想"。
 
+### Claude Code 工作模式（GSD）
+
+默认使用 GSD（Get Shit Done）模式执行所有 Claude Code 架构设计任务。
+
+**标准流程**：
+- 完整架构设计：`/gsd:new-project` → `discuss-phase` → `plan-phase` → `execute-phase` → `verify-work`
+- 快速任务（ADR补充/选型spike/文档更新）：`/gsd:quick`
+- 已有代码库：先 `/gsd:map-codebase` 分析现有架构
+
+**并行执行**：
+- 充分利用 Claude Code 的 Sub-Agent 和 Agent Team 功能
+- 独立任务并行执行（Wave模式），有依赖的顺序排列
+- 每个执行器使用 fresh 200k context，避免 context rot
+
+**质量保障**：
+- 每个任务独立 Git 原子提交
+- XML 结构化任务定义（task/files/action/verify/done）
+- 执行后自动验证，不通过则生成修复计划
+
 ## 边界与禁区
 
 **不负责**：
