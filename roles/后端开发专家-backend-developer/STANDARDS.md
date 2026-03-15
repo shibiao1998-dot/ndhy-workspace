@@ -293,3 +293,229 @@ claude --permission-mode bypassPermissions --print "任务描述"
 | 被要求做架构选型决策 | 拒绝。提供实现层观察 → 转交技术架构专家 |
 | 发现需要新增接口（契约未定义） | 不自行添加。提出需求 → 转交API设计专家定义 → 定义后再实现 |
 | 发现安全漏洞 | 立即停止相关实现，上报项目管理专家 |
+
+## Context Engineering（上下文工程）
+
+> 来源：Andrej Karpathy 提出的学科概念。后端开发涉及 AI 上下文组装时，以下工程实践为强制标准。
+
+### 上下文组装的工程实践
+
+当后端需要为 LLM 调用组装上下文时（如构建 prompt、管理会话记忆、拼接检索结果），遵循以下实践：
+
+**1. 模板化组装**
+
+上下文不是字符串拼接，是结构化模板渲染：
+
+```
+Context = render(template, {
+  system_instructions: "...",   // 系统指令（优先级最高，不可截断）
+  examples: [...],              // Few-shot 示例
+  memory: [...],                // 会话/长期记忆
+  retrieved_docs: [...],        // RAG 检索结果
+  user_input: "...",            // 用户输入
+  tool_results: [...],          // 工具调用结果
+  state: {...}                  // 任务状态
+})
+```
+
+禁止在业务代码中随意拼接 prompt 字符串。上下文模板统一管理，类型安全。
+
+**2. 优先级排序**
+
+Token 预算有限时，按优先级截断：
+
+| 优先级 | 内容 | 截断策略 |
+|--------|------|---------|
+| P0（不可截断） | 系统指令、核心业务规则 | 永不截断 |
+| P1（最后截断） | 用户当前输入、最近上下文 | 只在极端情况截断 |
+| P2（可压缩） | 会话记忆、历史对话 | 超出时压缩摘要 |
+| P3（可截断） | 检索结果、补充示例 | 按相关性排序，低相关性先截断 |
+| P4（可丢弃） | 装饰性内容、冗余信息 | 超出时直接丢弃 |
+
+**3. 正反向分离**
+
+- **正向上下文**（System Prompt 侧）：系统指令、角色设定、输出格式要求、业务规则——由系统控制，用户不可见
+- **反向上下文**（User Message 侧）：用户输入、检索结果、工具输出、会话历史——由用户行为驱动
+
+两侧分离管理，不混在一起。正向上下文的 Token 预算预留优先于反向上下文。
+
+**4. 截断策略**
+
+实现上下文截断时的工程规范：
+
+- 按语义边界截断（不在句子中间断），使用段落或消息为单位
+- 截断后保留截断标记（如 `[earlier context truncated]`），让模型知道信息不完整
+- 记忆截断优先使用 Summarization（压缩摘要）而非 Windowing（滑动窗口丢弃）
+- 截断决策写日志：记录截断了什么、为什么、Token 预算分配情况
+
+**5. Token Budget 管理**
+
+- 每次 LLM 调用前计算 Token 预算分配，作为 API 参数校验的一部分
+- Token 统计纳入可观测性（日志/监控），与成本控制联动
+- 预留 output token 空间：总窗口 - 输入 token ≥ 预期输出 token，否则截断输入
+
+## Prompt 组装工程化（Schema Engineering）
+
+> 来源：BAML（BoundaryML）的核心理念。Prompt 是函数，不是字符串拼接。以下标准适用于所有涉及 prompt 组装的后端代码。
+
+### 模板化 Prompt 组装原则
+
+**1. 类型安全（Type-Safe Inputs）**
+
+Prompt 函数的输入必须是类型化的，不能是 `dict` 或 `Any`：
+
+```python
+# ❌ 禁止：dict 传参，字段靠约定
+def assemble_prompt(dimensions: list[dict]) -> str: ...
+
+# ✅ 要求：Pydantic 类型定义，编辑器可提示、运行前可验证
+class DimensionInput(BaseModel):
+    id: str
+    name: str
+    description: str = Field(min_length=1)
+    direction: Direction  # enum, not str
+    priority: Literal[1, 2, 3]
+
+def assemble_prompt(dimensions: list[DimensionInput]) -> AssembledPrompt: ...
+```
+
+**2. 可组合（Composable Templates）**
+
+Prompt 由独立的模板片段组合而成，每个片段可独立测试和复用：
+
+```
+templates/
+├── system_prompt.jinja2         # 主模板，include 子片段
+└── partials/
+    ├── positive_section.jinja2  # 正向信息渲染
+    ├── constraint_section.jinja2 # 约束渲染
+    └── output_requirements.jinja2
+```
+
+- 每个 partial 是独立的可复用模板（类比 BAML 的 `template_string`）
+- 主模板通过 `{% include %}` 组合 partials
+- 不同场景可以组合不同的 partials 集合
+
+**3. 可测试（Testable Rendering）**
+
+模板渲染可独立测试，不依赖 LLM 调用：
+
+```python
+def test_positive_section_renders_correctly():
+    ctx = {"positive_by_priority": {1: [dim1, dim2]}, ...}
+    result = render_template("partials/positive_section.jinja2", ctx)
+    assert "D001" in result
+```
+
+**4. 模板与逻辑分离**
+
+- **模板文件**（`.jinja2`）：负责 prompt 的文本结构和措辞
+- **Python 代码**：负责数据分类、上下文构建、统计计算
+- 改 prompt 措辞 = 改模板文件，不碰 Python 代码
+- 改数据处理逻辑 = 改 Python 代码，不碰模板
+
+### 正反向维度分离标准模式
+
+**铁律：正反向分离在数据层完成，不在组装层完成。**
+
+```python
+# ❌ 禁止：在组装器中用关键词匹配拆分 mixed 内容
+if any(kw in line for kw in ["❌", "不要", "禁止"]):
+    neg_lines.append(line)
+
+# ✅ 要求：数据入库时就将 mixed 拆分为 positive + negative 两条记录
+class Direction(str, Enum):
+    POSITIVE = "positive"
+    NEGATIVE = "negative"
+    # 注意：没有 MIXED。mixed 在写入层处理。
+```
+
+**组装器只做渲染**：
+- 接收已分类的维度列表
+- 正向维度 → positive section（按优先级分组）
+- 反向维度 → constraint section
+- 不做语义判断，不做关键词匹配
+
+### Prompt 模板版本管理策略
+
+**1. 模板文件纳入 Git 版本控制**
+
+```
+templates/
+├── system_prompt.jinja2     ← git tracked, 可 diff/review/rollback
+└── partials/
+    └── ...
+```
+
+- 模板变更和代码变更走相同的 PR 流程
+- 模板修改需要测试验证（渲染测试 + 关键内容断言）
+
+**2. 模板版本标识**
+
+```jinja2
+{# template: system_prompt v2.1 | last-updated: 2026-03-16 #}
+```
+
+- 模板文件头部标注版本和最后更新时间
+- 重大 prompt 变更（角色设定、输出格式、核心原则）需要独立 PR
+
+**3. 模板回滚**
+
+- 模板文件是普通文件 → `git revert` 即可回滚
+- 不需要专门的版本管理系统（BAML 的设计哲学：用 git 管版本）
+
+### 输入/输出 Schema 定义规范
+
+**输入 Schema**
+
+每个 prompt 函数必须定义明确的输入 schema：
+
+```python
+class PromptContext(BaseModel):
+    """传入模板的完整上下文，所有字段必须显式定义。"""
+    positive_by_priority: dict[int, list[DimensionInput]]
+    negative_items: list[DimensionInput]
+    user_exclusions: Optional[str] = None
+    # 配置项也是显式的，不是魔法变量
+    priority_labels: dict[int, str] = {1: "必须", 2: "建议", 3: "可选"}
+```
+
+**输出 Schema**
+
+prompt 组装函数的返回值也必须是类型化的：
+
+```python
+class AssembledPrompt(BaseModel):
+    """组装结果，不是 dict，不是 str。"""
+    system_prompt: str
+    positive_section: str
+    constraint_section: str
+    dimensions_used: list[str]
+    coverage_stats: CoverageStats
+```
+
+**输出格式自动注入**（ctx.output_format 思路）
+
+当 prompt 需要指导 LLM 输出特定结构时，基于 Pydantic 模型自动生成格式说明：
+
+```python
+class DesignOutput(BaseModel):
+    summary: str = Field(description="设计概述")
+    user_journey: str = Field(description="用户旅程")
+
+def generate_output_format(model: type[BaseModel]) -> str:
+    """从 Pydantic 模型自动生成 LLM 输出格式说明。"""
+    lines = []
+    for name, field in model.model_fields.items():
+        desc = field.description or name
+        lines.append(f"- {name}: {desc}")
+    return "\n".join(lines)
+```
+
+### 禁止行为
+
+1. **不在 Python 代码中用 f-string 拼 prompt**：所有 prompt 文本走 Jinja2 模板
+2. **不用 `dict` 传递 prompt 输入**：必须 Pydantic 类型化
+3. **不在组装层做语义判断**：关键词匹配、mixed 拆分等在数据写入层处理
+4. **不把 prompt 模板和业务逻辑放在同一个文件**：模板文件独立存放
+5. **不硬编码输出格式说明**：基于 output schema 自动生成

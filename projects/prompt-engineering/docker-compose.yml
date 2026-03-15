@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  prompt-engineering:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DIMENSIONS_DIR=/app/dimensions
+    volumes:
+      - ./dimensions:/app/dimensions:ro
+    restart: unless-stopped

@@ -1,0 +1,34 @@
+# Node
+frontend/node_modules
+frontend/.vite
+
+# Python
+backend/__pycache__
+backend/**/__pycache__
+backend/.pytest_cache
+backend/tests
+
+# IDE & OS
+.git
+.gitignore
+.vscode
+.idea
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Docs & scripts (not needed in image)
+deployment-guide.md
+start.sh
+start.bat
+*.md
+!dimensions/*.md
+
+# Project archives
+docs/
