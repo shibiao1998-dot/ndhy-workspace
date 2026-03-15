@@ -37,7 +37,7 @@
 | `github` | Skill 代码需要推送到 GitHub 仓库时 |
 | `skillforge` | **进阶工具**。系统化 7 步 Skill 生成引擎 + 3 步修正引擎 + 10 维度质量审计 |
 | `coding-agent` | Skill 涉及复杂脚本逻辑时，可以委派编码子任务 |
-| `tavily-search` | 调研已有解决方案或查找 API 文档时 |
+| `search-layer` | 调研已有解决方案或查找 API 文档时 |
 | `skill-vetter` | 安装第三方 Skill 前的安全审计，检查红旗、权限范围、可疑模式 |
 
 ## 汇报路径

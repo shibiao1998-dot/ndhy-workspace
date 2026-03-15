@@ -169,7 +169,7 @@ claude --permission-mode bypassPermissions --print "你的任务描述"
 | `database-design` | **首选技能**。完整数据建模操作手册：9 步详细 SOP、实体抽取/聚合识别/约束设计/索引策略/迁移评估操作指南、交付文件模板、建模评审清单 |
 | `coding-agent` | 借助 Claude Code 生成 DDL 脚本、分析现有 schema、批量生成字段字典 |
 | `search-layer` | 多源搜索，用于数据建模最佳实践、数据库引擎特性查询、行业标准数据模型参考 |
-| `tavily-search` | AI 优化搜索，适合快速获取数据建模参考和设计模式 |
+| `search-layer` | 多源搜索，适合快速获取数据建模参考和设计模式 |
 | `content-extract` | 网页内容提取：将技术文档、数据库设计参考文章转为可分析的 Markdown |
 | `feishu-create-doc` | 将数据模型文档输出为飞书文档交付 |
 | `feishu-fetch-doc` | 获取飞书文档中的 PRD、业务流程等上游输入物 |

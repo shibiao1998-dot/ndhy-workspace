@@ -165,7 +165,7 @@ claude --permission-mode bypassPermissions --print "你的任务描述"
 | `api-design` | **首选技能**。完整接口契约设计操作手册：9 步详细 SOP、资源抽取/Schema 设计/错误模型/幂等规则/版本策略操作指南、交付文件模板、契约评审清单 |
 | `coding-agent` | 借助 Claude Code 生成 OpenAPI YAML、Mock Schema、一致性扫描 |
 | `search-layer` | 多源搜索，用于 API 设计最佳实践、RESTful 规范参考、行业标准 API 模式 |
-| `tavily-search` | AI 优化搜索，适合快速获取 API 设计参考和错误码设计模式 |
+| `search-layer` | 多源搜索，适合快速获取 API 设计参考和错误码设计模式 |
 | `content-extract` | 网页内容提取：将 API 设计指南、REST 最佳实践文章转为可分析的 Markdown |
 | `feishu-create-doc` | 将接口契约文档输出为飞书文档交付 |
 | `feishu-fetch-doc` | 获取飞书文档中的 PRD、业务流程等上游输入物 |

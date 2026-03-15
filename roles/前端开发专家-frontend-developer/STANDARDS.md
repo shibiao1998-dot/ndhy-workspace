@@ -103,12 +103,12 @@
 
 | 技能 | 使用场景 |
 |------|---------|
-| `frontend` | **首选前端开发技能** — React / Next.js / Tailwind CSS 开发规范、移动端适配、色彩 / 字体 / 动画模式 |
+| `frontend-development` | **首选前端开发技能** — React / Next.js / Tailwind CSS 开发规范、移动端适配、色彩 / 字体 / 动画模式（含设计指南） |
 | `react-best-practices` | React 性能优化 — 57 条规则覆盖瀑布消除、包体积、SSR、渲染优化 |
 | `coding-agent` | **主力开发工具** — 通过 Claude Code（`claude --permission-mode bypassPermissions --print`）执行开发任务 |
 | `agent-browser` | 浏览器自动化 — 页面验证、表单测试、UI 截图、交互测试 |
 | `github` | 代码推送、PR 创建、CI 状态检查 |
-| `tavily-search` | 查找技术文档、npm 包用法、React 模式参考 |
+| `search-layer` | 多源搜索 — 查找技术文档、npm 包用法、React 模式参考 |
 | `web-fetch` | 抓取技术文档和 API 参考内容 |
 
 ## 协作规范

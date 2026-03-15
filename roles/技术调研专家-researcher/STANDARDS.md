@@ -25,7 +25,7 @@
 |------|----------|
 | `search-layer` | 主力搜索工具 |
 | `content-extract` | URL → Markdown |
-| `tavily-search` | 备选搜索 |
+| `search-layer` | 多源搜索（含 Brave/Exa/Tavily/Grok） |
 | `agent-browser` | 网页深度调研 |
 | `feishu-fetch-doc` | 获取飞书文档 |
 | `feishu-bitable` | 数据整理 |

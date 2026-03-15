@@ -217,7 +217,7 @@ claude --permission-mode bypassPermissions --print "任务描述"
 |------|---------|
 | `coding-agent` | **主力开发工具**。通过 Claude Code `--permission-mode bypassPermissions --print` 执行后端开发任务 |
 | `github` | 代码推送、PR 创建、CI 状态检查 |
-| `tavily-search` | 查找后端框架文档、库用法、最佳实践 |
+| `search-layer` | 查找后端框架文档、库用法、最佳实践 |
 | `web-fetch` | 抓取技术文档和 API 参考页面 |
 | `feishu-fetch-doc` | 需求文档/契约文档在飞书时读取 |
 

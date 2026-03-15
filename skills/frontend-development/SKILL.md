@@ -34,9 +34,9 @@ description: >-
 > 组件边界清晰优先于页面堆砌。状态清晰优先于"先显示出来再说"。异常状态是正式实现的一部分。
 
 **与已有 Skill 的关系**：
-- `frontend`（设计指南）：提供视觉风格、排版、配色、动效等**设计层**规范 → 本 Skill 消费其设计指南
 - `react-best-practices`（性能优化）：提供 57 条 React/Next.js **性能层**规则 → 本 Skill 消费其性能规则
 - `frontend-development`（本 Skill）：聚焦**实现工程层** — 页面结构、组件架构、状态管理、API 集成、业务模式、测试、交接
+- 设计指南（视觉风格/排版/配色/动效）已合并至 [references/design-guidelines.md](references/design-guidelines.md)
 
 ## 模块速查
 
@@ -57,6 +57,7 @@ description: >-
 | 13 | 检查清单详版 | 交付验收 | [references/checklists.md] |
 | 14 | 交付模板 | 组织输出物 | [references/templates.md] |
 | 15 | 教育行业适配 | 教育项目专用 | [references/education-frontend.md] |
+| 16 | 设计指南 | 视觉风格/排版/配色/动效/移动端 | [references/design-guidelines.md] |
 
 ---
 

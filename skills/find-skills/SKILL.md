@@ -5,7 +5,7 @@ description: Helps users discover and install agent skills when they ask questio
 
 # Find Skills
 
-This skill helps you discover and install skills from the open agent skills ecosystem.
+This skill helps you discover and install skills from the agent skills ecosystem via ClawHub.
 
 ## When to Use This Skill
 
@@ -18,18 +18,19 @@ Use this skill when the user:
 - Wants to search for tools, templates, or workflows
 - Mentions they wish they had help with a specific domain (design, testing, deployment, etc.)
 
-## What is the Skills CLI?
+## What is ClawHub CLI?
 
-The Skills CLI (`npx skills`) is the package manager for the open agent skills ecosystem. Skills are modular packages that extend agent capabilities with specialized knowledge, workflows, and tools.
+ClawHub CLI (`clawhub`) is the package manager for the agent skills ecosystem. Skills are modular packages that extend agent capabilities with specialized knowledge, workflows, and tools.
 
 **Key commands:**
 
-- `npx skills find [query]` - Search for skills interactively or by keyword
-- `npx skills add <package>` - Install a skill from GitHub or other sources
-- `npx skills check` - Check for skill updates
-- `npx skills update` - Update all installed skills
+- `clawhub search [query]` - Search for skills by keyword
+- `clawhub install <skill-name>` - Install a skill
+- `clawhub install <skill-name> --version 1.2.3` - Install a specific version
+- `clawhub list` - List installed skills
+- `clawhub update --all` - Update all installed skills
 
-**Browse skills at:** https://skills.sh/
+**Browse skills at:** https://clawhub.com/
 
 ## How to Help Users Find Skills
 
@@ -43,26 +44,17 @@ When a user asks for help with something, identify:
 
 ### Step 2: Search for Skills
 
-Run the find command with a relevant query:
+Run the search command with a relevant query:
 
 ```bash
-npx skills find [query]
+clawhub search [query]
 ```
 
 For example:
 
-- User asks "how do I make my React app faster?" → `npx skills find react performance`
-- User asks "can you help me with PR reviews?" → `npx skills find pr review`
-- User asks "I need to create a changelog" → `npx skills find changelog`
-
-The command will return results like:
-
-```
-Install with npx skills add <owner/repo@skill>
-
-vercel-labs/agent-skills@vercel-react-best-practices
-└ https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices
-```
+- User asks "how do I make my React app faster?" → `clawhub search react performance`
+- User asks "can you help me with PR reviews?" → `clawhub search pr review`
+- User asks "I need to create a changelog" → `clawhub search changelog`
 
 ### Step 3: Present Options to the User
 
@@ -70,18 +62,18 @@ When you find relevant skills, present them to the user with:
 
 1. The skill name and what it does
 2. The install command they can run
-3. A link to learn more at skills.sh
+3. A link to learn more at clawhub.com
 
 Example response:
 
 ```
-I found a skill that might help! The "vercel-react-best-practices" skill provides
+I found a skill that might help! The "react-best-practices" skill provides
 React and Next.js performance optimization guidelines from Vercel Engineering.
 
 To install it:
-npx skills add vercel-labs/agent-skills@vercel-react-best-practices
+clawhub install react-best-practices
 
-Learn more: https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices
+Learn more: https://clawhub.com/
 ```
 
 ### Step 4: Offer to Install
@@ -89,10 +81,14 @@ Learn more: https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practic
 If the user wants to proceed, you can install the skill for them:
 
 ```bash
-npx skills add <owner/repo@skill> -g -y
+clawhub install <skill-name>
 ```
 
-The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
+To install a specific version:
+
+```bash
+clawhub install <skill-name> --version 1.2.3
+```
 
 ## Common Skill Categories
 
@@ -112,7 +108,7 @@ When searching, consider these common categories:
 
 1. **Use specific keywords**: "react testing" is better than just "testing"
 2. **Try alternative terms**: If "deploy" doesn't work, try "deployment" or "ci-cd"
-3. **Check popular sources**: Many skills come from `vercel-labs/agent-skills` or `ComposioHQ/awesome-claude-skills`
+3. **Check installed skills first**: Run `clawhub list` to see what's already available
 
 ## When No Skills Are Found
 
@@ -120,7 +116,7 @@ If no relevant skills exist:
 
 1. Acknowledge that no existing skill was found
 2. Offer to help with the task directly using your general capabilities
-3. Suggest the user could create their own skill with `npx skills init`
+3. Suggest the user could create and publish their own skill
 
 Example:
 
@@ -128,6 +124,6 @@ Example:
 I searched for skills related to "xyz" but didn't find any matches.
 I can still help you with this task directly! Would you like me to proceed?
 
-If this is something you do often, you could create your own skill:
-npx skills init my-xyz-skill
+If this is something you do often, you could create your own skill and publish it:
+clawhub publish ./my-skill --slug my-skill --name "My Skill" --version 1.0.0
 ```

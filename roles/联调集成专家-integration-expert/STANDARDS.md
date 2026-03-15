@@ -250,7 +250,7 @@ claude --permission-mode bypassPermissions --print "任务描述"
 | `integration-testing`（首选） | **主力工具**。联调前提检查、契约对齐验证、端到端流程跑通、问题归因、回归验证 |
 | `coding-agent` | 通过 Claude Code 执行联调验证脚本、对比分析、环境检查 |
 | `github` | 查看代码实现细节、PR 变更记录、CI 状态 |
-| `tavily-search` | 查找联调最佳实践、错误码标准、集成模式参考 |
+| `search-layer` | 查找联调最佳实践、错误码标准、集成模式参考 |
 | `web-fetch` | 抓取 API 文档、技术参考 |
 | `feishu-fetch-doc` | 契约文档/需求文档在飞书时读取 |
 

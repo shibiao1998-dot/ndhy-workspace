@@ -31,7 +31,7 @@
 | `feishu-create-doc` | 创建新的飞书云文档（从 Markdown 生成） |
 | `feishu-fetch-doc` | 获取飞书云文档内容（读取源材料） |
 | `feishu-update-doc` | 更新已有飞书云文档（追加、覆盖、定位替换等 7 种模式） |
-| `tavily-search` | 调研背景资料、查证技术细节 |
+| `search-layer` | 调研背景资料、查证技术细节 |
 | `session-logs` | 回顾历史会话，提取需要文档化的决策和教训 |
 | `github` | 将文档提交到 GitHub 仓库 |
 | `content-extract` | 从网页（尤其微信公众号）提取结构化 Markdown 内容，作为文档参考素材 |
