@@ -12,7 +12,7 @@ description: "Project management for NDHY AI Agent Team. Use when: (1) creating 
 - **所有任务产出统一放在 `D:\code\openclaw-home\workspace\` 下**
 - **新需求** → 在 workspace 下新建文件夹，命名规范：`英文小写-连字符`（如 `landing-page`、`data-dashboard`）
 - **旧需求迭代** → 找到已有文件夹，在原基础上继续。判断依据：任务描述与已有项目的主题/目标匹配
-- pm-lead 在派发任务时负责判断新旧，并在 task 中明确指定工作目录
+- Leader 在派发任务时负责判断新旧，并在 task 中明确指定工作目录
 
 ---
 
@@ -70,7 +70,7 @@ description: "Project management for NDHY AI Agent Team. Use when: (1) creating 
 | `[blocked]` | 阻塞，等待外部条件 |
 | `[rework]` | 审查未通过，返工中 |
 
-pm-lead 和子 Agent 在更新 PROJECT.md 时，同步更新对应 TODO 的状态标签。
+Leader 和子 Agent 在更新 PROJECT.md 时，同步更新对应 TODO 的状态标签。
 
 ---
 

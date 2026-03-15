@@ -7,7 +7,7 @@ description: "Sub-agent communication relay and structured messaging protocol fo
 
 # Relay 协议 — 子 Agent 沟通转发规范
 
-pm-lead 在人类与子 Agent 之间充当"翻译层"。本协议定义转发格式和时机。
+Leader 在人类与子 Agent 之间充当"翻译层"。本协议定义转发格式和时机。
 
 ## 核心原则
 
@@ -110,9 +110,9 @@ pm-lead 在人类与子 Agent 之间充当"翻译层"。本协议定义转发格
 
 ## 结构化通信格式
 
-借鉴 MetaGPT 结构化通信协议，子 Agent 之间（通过 pm-lead 中转）传递信息时，使用以下规范化格式。
+借鉴 MetaGPT 结构化通信协议，子 Agent 之间（通过 Leader 中转）传递信息时，使用以下规范化格式。
 
-### 任务通告格式（子 Agent → pm-lead）
+### 任务通告格式（子 Agent → Leader）
 
 ```
 📦 **任务通告** | [角色标识] [角色名]
@@ -124,7 +124,7 @@ pm-lead 在人类与子 Agent 之间充当"翻译层"。本协议定义转发格
 - **备注**：[阻塞项/待决策项/无]
 ```
 
-### 审查请求格式（pm-lead → 审查专家）
+### 审查请求格式（Leader → 审查专家）
 
 ```
 🔍 **审查请求**
@@ -138,7 +138,7 @@ pm-lead 在人类与子 Agent 之间充当"翻译层"。本协议定义转发格
 - **需要重点关注**：[特别说明/无]
 ```
 
-### 问题上报格式（子 Agent → pm-lead）
+### 问题上报格式（子 Agent → Leader）
 
 ```
 🚨 **问题上报** | [角色标识] [角色名]

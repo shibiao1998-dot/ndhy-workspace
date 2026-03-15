@@ -5,7 +5,7 @@ description: "Project execution operations manual for AI project managers who di
 
 # project-execution — 项目执行操作手册
 
-纪统辰的核心技能。覆盖项目执行全生命周期：从状态档案建立到复盘收尾。
+项目管理专家的核心技能。覆盖项目执行全生命周期：从状态档案建立到复盘收尾。
 
 ## 模块速查
 

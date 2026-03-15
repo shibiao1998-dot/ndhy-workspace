@@ -34,8 +34,8 @@ description: "Heartbeat monitoring, anomaly recovery, and daily closing operatio
 | Agent | 标签 | 状态 | 运行时长 | 备注 |
 |-------|------|------|----------|------|
 | 🌐 林栈桥 | dev-xxx | ✅ 已完成 | 12m | 待验收 |
-| 🔍 严守正 | review-xxx | 🔄 进行中 | 5m | 正常 |
-| 📝 苏墨言 | doc-xxx | ⚠️ 超时 | 30m | 已追问 |
+| 🔍 代码审查专家 | review-xxx | 🔄 进行中 | 5m | 正常 |
+| 📝 技术文档专家 | doc-xxx | ⚠️ 超时 | 30m | 已追问 |
 
 异常：[有/无] — [异常描述及处理动作]
 ```
@@ -46,7 +46,7 @@ description: "Heartbeat monitoring, anomaly recovery, and daily closing operatio
 
 ## 异常恢复协议（从 AGENTS.md 提取）
 
-子 Agent 不是永远可靠的。卡死、超时、无响应都会发生。pm-lead 必须有恢复手段，不能等它自己好起来。
+子 Agent 不是永远可靠的。卡死、超时、无响应都会发生。Leader 必须有恢复手段，不能等它自己好起来。
 
 ### 恢复协议 3 阶段
 
