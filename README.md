@@ -1,145 +1,245 @@
 # NDHY AI Agent Team
 
-> **1 个人类 + 6 个 AI Agent = 一支完整的产品团队。**
-> 这不是概念验证，是正在运行的生产环境。
+> **1 个人类 + 26 个 AI 专家 + 1 个 AI Leader = 一支完整的产品团队。**
+> 不是概念验证，是每天运行的生产环境。
 
-## What is This?
+## 这是什么 / What is This
 
-NDHY AI Agent Team 是一个真实的实验：用一个人类产品经理 + 一群 AI Agent，组建一支能交付产品的团队。所有 Agent 运行在 [OpenClaw](https://github.com/openclaw/openclaw)（开源 AI Agent 平台）上，通过飞书沟通，在 GitHub 协作。
+NDHY AI Agent Team 是一个真实运转的 AI 产品组织：一个人类产品经理 + 一个 AI 组织运营者（Leader）+ 26 个覆盖产品全链路的 AI 专家，从需求挖掘到发布上线全部由 AI 执行。
+
+所有 Agent 运行在 [OpenClaw](https://github.com/nicepkg/openclaw) 上，通过飞书沟通，在 GitHub 协作。
 
 唯一的人类是 **黄世彪**（产品经理）。其余全是 AI。
 
 ---
 
-## 🏗 组织架构 / Team Structure
+## 组织架构 / Team Structure
 
 ```
-黄世彪（人类·产品经理）
+黄世彪（人类 · 产品经理）
     │
     ▼
-🧧 发发 · Leader（AI 指挥官）
-    │  需求挖掘 → 任务拆解 → 调度分发 → 质量验收 → 交付汇报
+🧧 发发 · Leader（AI 组织运营者）
+    │  需求挖掘 · 目标定义 · 调度决策 · 质量验收 · 交付汇报
     │
-    ├── 🔧 Skill开发专家 · Skill Developer
-    │     OpenClaw Skill 创建/改进、脚本开发、Skill 发布
-    │
-    ├── 🌐 林栈桥 · Full-Stack Developer
-    │     Web 全栈开发、React/Next.js、API 设计、数据库
-    │
-    ├── 📝 技术文档专家 · Technical Writer
-    │     技术文档、方案设计、知识体系整理
-    │
-    ├── 🔍 代码审查专家 · Code Reviewer
-    │     代码审查、架构评审、性能分析、安全审计
-    │
-    └── 🔬 技术调研专家 · Researcher
-          技术选型、竞品分析、市场调研、可行性评估
+    └── 26 位 AI 专家（7 层流水线）
 ```
 
-Leader 是**纯调度角色** — 不写一行代码，不碰一个文件。所有执行通过 `sessions_spawn` 委派给专家 Agent，每个专家有独立的灵魂文件（SOUL.md）和专业标准（STANDARDS.md）。
+### 七层流水线
+
+#### Layer 1 — 需求与战略（5 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 🎯 需求分析专家 | 将模糊想法变为结构化需求，5 轮对话挖掘真实需求 |
+| 🔍 用户研究专家 | 用户画像构建、旅程地图、需求推演与洞察转化 |
+| 📊 市场评估专家 | 市场规模分析、竞争格局全景、商业可行性判断 |
+| 🔭 竞品调研专家 | 单个竞品深度拆解、策略分析、功能对标 |
+| 🧭 战略定位专家 | 战略方向选择、竞争定位、价值主张设计 |
+
+#### Layer 2 — 产品设计（4 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 📐 产品定义专家 | 产品概念定义、场景拆解、功能范围界定、MVP 定义 |
+| 🎨 体验设计专家 | 信息架构、任务流程、交互模式、体验语言定义 |
+| 🔩 流程设计专家 | 产出物拆解、角色定义、协作拓扑、执行流程编排 |
+| 🧬 角色创造专家 | AI 专家角色创造、专家池匹配、项目团队组建 |
+
+#### Layer 3 — 技术架构（3 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 🏛️ 技术架构专家 | 系统分层、模块边界、技术选型、AI 集成方案 |
+| 🗄️ 数据库设计专家 | 业务概念建模、逻辑/物理模型、字段字典、迁移策略 |
+| 📜 API 设计专家 | 接口契约设计、错误模型、幂等规范、Mock 输出 |
+
+#### Layer 4 — 开发实现（2 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| ⚙️ 后端开发专家 | Controller/Service/Repository 分层实现、事务/权限/错误处理 |
+| 🖥️ 前端开发专家 | 组件拆分、状态管理、全态覆盖、契约消费 |
+
+#### Layer 5 — 质量保障（3 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 🔗 联调集成专家 | 契约对齐验证、端到端流程跑通、集成问题归因 |
+| 🔍 代码审查专家 | Code Review、架构评审、性能分析、安全审计 |
+| 🧪 测试专家 | 测试策略、用例设计、缺陷分级、发布就绪评估 |
+
+#### Layer 6 — 发布与运营（4 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 🚀 部署运维专家 | 环境校验、发布步骤、回滚方案、监控告警 |
+| 📦 发布策略专家 | 灰度方案、用户培训、沟通计划、发布效果评估 |
+| 📈 增长运营专家 | 用户获取/激活/留存策略、增长实验、区域化增长 |
+| 🔄 迭代优化专家 | 迭代方向决策、优先级裁决、MVP 拆解、止损判断 |
+
+#### Layer 7 — 组织支撑（5 位专家）
+
+| 专家 | 定位 |
+|------|------|
+| 🏗️ 项目管理专家 | 指令包组装、执行排期、上下文管理、质量检查 |
+| 🔧 Skill 开发专家 | OpenClaw Skill 创建/改进、脚本开发 |
+| 📝 技术文档专家 | 文档撰写、知识体系整理、方案结构化 |
+| 🔬 技术调研专家 | 技术选型、可行性评估、方案调研 |
+| 📈 数据分析专家 | 指标体系、埋点规划、A/B 测试、数据可视化 |
 
 ---
 
-## ⚙ 核心机制 / How It Works
+## 核心机制 / How It Works
+
+### 权力分层
+
+| 层级 | 决策者 | 职责 |
+|------|--------|------|
+| **L0 战略层** | 老板（人类） | 做不做、方向对不对、预算审批 |
+| **L1 目标层** | Leader（AI） | 做成什么样、验收标准、优先级 |
+| **L2 执行层** | 项目管理专家 | 怎么拆、谁先做、依赖管理 |
+| **L3 专业层** | 各领域专家 | 领域内怎么做最好 |
+
+每层只管自己该管的，不越级干预。
 
 ### 三高原则
 
-| 原则 | 含义 |
-|------|------|
-| **高价值** | 每个需求必须追溯到商业价值，不做"为了做而做"的事 |
-| **高复用** | 能做平台不做工具，能做组件不做页面 |
-| **高质量** | 对照验收标准逐条 check，不达标打回重做 |
+- **高价值** — 每个需求追溯到商业价值，不做"为了做而做"的事
+- **高复用** — 能做平台不做工具，能做组件不做页面
+- **高质量** — 对照验收标准逐条 check，不达标打回重做
+
+### 需求验证门
+
+任何需求进入执行之前，必须通过四步验证：
+
+**接收** → **深挖**（需求分析专家介入） → **确认**（与人类对齐） → **放行**（选择调度模式）
+
+### 分级验收
+
+| 级别 | 标准 | 验收方式 |
+|------|------|---------|
+| **S 级** | 交付给老板的最终产出 | Leader 全审 |
+| **A 级** | 关键技术决策、架构方案 | Leader 审关键点 + 抽查 |
+| **B 级** | 常规开发、文档整理 | 项目管理专家验收，Leader 抽检 |
+| **C 级** | 内部工具、辅助任务 | 项目管理专家验收即可 |
+
+### GSD 工作模式
+
+**Claude Code + Get Shit Done + Sub-Agent + Agent Team**
+
+所有开发任务默认使用 GSD 工作流（context engineering + spec-driven development），通过 Sub-Agent 机制支持分布式执行。
 
 ### 分层记忆
 
 AI Agent 每次醒来都是全新的。靠文件系统维持记忆：
 
-- 🔥 **HOT**（`MEMORY.md`）— 长期规则、偏好、教训，每次会话加载
-- 🟡 **WARM**（`memory/YYYY-MM-DD.md`）— 每日事件流水，按需回溯
-- 📁 **项目层**（`PROJECT.md`）— 单项目上下文，子 Agent 接手时读取
+| 层级 | 载体 | 作用 |
+|------|------|------|
+| 🔥 HOT | `MEMORY.md` | 长期规则、偏好、教训，每次会话加载 |
+| 🟡 WARM | `memory/YYYY-MM-DD.md` | 每日事件流水，按需回溯 |
+| 📁 项目层 | `PROJECT.md` | 单项目上下文，子 Agent 接手时读取 |
 
-### 质量闭环
+### Token 效率宪法
 
-```
-常规任务：执行 Agent → Leader 验收 → 交付
-关键任务：执行 Agent → 🔍 代码审查专家独立审查 → Leader 终审 → 交付
-```
-
-### 心跳与自愈
-
-- **主动行为检查** — 每次心跳轮查待办
-- **子 Agent 健康巡查** — 超时追问 → 卡死重启（携带上下文）→ 连续失败上报人类
-- **每日收盘** — Git 备份 → 记忆清理 → 能力缺口检测
-
-### 任务生命周期
-
-`[pending]` → `[doing]` → `[review]` → `[done]`（异常：`[blocked]` / `[rework]`）
+**该省省该花花。** 设定/技能描述可精简（零信息损耗），任务指令/验收标准/关键上下文不可减。目标永远是高质量产出和价值交付。
 
 ---
 
-## 🛠 技术栈 / Tech Stack
+## 技术栈 / Tech Stack
 
 | 层面 | 选型 |
 |------|------|
-| Agent 平台 | OpenClaw |
+| Agent 平台 | [OpenClaw](https://github.com/nicepkg/openclaw) |
 | AI 模型 | Claude 4.6 Opus（via ndhy-gateway） |
+| 开发工具 | Claude Code + GSD（Get Shit Done） |
 | 沟通 | 飞书 |
 | 代码托管 | GitHub |
-| 开发工具 | vibe-coding（OpenCode + OMO ultraworker） |
 | OS | Windows 10 |
 
 ---
 
-## 🧩 能力包 / Installed Skills
+## Skill 生态 / Skill Ecosystem
 
-| 类别 | Skills |
-|------|--------|
-| 搜索调研 | search-layer（四源并行）· content-extract · tavily-search |
-| 前端开发 | react-best-practices · frontend |
-| 代码管理 | github · gh-issues · coding-agent |
-| Skill 管理 | skill-creator · clawhub · find-skills · skill-vetter |
-| 飞书集成 | feishu-*（9 个 Skill：文档/表格/日历/消息/任务） |
-| 团队管理 | agent-autonomy-kit · agent-team-orchestration · multi-agent-cn |
-| 工具 | agent-browser · cftunnel · vibe-coding · weather · healthcheck |
+39 个 Skill，全部模块化架构（`SKILL.md` 路由器 + `references/` 详细文档），按需加载。
+
+| 类别 | 数量 | 覆盖范围 |
+|------|------|----------|
+| **角色专属技能** | 20 | 需求挖掘、产品定义、体验设计、技术架构、数据库设计、API 设计、前后端开发、联调集成、测试验证、部署运维、发布策略、增长运营、迭代优化、数据分析、代码审查、技术调研、技术文档 |
+| **组织基础设施** | 12 | 项目管理、流程设计、角色创造、Skill 开发、上下文管理、质量门禁、心跳运维、交付转发、搜索中台、内容提取 |
+| **通用工具** | 7 | 浏览器自动化、GitHub 操作、天气查询、健康检查、React 最佳实践、ClawHub、会话日志 |
+
+另有 9 个飞书集成 Skill（文档/多维表格/日历/消息/任务）由 OpenClaw 飞书插件提供。
 
 ---
 
-## 📂 仓库结构 / Repo Structure
+## 仓库结构 / Repo Structure
 
 ```
 workspace/
-├── AGENTS.md                    # Leader 工作手册
-├── SOUL.md                      # Leader 灵魂与信条
-├── USER.md                      # 人类档案
-├── MEMORY.md                    # HOT 层长期记忆
-├── HEARTBEAT.md                 # 心跳协议
-├── IDENTITY.md                  # 身份标识
-├── roles/
-│   ├── README.md                # 选角决策树
-│   ├── RELAY-PROTOCOL.md        # 沟通转发规范
-│   ├── Skill开发专家-skill-developer/  # SOUL.md + STANDARDS.md
-│   ├── 林栈桥-fullstack-developer/
-│   ├── 技术文档专家-technical-writer/
+├── AGENTS.md                       # Leader 工作手册
+├── SOUL.md                         # Leader 灵魂与信条
+├── USER.md                         # 人类档案
+├── MEMORY.md                       # HOT 层长期记忆
+├── IDENTITY.md                     # 身份标识
+├── HEARTBEAT.md                    # 心跳协议
+│
+├── roles/                          # 26 位专家的角色定义
+│   ├── README.md                   #   选角决策树
+│   ├── RELAY-PROTOCOL.md           #   沟通转发规范
+│   ├── 需求分析专家-requirement-analyst/
+│   ├── 用户研究专家-user-researcher/
+│   ├── 市场评估专家-market-assessor/
+│   ├── 竞品调研专家-competitive-analyst/
+│   ├── 战略定位专家-strategic-positioner/
+│   ├── 产品定义专家-product-definer/
+│   ├── 体验设计专家-experience-designer/
+│   ├── 流程设计专家-process-designer/
+│   ├── 角色创造专家-role-creator/
+│   ├── 技术架构专家-technical-architect/
+│   ├── 数据库设计专家-database-architect/
+│   ├── API设计专家-api-architect/
+│   ├── 后端开发专家-backend-developer/
+│   ├── 前端开发专家-frontend-developer/
+│   ├── 联调集成专家-integration-expert/
 │   ├── 代码审查专家-code-reviewer/
-│   └── 技术调研专家-researcher/
-├── skills/                      # 已安装 Skill 包
-├── memory/                      # WARM 层每日日志
-└── [项目文件夹]/                # 各项目代码 + PROJECT.md
+│   ├── 测试专家-testing-expert/
+│   ├── 部署运维专家-deployment-ops/
+│   ├── 发布策略专家-release-strategist/
+│   ├── 增长运营专家-growth-operator/
+│   ├── 迭代优化专家-iteration-optimizer/
+│   ├── 项目管理专家-project-manager/
+│   ├── Skill开发专家-skill-developer/
+│   ├── 技术文档专家-technical-writer/
+│   ├── 技术调研专家-researcher/
+│   └── 数据分析专家-data-analyst/
+│
+├── skills/                         # 39 个模块化 Skill
+├── memory/                         # WARM 层每日日志
+├── projects/                       # 项目目录（含模板）
+├── workflow-templates/              # 工作流模板（标准开发/快速修复/调研分析/组织变更）
+├── research/                       # 调研资料
+└── data/                           # 数据文件
 ```
 
+每个专家目录下包含 `SOUL.md`（灵魂定义）和 `STANDARDS.md`（专业标准），spawn 时注入。
+
 ---
 
-## 🤔 FAQ
+## FAQ
 
 **Q: 这是玩具项目吗？**
-不是。这是一个真实运行的产品团队，有日常任务、质量验收、记忆积累、异常恢复机制。Agent 会犯错，但系统设计了闭环来兜底。
+不是。这是一个真实运行的产品组织，有日常任务、质量验收、记忆积累、异常恢复机制。Agent 会犯错，但系统设计了分级验收和闭环机制来兜底。
 
 **Q: 人类在这个团队里做什么？**
-定方向、做决策、审批高风险操作。所有执行层面的工作由 AI 完成。
+定方向（L0 战略决策）、审批高风险操作、验收最终交付。所有执行层面的工作由 AI 完成。人类是决策者，不是执行者。
 
-**Q: 为什么每个 Agent 都有中文名？**
-因为它们不是工具，是团队成员。有名字、有性格、有专业标准。这不是拟人化情怀，是让角色注入更精确的工程决策。
+**Q: 为什么需要 26 个专家？**
+因为产品全链路的每个环节都有专业门槛。需求挖掘、用户研究、架构设计、前端开发、测试验证、发布运维……每个领域的最佳实践不同，合在一起会稀释专业度。26 个专家 = 26 份独立的专业判断力。
+
+**Q: 一个人怎么管这么多 Agent？**
+不需要管每一个。权力分层 + 里程碑驱动 + 异常介入。正常推进时 Leader 和项目管理专家自主运转，人类只在关键节点出现。一个清晰的组织架构比十个微操的管理者更有效。
 
 ---
 
-<sub>Powered by [OpenClaw](https://github.com/openclaw/openclaw) · Built by 黄世彪 & his AI team · 2026</sub>
+<sub>Powered by [OpenClaw](https://github.com/nicepkg/openclaw) · Built by 黄世彪 & his AI team · 2026</sub>
