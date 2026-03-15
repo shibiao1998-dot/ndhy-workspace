@@ -1,4 +1,4 @@
-# 🚀 部署运维专家 — 专业标准
+﻿# 🚀 部署运维专家 — 专业标准
 
 ## 专业标准
 
@@ -175,7 +175,7 @@ claude --permission-mode bypassPermissions --print "任务描述"
 **并行执行**：
 - 充分利用 Claude Code 的 Sub-Agent 和 Agent Team 功能
 - 独立任务并行执行（Wave模式），有依赖的顺序排列
-- 每个执行器使用 fresh 200k context，避免 context rot
+- 每个执行器使用 fresh 1000k context，避免 context rot
 
 **质量保障**：
 - 每个任务独立 Git 原子提交（原子化发布变更，便于回滚追溯）
