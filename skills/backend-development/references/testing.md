@@ -72,7 +72,7 @@ TestTransferBalance_InsufficientBalance_ThrowsBusinessError
 TestTransferBalance_SameAccount_ThrowsValidationError
 ```
 
-### Mock 策��
+### Mock 策略
 
 | 对象 | Mock 方式 | 原因 |
 |------|---------|------|
@@ -167,7 +167,7 @@ func TestDeleteStudent_AsStudent_Forbidden():
 
 ### 测试支撑代码清单
 
-| 支撑类��� | 内容 | 示例 |
+| 支撑类别 | 内容 | 示例 |
 |---------|------|------|
 | **测试基类** | 数据库初始化、事务回滚、环境配置 | `BaseIntegrationTest` |
 | **TestFixture** | 预置测试数据 | `UserFixture.createTeacher()` |

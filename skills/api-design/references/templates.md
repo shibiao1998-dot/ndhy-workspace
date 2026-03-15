@@ -364,7 +364,7 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     Conflict:
-      description: "资源冲���"
+      description: "资源冲突"
       content:
         application/json:
           schema:
@@ -536,7 +536,7 @@ components:
 
 | 端点 | admin | teacher | student | parent |
 |------|-------|---------|---------|--------|
-| GET /{resource} | ✅ | ✅ | ���（本人） | ✅（子女） |
+| GET /{resource} | ✅ | ✅ | ✅（本人） | ✅（子女） |
 | POST /{resource} | ✅ | ✅ | ❌ | ❌ |
 
 ## 分页规范
@@ -606,7 +606,7 @@ components:
 
 ## 变更摘要
 
-| 变更类�� | 数量 | 风险等级 |
+| 变更类型 | 数量 | 风险等级 |
 |---------|------|---------|
 | 新增端点 | {n} | 🟢 无风险 |
 | 新增字段 | {n} | 🟢 无风险（选填）/ 🟡 注意（必填） |
@@ -639,7 +639,7 @@ components:
 
 ## 迁移计划
 
-### 阶段 1：并行期��{起止日期}）
+### 阶段 1：并行期（{起止日期}）
 - 新旧端点同时可用
 - 旧端点返回 `Deprecation` 响应头
 

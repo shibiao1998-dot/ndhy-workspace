@@ -256,7 +256,7 @@ Step 9: 输出交付包
 | 2 | 实现服务层业务逻辑（service/use case） | Step 4 | references/handler-service-repo.md §Service层 |
 | 3 | 实现数据访问层（repository/DAO） | Step 5 | references/handler-service-repo.md §Repository层 |
 | 4 | 添加输入校验 | Step 6 | references/validation-auth.md §输入校验 |
-| 5 | 添加权限控制 | Step 6 | references/validation-auth.md §��限控制 |
+| 5 | 添加权限控制 | Step 6 | references/validation-auth.md §权限控制 |
 | 6 | 添加错误处理与错误码映射 | Step 6 | references/error-transaction-log.md §错误处理 |
 | 7 | 添加事务边界 | Step 6 | references/error-transaction-log.md §事务边界 |
 | 8 | 添加日志与可观测性 | Step 6 | references/error-transaction-log.md §日志可观测性 |

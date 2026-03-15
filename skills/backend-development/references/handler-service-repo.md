@@ -279,7 +279,7 @@ func FindActiveUsers(page PageRequest) -> Page<User>:
 | 陷阱 | 症状 | 修复 |
 |------|------|------|
 | 业务逻辑下沉 | Repository 中出现 if/else 业务判断 | 业务逻辑上移到 Service |
-| SQL 拼接 | 字符串拼接 SQL，有注��风险 | 参数化查询 / ORM |
+| SQL 拼接 | 字符串拼接 SQL，有注入风险 | 参数化查询 / ORM |
 | N+1 查询 | 循环中逐条查询关联数据 | 批量查询 + 内存组装 |
 | 过度 JOIN | 一条 SQL JOIN 5+ 张表 | 拆分查询，在 Service 层组装 |
 | 无分页 | 查询可能返回海量数据 | 所有列表查询必须分页 |

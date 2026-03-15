@@ -83,7 +83,7 @@ func GetStudentList(query, currentUser):
 | **目的限制** | 数据只用于收集时声明的目的 |
 | **访问控制** | 严格按角色控制数据可见性 |
 | **审计追踪** | 关键数据访问和修改有日志 |
-| **脱敏展示** | 非必要场景脱敏展示敏��字段 |
+| **脱敏展示** | 非必要场景脱敏展示敏感字段 |
 | **数据导出** | 支持家长/学生导出个人数据 |
 
 ### 敏感数据处理
@@ -144,7 +144,7 @@ func auditLog(action, targetType, targetId, details, operator):
 func BatchUpdateScores(scores):
     validate(scores)  // 校验所有条目
 
-    // 批量写入（不要��条 INSERT）
+    // 批量写入（不要逐条 INSERT）
     scoreRepo.batchUpdate(scores)
 
     return BatchResult(success: scores.length, failed: 0)

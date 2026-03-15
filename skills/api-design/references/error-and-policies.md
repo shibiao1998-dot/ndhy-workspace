@@ -51,13 +51,13 @@
 | HTTP 状态码 | 使用场景 | 通用错误码 | 说明 |
 |------------|---------|----------|------|
 | 400 | 请求参数错误 | VALIDATION_FAILED | details 中列出每个字段的问题 |
-| 401 | ��认证 | UNAUTHORIZED | Token 缺失或过期 |
+| 401 | 未认证 | UNAUTHORIZED | Token 缺失或过期 |
 | 403 | 无权限 | FORBIDDEN, ACCESS_DENIED | 认证通过但权限不足 |
 | 404 | 资源不存在 | {RESOURCE}_NOT_FOUND | 资源 ID 无效或已删除 |
 | 409 | 资源冲突 | DUPLICATE_{RESOURCE}, IDEMPOTENCY_CONFLICT | 唯一约束冲突或幂等键冲突 |
 | 422 | 业务规则不满足 | {DOMAIN}_{ACTION}_{REASON} | 参数格式合法但业务不允许 |
 | 429 | 限流 | RATE_LIMITED | 附 `Retry-After` 响应头 |
-| 500 | 服务端错误 | INTERNAL_ERROR | 不暴露内部细�� |
+| 500 | 服务端错误 | INTERNAL_ERROR | 不暴露内部细节 |
 
 ### 错误码注册表模板
 
@@ -67,7 +67,7 @@
 | VALIDATION_FAILED | 400 | 参数校验失败 | 字段类型/格式/约束不满足 | 展示 details 中的字段错误 |
 | UNAUTHORIZED | 401 | 未认证 | 无 Token 或 Token 过期 | 跳转登录页 |
 | FORBIDDEN | 403 | 无权限 | 无此端点的操作权限 | 展示无权限提示 |
-| RESOURCE_NOT_FOUND | 404 | 资源不存在 | ID 无效或资源已���除 | 展示"资源不存在"提示 |
+| RESOURCE_NOT_FOUND | 404 | 资源不存在 | ID 无效或资源已删除 | 展示"资源不存在"提示 |
 | RATE_LIMITED | 429 | 限流 | 超过速率限制 | 按 Retry-After 头等待后重试 |
 | INTERNAL_ERROR | 500 | 服务端错误 | 内部异常 | 展示"服务暂时不可用" |
 ```
@@ -210,7 +210,7 @@ GET /courses?sort=created_at:desc,title:asc
 
 ### 可排序字段白名单
 
-每个���表端点定义可排序字段白名单，拒绝未声明字段的排序请求：
+每个列表端点定义可排序字段白名单，拒绝未声明字段的排序请求：
 
 ```yaml
 parameters:

@@ -56,7 +56,7 @@ UpdateCourseRequest:
     description:
       type: string
       maxLength: 2000
-  # 无 required — 只更新传入��字段
+  # 无 required — 只更新传入的字段
 ```
 
 ---

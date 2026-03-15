@@ -126,7 +126,7 @@ interface User {
 | **服务端数据** | 来自 API，需缓存/刷新/同步 | React Query / SWR | 手动 useState+useEffect |
 | **UI 临时状态** | 弹窗开关、Hover、焦点 | useState | 全局 store |
 | **复杂本地状态** | 多字段联动、状态机 | useReducer | 多个 useState |
-| **跨���件共享** | 主题、用户信息、权限 | Context（读多写少）/ Zustand | Props 层层透传 |
+| **跨组件共享** | 主题、用户信息、权限 | Context（读多写少）/ Zustand | Props 层层透传 |
 | **表单状态** | 字段值、校验、脏检查 | React Hook Form | 手动 useState per field |
 | **URL 状态** | 筛选、分页、排序 | URL SearchParams | useState（URL 不可分享） |
 | **RSC 数据** | 服务端获取，页面初始数据 | Server Component fetch | 客户端 useEffect |

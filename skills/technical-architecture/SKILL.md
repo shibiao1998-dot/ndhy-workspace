@@ -16,7 +16,7 @@ description: >-
   (8) 需要识别架构反模式和风险,
   (9) 用户提到技术架构、架构设计、技术选型、系统分层、模块划分、ADR.
   Triggers on: 技术架构, technical architecture, 架构设计, 技术选型, 系统分层,
-  模块划分, AI集成, 架构模��, ADR, 架构决策, 性能设计, 安全架构.
+  模块划分, AI集成, 架构模式, ADR, 架构决策, 性能设计, 安全架构.
 ---
 
 # technical-architecture — 技术架构设计执行工具箱

@@ -17,7 +17,7 @@
 
 | 校验层 | 职责 | 时机 | 示例 |
 |--------|------|------|------|
-| **即时校验** | 格式、��度、必填 | onChange / onBlur | 邮箱格式、密码强度 |
+| **即时校验** | 格式、长度、必填 | onChange / onBlur | 邮箱格式、密码强度 |
 | **提交校验** | 跨字段关联、业务规则 | onSubmit | 结束日期 > 开始日期 |
 | **服务端校验** | 唯一性、权限、业务状态 | API 返回错误 | 邮箱已注册 |
 
@@ -144,13 +144,13 @@ export function useListPage<T, P extends PaginationParams>(
 
 ```
 DetailPage
-  ├─��� BreadcrumbNav      # 面包屑导航
+  ├── BreadcrumbNav      # 面包屑导航
   ├── DetailHeader       # 标题 + 状态 + 操作按钮
   ├── DetailContent      # 主体内容（Tab 或 Section）
   │     ├── BasicInfo    # 基本信息区
   │     ├── RelatedList  # 关联数据区
   │     └── Timeline     # 操作历史/时间线
-  └── DetailActions      # 底部操作栏（编辑/删除/返��）
+  └── DetailActions      # 底部操作栏（编辑/删除/返回）
 ```
 
 ### 详情页数据加载
@@ -242,7 +242,7 @@ const deleteAction = useConfirmAction({
 
 ```
 1. 弹窗开关状态 → 就近管理（触发弹窗的组件内）
-2. ���窗内的表单状态 → 弹窗组件内（弹窗关闭时自动清理）
+2. 弹窗内的表单状态 → 弹窗组件内（弹窗关闭时自动清理）
 3. 弹窗操作后的列表刷新 → 通过回调/缓存失效
 4. 不要把弹窗状态放进全局 store
 5. 嵌套弹窗限制 ≤ 2 层（弹窗套弹窗超过 2 层说明交互设计有问题）
