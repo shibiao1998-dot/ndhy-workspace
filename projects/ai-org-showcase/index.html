@@ -188,26 +188,75 @@ body.scroll-locked { overflow: hidden; }
   text-align: center;
   position: relative;
   padding: var(--sp-8);
-  background: var(--color-bg);
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(129,140,248,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 40%, rgba(99,102,241,0.03) 0%, transparent 40%),
+    var(--color-bg);
 }
+
+/* Hook date line — monospace, accent, wide tracking */
+#hook-date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-accent);
+  opacity: 0.05;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--sp-8);
+  transition: opacity var(--dur-slower) var(--ease-out);
+}
+#hook-date.visible { opacity: 0.7; }
+
+/* Hook narrative lines — medium size */
 .hook-line {
-  font-size: var(--fs-display);
-  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-medium);
   line-height: var(--lh-relaxed);
   color: var(--color-text-muted);
   opacity: 0.05;
+  margin-bottom: var(--sp-6);
   transition: opacity var(--dur-slower) var(--ease-out);
 }
 .hook-line.visible { opacity: 1; }
-.hook-emphasis {
+
+/* "他拥有了一个 28 人的产品团队。" — bigger */
+#hook-team {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
   color: var(--color-text-bright);
 }
-#hook-typewriter {
+
+/* Emphasis punchline — display size + accent underline */
+.hook-emphasis {
   font-size: var(--fs-display);
   font-weight: var(--fw-bold);
+  color: #ffffff;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+}
+.hook-emphasis::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--dur-slower) var(--ease-out);
+}
+.hook-emphasis.visible::after {
+  opacity: 0.6;
+}
+
+/* Typewriter line — h2 size to match narrative */
+#hook-typewriter {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-medium);
   line-height: var(--lh-relaxed);
   color: var(--color-text-muted);
   min-height: 1.8em;
+  margin-bottom: var(--sp-6);
 }
 #hook-typewriter .cursor {
   display: inline-block;
@@ -220,22 +269,23 @@ body.scroll-locked { overflow: hidden; }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-.hook-spacer { height: var(--sp-8); }
+/* Spacer before punchline — extra large */
+.hook-spacer { height: var(--sp-12); }
 
 .scroll-arrow {
   position: absolute;
   bottom: var(--sp-8);
   left: 50%;
   transform: translateX(-50%);
-  font-size: var(--fs-h1);
-  color: var(--color-text-dim);
+  font-size: 1.5rem;
+  color: var(--color-accent);
   opacity: 0.05;
   animation: breathe var(--breathe-cycle) var(--ease-in-out) infinite;
   cursor: pointer;
   border: none;
   background: none;
 }
-.scroll-arrow.visible { opacity: 1; }
+.scroll-arrow.visible { opacity: 0.6; }
 @keyframes breathe {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(var(--breathe-range)); }
@@ -340,36 +390,42 @@ body.scroll-locked { overflow: hidden; }
 .timeline {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: var(--sp-6);
-  overflow-x: auto;
-  padding: var(--sp-8) 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  flex-direction: column;
+  gap: 0;
+  padding: var(--sp-8) 0 var(--sp-8) var(--sp-8);
 }
 .timeline::before {
   content: '';
   position: absolute;
-  top: 28px;
-  left: 0;
-  right: 0;
-  height: 2px;
+  top: 0;
+  bottom: 0;
+  left: 27px;
+  width: 2px;
+  height: auto;
   background: var(--color-border);
 }
 .timeline-step {
-  flex: 0 0 160px;
   position: relative;
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  text-align: left;
   cursor: pointer;
+  padding-left: var(--sp-8);
+  padding-bottom: var(--sp-6);
+  width: 100%;
 }
 .step-dot {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: var(--color-border);
-  margin: 20px auto var(--sp-3);
-  position: relative;
+  position: absolute;
+  left: -8px;
+  top: 4px;
+  margin: 0;
   z-index: 2;
+  flex-shrink: 0;
   transition: background var(--dur-normal) var(--ease-out),
               box-shadow var(--dur-normal) var(--ease-out);
 }
@@ -377,8 +433,29 @@ body.scroll-locked { overflow: hidden; }
   background: var(--color-accent);
   box-shadow: 0 0 8px var(--color-accent-glow);
 }
-.step-emoji { font-size: var(--fs-h2); margin-bottom: var(--sp-1); }
-.step-role { font-size: var(--fs-small); color: var(--color-text-muted); margin-bottom: var(--sp-1); }
+/* Step card: emoji left + content right */
+.step-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  width: 100%;
+  padding: var(--sp-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color var(--dur-normal) var(--ease-out),
+              box-shadow var(--dur-normal) var(--ease-out);
+}
+.timeline-step:hover .step-content {
+  border-color: var(--color-accent-dim);
+  box-shadow: 0 0 12px rgba(129,140,248,0.1);
+}
+.timeline-step.lit .step-content {
+  border-color: var(--color-accent-dim);
+}
+.step-emoji { font-size: 1.5rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+.step-text { flex: 1; min-width: 0; }
+.step-role { font-size: var(--fs-small); color: var(--color-text-muted); margin-bottom: 2px; }
 .step-action { font-size: var(--fs-small); color: #e0e0e0; font-weight: var(--fw-medium); }
 .step-meta { font-size: var(--fs-xs); color: var(--color-text-dim); margin-top: var(--sp-1); }
 
@@ -418,30 +495,13 @@ body.scroll-locked { overflow: hidden; }
   margin-top: var(--sp-3);
 }
 
-/* Vertical timeline (mobile) */
+/* Vertical timeline responsive adjustments (mobile) */
 @media (max-width: 600px) {
   .timeline {
-    flex-direction: column;
-    overflow-x: visible;
-    padding-left: var(--sp-8);
-    gap: 0;
+    padding-left: var(--sp-6);
   }
-  .timeline::before {
-    top: 0; bottom: 0;
-    left: 27px; right: auto;
-    width: 2px; height: auto;
-  }
-  .timeline-step {
-    flex: none;
-    text-align: left;
-    padding-left: var(--sp-8);
-    padding-bottom: var(--sp-6);
-  }
-  .step-dot {
-    position: absolute;
-    left: -8px;
-    top: 4px;
-    margin: 0;
+  .step-content {
+    padding: var(--sp-3);
   }
 }
 
@@ -467,12 +527,14 @@ body.scroll-locked { overflow: hidden; }
   border: 1px solid var(--color-border-subtle);
 }
 .contrast-panel.dim {
-  opacity: 0.8;
-  background: var(--color-bg);
+  opacity: 1;
+  background: rgba(10,10,15,0.8);
+  border: 1px dashed rgba(58,58,85,0.3);
 }
 .contrast-panel.bright {
   background: var(--color-bg-surface);
-  border-color: var(--color-border);
+  border: 1px solid rgba(129,140,248,0.2);
+  box-shadow: 0 0 40px rgba(129,140,248,0.03);
 }
 .panel-heading {
   font-size: var(--fs-h2);
@@ -481,11 +543,11 @@ body.scroll-locked { overflow: hidden; }
   padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--color-border-subtle);
 }
-.dim .panel-heading { color: #f5f5f5; border-bottom-style: dashed; }
-.bright .panel-heading { color: #f5f5f5; }
+.dim .panel-heading { color: #c0c0c0; border-bottom-style: dashed; }
+.bright .panel-heading { color: var(--color-text-bright); }
 
 .flow-step {
-  padding: var(--sp-2) 0;
+  padding: var(--sp-3) 0;
   font-size: var(--fs-small);
   color: #e0e0e0;
   position: relative;
@@ -499,15 +561,15 @@ body.scroll-locked { overflow: hidden; }
   color: var(--color-text-dim);
 }
 .flow-step:first-child::before { content: ''; }
-.dim .flow-step { border-left: 1px dashed var(--color-border-subtle); }
-.bright .flow-step { border-left: 2px solid var(--color-accent); }
+.dim .flow-step { color: #999; border-left: 1px dashed rgba(58,58,85,0.3); }
+.bright .flow-step { color: var(--color-text); border-left: 2px solid var(--color-accent); }
 .bright .flow-step::before { color: var(--color-accent); }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-2);
-  margin-top: var(--sp-4);
+  margin-top: var(--sp-6);
   padding-top: var(--sp-3);
   border-top: 1px solid var(--color-border-subtle);
 }
@@ -544,19 +606,20 @@ body.scroll-locked { overflow: hidden; }
 .cross-sections {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-12);
+  gap: var(--sp-16);
   max-width: var(--max-w);
   margin: 0 auto;
 }
 .cross-section {
   border: 1px solid var(--color-border-subtle);
+  border-left: 3px solid var(--color-accent);
   border-radius: 8px;
   padding: var(--sp-6);
   overflow: hidden;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--dur-slower) var(--ease-out),
-              transform var(--dur-slower) var(--ease-out);
+  transform: translateY(32px);
+  transition: opacity 800ms cubic-bezier(0.22,1,0.36,1),
+              transform 800ms cubic-bezier(0.22,1,0.36,1);
 }
 .cross-section.visible {
   opacity: 1;
@@ -583,10 +646,10 @@ body.scroll-locked { overflow: hidden; }
   display: flex;
   align-items: baseline;
   gap: var(--sp-3);
-  opacity: 0.05;
-  transform: translateY(8px);
-  transition: opacity var(--dur-slow) var(--ease-out),
-              transform var(--dur-slow) var(--ease-out);
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 800ms cubic-bezier(0.22,1,0.36,1),
+              transform 800ms cubic-bezier(0.22,1,0.36,1);
 }
 .cs-row.visible { opacity: 1; transform: translateY(0); }
 .cs-row .level {
@@ -652,13 +715,19 @@ body.scroll-locked { overflow: hidden; }
   font-size: var(--fs-h2);
   color: #f5f5f5;
   line-height: var(--lh-relaxed);
-  margin-bottom: var(--sp-8);
+  margin-bottom: 24px;
   opacity: 0.05;
   transform: translateY(16px);
   transition: opacity var(--dur-slower) var(--ease-out),
               transform var(--dur-slower) var(--ease-out);
 }
 .vision-para.visible { opacity: 1; transform: translateY(0); }
+/* Rhythm: turn paragraph gets extra top breathing room */
+.vision-para.vp-turn { margin-top: var(--sp-8); }
+/* Rhythm: climax paragraph gets generous spacing */
+.vision-para.vp-climax { margin-top: var(--sp-12); margin-bottom: var(--sp-12); }
+/* "答案是——组织" text-shadow */
+.vision-answer { text-shadow: 0 0 30px rgba(129,140,248,0.2); }
 .vision-divider {
   width: 0;
   height: 1px;
@@ -667,7 +736,7 @@ body.scroll-locked { overflow: hidden; }
   margin: var(--sp-8) 0;
   transition: width var(--dur-slow) var(--ease-out);
 }
-.vision-divider.visible { width: 120px; }
+.vision-divider.visible { width: min(120px, 30vw); }
 .vision-final {
   font-size: var(--fs-h1);
   font-weight: var(--fw-bold);
@@ -679,7 +748,7 @@ body.scroll-locked { overflow: hidden; }
    BLOCK 7 — The Call (行动号召)
    ═══════════════════════════════════════════ */
 #cta {
-  min-height: 80vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -692,7 +761,15 @@ body.scroll-locked { overflow: hidden; }
   font-size: var(--fs-h1);
   font-weight: var(--fw-bold);
   color: #f5f5f5;
+  margin-bottom: var(--sp-4);
+}
+.cta-subtitle {
+  font-size: var(--fs-body);
+  color: var(--color-text-muted);
   margin-bottom: var(--sp-8);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .cta-buttons {
   display: flex;
@@ -745,14 +822,15 @@ footer {
   border-top: 1px solid var(--color-border-subtle);
 }
 .footer-brand {
-  font-size: var(--fs-body);
-  font-weight: var(--fw-bold);
-  color: #999;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: #777;
+  letter-spacing: 0.05em;
   margin-bottom: var(--sp-2);
 }
 .footer-stats {
-  font-size: var(--fs-small);
-  color: #999;
+  font-size: var(--fs-xs);
+  color: #666;
   margin-bottom: var(--sp-2);
   letter-spacing: var(--ls-wide);
 }
@@ -850,8 +928,8 @@ section#cta .btn-primary { background: #818cf8; color: #0a0a14; font-weight: 600
 section#cta .btn-ghost { border: 2px solid #818cf8; color: #a5b4fc; }
 /* Block 7: Footer */
 footer .footer-meta { color: #818cf8; }
-footer .footer-brand { color: #aaa; }
-footer .footer-stats { color: #aaa; }
+footer .footer-brand { color: #777; }
+footer .footer-stats { color: #666; }
 
 /* ═══════════════════════════════════════════
    V3.2 — Block 3/4 card borders
@@ -859,7 +937,31 @@ footer .footer-stats { color: #aaa; }
 
 /* Block 3: Timeline step-detail cards */
 #process .step-detail { border: 1px solid #2a2a40; }
-/* Block 4: Contrast panels */
+/* Block 4: Contrast panels — enhanced contrast */
+section#contrast .contrast-panel.dim {
+  opacity: 1;
+  background: rgba(10,10,15,0.8);
+  border: 1px dashed rgba(58,58,85,0.3);
+}
+section#contrast .dim .flow-step {
+  color: #999;
+  border-left: 1px dashed rgba(58,58,85,0.3);
+}
+section#contrast .dim .panel-heading {
+  color: #c0c0c0;
+}
+section#contrast .contrast-panel.bright {
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(129,140,248,0.2);
+  box-shadow: 0 0 40px rgba(129,140,248,0.03);
+}
+section#contrast .bright .panel-heading {
+  color: var(--color-text-bright);
+}
+section#contrast .bright .flow-step {
+  color: var(--color-text);
+  border-left: 2px solid var(--color-accent);
+}
 #contrast .contrast-panel { border: 1px solid #2a2a40; }
 
 /* ═══════════════════════════════════════════
@@ -886,7 +988,7 @@ section#vision hr,
 section#vision .vision-divider {
   border-color: #818cf8;
   opacity: 0.6;
-  width: 120px;
+  width: min(120px, 30vw);
 }
 section#vision .vision-final,
 section#vision .reveal-text .statement {
@@ -905,6 +1007,7 @@ section#vision .reveal-text .statement {
 /* --- Block 3: Timeline cards brightness --- */
 .step-card,
 .step-summary,
+.step-content,
 #process .step-summary {
   background: #1a1a35;
   border: 1px solid #3a3a55;
@@ -924,35 +1027,35 @@ section#vision .reveal-text .statement {
 
 <!-- ═══════════════ BLOCK 1: The Hook ═══════════════ -->
 <section id="hook" aria-label="悬念开场">
-  <div class="hook-line" id="hook-date">2026 年 3 月 10 日</div>
+  <div id="hook-date">2026 年 3 月 10 日</div>
   <div id="hook-typewriter" aria-live="polite"></div>
   <div class="hook-spacer"></div>
   <div class="hook-line" id="hook-later">6 天后，</div>
   <div class="hook-line" id="hook-team">他拥有了一个 28 人的产品团队。</div>
   <div class="hook-spacer"></div>
-  <div class="hook-line hook-emphasis" id="hook-punchline">他没有招过一个人。</div>
+  <div class="hook-emphasis" id="hook-punchline">他没有招过一个人。</div>
   <button class="scroll-arrow" id="scroll-arrow" aria-label="向下滚动" title="向下滚动">↓</button>
 </section>
 
 <!-- ═══════════════ BLOCK 2: The Reveal ═══════════════ -->
 <section id="reveal" aria-label="揭幕震撼">
   <div class="topo-wrap">
-    <svg class="topo-svg" viewBox="0 0 900 920" role="img" aria-label="NDHY AI 组织拓扑图：1 个人类 + 28 个 AI 专家的同心环组织网络">
+    <svg class="topo-svg" viewBox="0 0 960 980" role="img" aria-label="NDHY AI 组织拓扑图：1 个人类 + 28 个 AI 专家的同心环组织网络">
       <defs>
         <filter id="glow-sm" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-md" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-lg" x="-150%" y="-150%" width="400%" height="400%">
-          <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-xl" x="-150%" y="-150%" width="400%" height="400%">
-          <feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <filter id="glow-gold" x="-150%" y="-150%" width="400%" height="400%">
-          <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
         <radialGradient id="ambient" cx="50%" cy="52%" r="35%">
           <stop offset="0%" stop-color="rgba(129,140,248,0.08)"/>
@@ -961,17 +1064,17 @@ section#vision .reveal-text .statement {
       </defs>
 
       <!-- Ambient background glow -->
-      <rect x="0" y="0" width="900" height="920" fill="url(#ambient)"/>
+      <rect x="0" y="0" width="960" height="980" fill="url(#ambient)"/>
 
       <!-- Decorative ring guides -->
-      <circle cx="450" cy="480" r="130" fill="none" stroke="rgba(129,140,248,0.04)" stroke-width="1" stroke-dasharray="4 8"/>
-      <circle cx="450" cy="480" r="295" fill="none" stroke="rgba(129,140,248,0.03)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="480" cy="500" r="140" fill="none" stroke="rgba(129,140,248,0.04)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="480" cy="500" r="330" fill="none" stroke="rgba(129,140,248,0.03)" stroke-width="1" stroke-dasharray="4 8"/>
 
       <!-- Connection lines (rendered behind nodes) -->
       <g class="lines" opacity="0">
-        <line x1="450" y1="120" x2="450" y2="440" stroke="rgba(251,191,36,0.25)" stroke-width="2" stroke-dasharray="6 4"/>
-        <line x1="450" y1="480" x2="330" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
-        <line x1="450" y1="480" x2="570" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
+        <line x1="480" y1="120" x2="480" y2="460" stroke="rgba(251,191,36,0.4)" stroke-width="2" stroke-dasharray="6 4"/>
+        <line x1="480" y1="500" x2="350" y2="445" stroke="rgba(129,140,248,0.25)" stroke-width="1.5"/>
+        <line x1="480" y1="500" x2="610" y2="445" stroke="rgba(129,140,248,0.25)" stroke-width="1.5"/>
       </g>
       <!-- Spoke lines (dynamically generated) -->
       <g class="spokes" opacity="0"></g>
@@ -979,172 +1082,172 @@ section#vision .reveal-text .statement {
       <!-- Nodes -->
       <g id="nodes">
         <!-- L0: Boss (Human) — top center -->
-        <g class="node boss" data-ring="0" data-order="29" data-emoji="👤" data-name="老板（人类）" data-desc="最终决策者" transform="translate(450,85)">
-          <circle r="34" fill="rgba(20,20,30,0.8)" stroke="rgba(251,191,36,0.2)" stroke-width="2"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="26" fill="#fff">👤</text>
-          <text text-anchor="middle" y="52" font-size="12" fill="rgba(251,191,36,0.15)" font-family="var(--font-sans)">老板</text>
+        <g class="node boss" data-ring="0" data-order="29" data-emoji="👤" data-name="老板（人类）" data-desc="最终决策者" transform="translate(480,85)">
+          <circle r="36" fill="rgba(20,20,30,0.8)" stroke="rgba(251,191,36,0.2)" stroke-width="2"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="28" fill="#fff">👤</text>
+          <text text-anchor="middle" y="54" font-size="13" fill="rgba(251,191,36,0.15)" font-weight="500" font-family="var(--font-sans)">老板</text>
         </g>
 
         <!-- L1: Leader — center -->
-        <g class="node leader" data-ring="1" data-order="0" data-emoji="🧧" data-name="Leader" data-desc="组织运营，目标定义与调度决策" transform="translate(450,480)">
-          <circle r="30" fill="rgba(20,20,40,0.9)" stroke="rgba(129,140,248,0.15)" stroke-width="2"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="24" fill="#fff">🧧</text>
-          <text text-anchor="middle" y="46" font-size="12" fill="rgba(129,140,248,0.15)" font-family="var(--font-sans)">Leader</text>
+        <g class="node leader" data-ring="1" data-order="0" data-emoji="🧧" data-name="Leader" data-desc="组织运营，目标定义与调度决策" transform="translate(480,500)">
+          <circle r="32" fill="rgba(129,140,248,0.08)" stroke="rgba(129,140,248,0.2)" stroke-width="2"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="26" fill="#fff">🧧</text>
+          <text text-anchor="middle" y="50" font-size="13" fill="rgba(129,140,248,0.15)" font-weight="500" font-family="var(--font-sans)">Leader</text>
         </g>
 
         <!-- L2: Ring 2 — close orbit -->
-        <g class="node r2" data-ring="2" data-order="1" data-emoji="🏗️" data-name="项目管理专家" data-desc="项目执行调度，指令包组装与上下文管理" transform="translate(330,430)">
-          <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="20">🏗️</text>
-          <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">项目管理</text>
+        <g class="node r2" data-ring="2" data-order="1" data-emoji="🏗️" data-name="项目管理专家" data-desc="项目执行调度，指令包组装与上下文管理" transform="translate(350,445)">
+          <circle r="26" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.12)" stroke-width="1.5"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="22">🏗️</text>
+          <text text-anchor="middle" y="40" font-size="12" fill="rgba(232,232,232,0.12)" font-weight="500" font-family="var(--font-sans)">项目管理</text>
         </g>
-        <g class="node r2" data-ring="2" data-order="2" data-emoji="📝" data-name="技术文档专家" data-desc="把混乱信息变成清晰知识体系" transform="translate(570,430)">
-          <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="20">📝</text>
-          <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">技术文档</text>
+        <g class="node r2" data-ring="2" data-order="2" data-emoji="📝" data-name="技术文档专家" data-desc="把混乱信息变成清晰知识体系" transform="translate(610,445)">
+          <circle r="26" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.12)" stroke-width="1.5"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="22">📝</text>
+          <text text-anchor="middle" y="40" font-size="12" fill="rgba(232,232,232,0.12)" font-weight="500" font-family="var(--font-sans)">技术文档</text>
         </g>
 
         <!-- L3: Ring 3 — outer orbit, grouped by domain -->
         <!-- Domain: 需求洞察 -->
-        <g class="node r3" data-ring="3" data-order="3" data-emoji="🎯" data-name="需求分析专家" data-desc="将模糊想法变为结构化需求" data-domain="insight" transform="translate(215,240)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎯</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">需求分析</text>
+        <g class="node r3" data-ring="3" data-order="3" data-emoji="🎯" data-name="需求分析专家" data-desc="将模糊想法变为结构化需求" data-domain="insight" transform="translate(210,235)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🎯</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">需求分析</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="4" data-emoji="🔍" data-name="用户研究专家" data-desc="用户画像、旅程地图、需求洞察" data-domain="insight" transform="translate(250,225)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">用户研究</text>
+        <g class="node r3" data-ring="3" data-order="4" data-emoji="🔍" data-name="用户研究专家" data-desc="用户画像、旅程地图、需求洞察" data-domain="insight" transform="translate(250,215)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔍</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">用户研究</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="5" data-emoji="📊" data-name="市场评估专家" data-desc="市场规模、竞争格局、商业可行性" data-domain="insight" transform="translate(320,195)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📊</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">市场评估</text>
+        <g class="node r3" data-ring="3" data-order="5" data-emoji="📊" data-name="市场评估专家" data-desc="市场规模、竞争格局、商业可行性" data-domain="insight" transform="translate(325,185)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📊</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">市场评估</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="6" data-emoji="🔭" data-name="竞品调研专家" data-desc="单个竞品深度拆解与策略分析" data-domain="insight" transform="translate(400,185)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔭</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">竞品调研</text>
+        <g class="node r3" data-ring="3" data-order="6" data-emoji="🔭" data-name="竞品调研专家" data-desc="单个竞品深度拆解与策略分析" data-domain="insight" transform="translate(410,170)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔭</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">竞品调研</text>
         </g>
         <!-- Domain: 战略定义 -->
-        <g class="node r3" data-ring="3" data-order="7" data-emoji="🧭" data-name="战略定位专家" data-desc="战略方向选择与竞争定位" data-domain="strategy" transform="translate(490,185)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧭</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">战略定位</text>
+        <g class="node r3" data-ring="3" data-order="7" data-emoji="🧭" data-name="战略定位专家" data-desc="战略方向选择与竞争定位" data-domain="strategy" transform="translate(510,170)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🧭</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">战略定位</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="8" data-emoji="📐" data-name="产品定义专家" data-desc="产品形态、功能范围、MVP 界定" data-domain="strategy" transform="translate(575,195)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📐</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">产品定义</text>
+        <g class="node r3" data-ring="3" data-order="8" data-emoji="📐" data-name="产品定义专家" data-desc="产品形态、功能范围、MVP 界定" data-domain="strategy" transform="translate(610,185)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📐</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">产品定义</text>
         </g>
         <!-- Domain: 流程角色 -->
-        <g class="node r3" data-ring="3" data-order="9" data-emoji="🔩" data-name="流程设计专家" data-desc="执行流程编排与角色协作设计" data-domain="process" transform="translate(650,230)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔩</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">流程设计</text>
+        <g class="node r3" data-ring="3" data-order="9" data-emoji="🔩" data-name="流程设计专家" data-desc="执行流程编排与角色协作设计" data-domain="process" transform="translate(700,225)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔩</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">流程设计</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="10" data-emoji="🧬" data-name="角色创造专家" data-desc="AI 专家角色创造与团队组建" data-domain="process" transform="translate(700,285)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧬</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">角色创造</text>
+        <g class="node r3" data-ring="3" data-order="10" data-emoji="🧬" data-name="角色创造专家" data-desc="AI 专家角色创造与团队组建" data-domain="process" transform="translate(755,285)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🧬</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">角色创造</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="11" data-emoji="🔧" data-name="Skill 开发专家" data-desc="OpenClaw Skill 开发与发布" data-domain="process" transform="translate(730,350)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔧</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">Skill开发</text>
+        <g class="node r3" data-ring="3" data-order="11" data-emoji="🔧" data-name="Skill 开发专家" data-desc="OpenClaw Skill 开发与发布" data-domain="process" transform="translate(785,355)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔧</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">Skill开发</text>
         </g>
         <!-- Domain: 技术调研 -->
-        <g class="node r3" data-ring="3" data-order="12" data-emoji="🔬" data-name="技术调研专家" data-desc="技术选型、可行性评估、方案调研" data-domain="research" transform="translate(740,420)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔬</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术调研</text>
+        <g class="node r3" data-ring="3" data-order="12" data-emoji="🔬" data-name="技术调研专家" data-desc="技术选型、可行性评估、方案调研" data-domain="research" transform="translate(795,430)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔬</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">技术调研</text>
         </g>
         <!-- Domain: 设计 -->
-        <g class="node r3" data-ring="3" data-order="13" data-emoji="🎨" data-name="体验设计专家" data-desc="信息架构、任务流程、交互模式" data-domain="design" transform="translate(735,495)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">体验设计</text>
+        <g class="node r3" data-ring="3" data-order="13" data-emoji="🎨" data-name="体验设计专家" data-desc="信息架构、任务流程、交互模式" data-domain="design" transform="translate(790,510)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🎨</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">体验设计</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="14" data-emoji="🎨" data-name="视觉设计专家" data-desc="品牌视觉、配色、排印、设计 Token" data-domain="design" transform="translate(720,565)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">视觉设计</text>
+        <g class="node r3" data-ring="3" data-order="14" data-emoji="🎨" data-name="视觉设计专家" data-desc="品牌视觉、配色、排印、设计 Token" data-domain="design" transform="translate(770,585)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🎨</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">视觉设计</text>
         </g>
         <!-- Domain: 架构数据 -->
-        <g class="node r3" data-ring="3" data-order="15" data-emoji="🏛️" data-name="技术架构专家" data-desc="系统分层、模块边界、技术选型" data-domain="arch" transform="translate(685,630)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🏛️</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术架构</text>
+        <g class="node r3" data-ring="3" data-order="15" data-emoji="🏛️" data-name="技术架构专家" data-desc="系统分层、模块边界、技术选型" data-domain="arch" transform="translate(730,655)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🏛️</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">技术架构</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="16" data-emoji="🗄️" data-name="数据库设计专家" data-desc="数据建模、表结构、字段字典" data-domain="arch" transform="translate(630,690)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🗄️</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据库设计</text>
+        <g class="node r3" data-ring="3" data-order="16" data-emoji="🗄️" data-name="数据库设计专家" data-desc="数据建模、表结构、字段字典" data-domain="arch" transform="translate(670,720)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🗄️</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">数据库设计</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="17" data-emoji="📜" data-name="API 设计专家" data-desc="接口契约、错误模型、Mock 输出" data-domain="arch" transform="translate(565,730)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📜</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">API设计</text>
+        <g class="node r3" data-ring="3" data-order="17" data-emoji="📜" data-name="API 设计专家" data-desc="接口契约、错误模型、Mock 输出" data-domain="arch" transform="translate(595,770)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📜</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">API设计</text>
         </g>
         <!-- Domain: 开发 -->
-        <g class="node r3" data-ring="3" data-order="18" data-emoji="⚙️" data-name="后端开发专家" data-desc="Controller/Service/Repository 全栈实现" data-domain="dev" transform="translate(490,755)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">⚙️</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">后端开发</text>
+        <g class="node r3" data-ring="3" data-order="18" data-emoji="⚙️" data-name="后端开发专家" data-desc="Controller/Service/Repository 全栈实现" data-domain="dev" transform="translate(510,800)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">⚙️</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">后端开发</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="19" data-emoji="🖥️" data-name="前端开发专家" data-desc="组件、状态管理、全态处理" data-domain="dev" transform="translate(405,760)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🖥️</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">前端开发</text>
+        <g class="node r3" data-ring="3" data-order="19" data-emoji="🖥️" data-name="前端开发专家" data-desc="组件、状态管理、全态处理" data-domain="dev" transform="translate(420,805)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🖥️</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">前端开发</text>
         </g>
         <!-- Domain: 质量 -->
-        <g class="node r3" data-ring="3" data-order="20" data-emoji="🔍" data-name="代码审查专家" data-desc="代码质量、架构评审、安全审计" data-domain="quality" transform="translate(325,745)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">代码审查</text>
+        <g class="node r3" data-ring="3" data-order="20" data-emoji="🔍" data-name="代码审查专家" data-desc="代码质量、架构评审、安全审计" data-domain="quality" transform="translate(335,790)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔍</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">代码审查</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="21" data-emoji="🔗" data-name="联调集成专家" data-desc="跨模块契约对齐与端到端验证" data-domain="quality" transform="translate(255,710)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔗</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">联调集成</text>
+        <g class="node r3" data-ring="3" data-order="21" data-emoji="🔗" data-name="联调集成专家" data-desc="跨模块契约对齐与端到端验证" data-domain="quality" transform="translate(260,750)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔗</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">联调集成</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="22" data-emoji="🧪" data-name="测试专家" data-desc="测试策略、用例设计、发布就绪评估" data-domain="quality" transform="translate(200,650)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧪</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">测试</text>
+        <g class="node r3" data-ring="3" data-order="22" data-emoji="🧪" data-name="测试专家" data-desc="测试策略、用例设计、发布就绪评估" data-domain="quality" transform="translate(200,685)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🧪</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">测试</text>
         </g>
         <!-- Domain: 交付 -->
-        <g class="node r3" data-ring="3" data-order="23" data-emoji="🚀" data-name="部署运维专家" data-desc="发布保障、监控告警、回滚方案" data-domain="delivery" transform="translate(165,580)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🚀</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">部署运维</text>
+        <g class="node r3" data-ring="3" data-order="23" data-emoji="🚀" data-name="部署运维专家" data-desc="发布保障、监控告警、回滚方案" data-domain="delivery" transform="translate(160,605)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🚀</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">部署运维</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="24" data-emoji="📦" data-name="发布策略专家" data-desc="灰度发布、用户培训、变更管理" data-domain="delivery" transform="translate(160,505)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📦</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">发布策略</text>
+        <g class="node r3" data-ring="3" data-order="24" data-emoji="📦" data-name="发布策略专家" data-desc="灰度发布、用户培训、变更管理" data-domain="delivery" transform="translate(155,520)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📦</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">发布策略</text>
         </g>
         <!-- Domain: 运营迭代 -->
-        <g class="node r3" data-ring="3" data-order="25" data-emoji="📈" data-name="增长运营专家" data-desc="用户获取、激活、留存策略" data-domain="ops" transform="translate(165,425)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">增长运营</text>
+        <g class="node r3" data-ring="3" data-order="25" data-emoji="📈" data-name="增长运营专家" data-desc="用户获取、激活、留存策略" data-domain="ops" transform="translate(160,435)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📈</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">增长运营</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="26" data-emoji="📈" data-name="数据分析专家" data-desc="指标体系、A/B 测试、数据叙事" data-domain="ops" transform="translate(175,350)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
-          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据分析</text>
+        <g class="node r3" data-ring="3" data-order="26" data-emoji="📈" data-name="数据分析专家" data-desc="指标体系、A/B 测试、数据叙事" data-domain="ops" transform="translate(170,350)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📈</text>
+          <text text-anchor="middle" y="34" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">数据分析</text>
         </g>
-        <g class="node r3" data-ring="3" data-order="27" data-emoji="🔄" data-name="迭代优化专家" data-desc="优先级裁决、MVP 拆解、止损判断" data-domain="ops" transform="translate(200,275)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔄</text>
-          <text text-anchor="end" x="-24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">迭代优化</text>
+        <g class="node r3" data-ring="3" data-order="27" data-emoji="🔄" data-name="迭代优化专家" data-desc="优先级裁决、MVP 拆解、止损判断" data-domain="ops" transform="translate(195,270)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🔄</text>
+          <text text-anchor="end" x="-26" y="4" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">迭代优化</text>
         </g>
         <!-- Domain: 领域专家 -->
-        <g class="node r3" data-ring="3" data-order="28" data-emoji="📚" data-name="教育领域专家" data-desc="K12 课标、教学设计、学习科学" data-domain="domain" transform="translate(155,330)">
-          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
-          <text text-anchor="middle" dominant-baseline="central" font-size="18">📚</text>
-          <text text-anchor="start" x="24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">教育领域</text>
+        <g class="node r3" data-ring="3" data-order="28" data-emoji="📚" data-name="教育领域专家" data-desc="K12 课标、教学设计、学习科学" data-domain="domain" transform="translate(150,330)">
+          <circle r="22" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.1)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📚</text>
+          <text text-anchor="start" x="26" y="4" font-size="11" fill="rgba(232,232,232,0.1)" font-weight="500" font-family="var(--font-sans)">教育领域</text>
         </g>
       </g>
     </svg>
@@ -1164,59 +1267,91 @@ section#vision .reveal-text .statement {
   <div class="timeline" role="list" aria-label="制作过程时间线">
     <article class="timeline-step" role="listitem" data-step="0">
       <div class="step-dot"></div>
-      <div class="step-emoji">👤</div>
-      <div class="step-role">老板</div>
-      <div class="step-action">写了一份设计方案</div>
-      <div class="step-meta">[待回填] · design-v3.md</div>
+      <div class="step-content">
+        <div class="step-emoji">👤</div>
+        <div class="step-text">
+          <div class="step-role">老板</div>
+          <div class="step-action">写了一份设计方案</div>
+          <div class="step-meta">[待回填] · design-v3.md</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="1">
       <div class="step-dot"></div>
-      <div class="step-emoji">📝</div>
-      <div class="step-role">技术文档专家</div>
-      <div class="step-action">策划全站内容文案</div>
-      <div class="step-meta">[待回填] · content-v3.md</div>
+      <div class="step-content">
+        <div class="step-emoji">📝</div>
+        <div class="step-text">
+          <div class="step-role">技术文档专家</div>
+          <div class="step-action">策划全站内容文案</div>
+          <div class="step-meta">[待回填] · content-v3.md</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="2">
       <div class="step-dot"></div>
-      <div class="step-emoji">🎨</div>
-      <div class="step-role">体验设计专家</div>
-      <div class="step-action">设计信息架构和交互体验</div>
-      <div class="step-meta">[待回填] · experience-design-v3.md</div>
+      <div class="step-content">
+        <div class="step-emoji">🎨</div>
+        <div class="step-text">
+          <div class="step-role">体验设计专家</div>
+          <div class="step-action">设计信息架构和交互体验</div>
+          <div class="step-meta">[待回填] · experience-design-v3.md</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="3">
       <div class="step-dot"></div>
-      <div class="step-emoji">🎨</div>
-      <div class="step-role">视觉设计专家</div>
-      <div class="step-action">视觉规范与设计 Token</div>
-      <div class="step-meta">[待回填] · visual-spec-v3.md</div>
+      <div class="step-content">
+        <div class="step-emoji">🎨</div>
+        <div class="step-text">
+          <div class="step-role">视觉设计专家</div>
+          <div class="step-action">视觉规范与设计 Token</div>
+          <div class="step-meta">[待回填] · visual-spec-v3.md</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="4">
       <div class="step-dot"></div>
-      <div class="step-emoji">🖥️</div>
-      <div class="step-role">前端开发专家</div>
-      <div class="step-action">实现完整页面</div>
-      <div class="step-meta">[待回填] · index.html</div>
+      <div class="step-content">
+        <div class="step-emoji">🖥️</div>
+        <div class="step-text">
+          <div class="step-role">前端开发专家</div>
+          <div class="step-action">实现完整页面</div>
+          <div class="step-meta">[待回填] · index.html</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="5">
       <div class="step-dot"></div>
-      <div class="step-emoji">🔍</div>
-      <div class="step-role">代码审查专家</div>
-      <div class="step-action">代码质量审查</div>
-      <div class="step-meta">[待回填] · REVIEW.md</div>
+      <div class="step-content">
+        <div class="step-emoji">🔍</div>
+        <div class="step-text">
+          <div class="step-role">代码审查专家</div>
+          <div class="step-action">代码质量审查</div>
+          <div class="step-meta">[待回填] · REVIEW.md</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="6">
       <div class="step-dot"></div>
-      <div class="step-emoji">🚀</div>
-      <div class="step-role">部署运维专家</div>
-      <div class="step-action">容器化部署 + GitHub</div>
-      <div class="step-meta">[待回填] · Dockerfile</div>
+      <div class="step-content">
+        <div class="step-emoji">🚀</div>
+        <div class="step-text">
+          <div class="step-role">部署运维专家</div>
+          <div class="step-action">容器化部署 + GitHub</div>
+          <div class="step-meta">[待回填] · Dockerfile</div>
+        </div>
+      </div>
     </article>
     <article class="timeline-step" role="listitem" data-step="7">
       <div class="step-dot"></div>
-      <div class="step-emoji">🏗️</div>
-      <div class="step-role">项目管理专家</div>
-      <div class="step-action">全程协调 8 位专家</div>
-      <div class="step-meta">[待回填]</div>
+      <div class="step-content">
+        <div class="step-emoji">🏗️</div>
+        <div class="step-text">
+          <div class="step-role">项目管理专家</div>
+          <div class="step-action">全程协调 8 位专家</div>
+          <div class="step-meta">[待回填]</div>
+        </div>
+      </div>
     </article>
   </div>
 
@@ -1362,14 +1497,14 @@ section#vision .reveal-text .statement {
 <!-- ═══════════════ BLOCK 6: The Bigger Picture ═══════════════ -->
 <section id="vision" aria-label="更大的图景">
   <div class="vision-content">
-    <p class="vision-para">AI 不缺能力。</p>
-    <p class="vision-para">GPT-4 能写代码。Claude 能做分析。<br>Gemini 能搜索。Midjourney 能设计。</p>
-    <p class="vision-para">但它们是散兵。<br>散兵赢不了战争。</p>
+    <p class="vision-para vp-setup">AI 不缺能力。</p>
+    <p class="vision-para vp-setup">GPT-4 能写代码。Claude 能做分析。<br>Gemini 能搜索。Midjourney 能设计。</p>
+    <p class="vision-para vp-turn">但它们是散兵。<br>散兵赢不了战争。</p>
     <div class="vision-divider"></div>
-    <p class="vision-para">2026 年，AI 行业的真正问题不是<br>"模型够不够强"，<br>而是<br>"怎么把强大的模型组织成可靠的生产力"。</p>
-    <p class="vision-para">答案不是更好的 Prompt。<br>答案不是更大的上下文窗口。<br><span style="color: #a5b4fc; font-weight: 700;">答案是——组织。</span></p>
-    <p class="vision-para">给 AI 角色。给 AI 标准。给 AI 记忆。<br>给 AI 纪律。给 AI 协作方式。给 AI 进化机制。</p>
-    <p class="vision-para">像管理人类团队一样管理 AI 团队。<br>然后你会发现：<br>一个人 + AI 组织 ≈ 一个完整的产品公司。</p>
+    <p class="vision-para vp-setup">2026 年，AI 行业的真正问题不是<br>"模型够不够强"，<br>而是<br>"怎么把强大的模型组织成可靠的生产力"。</p>
+    <p class="vision-para vp-climax">答案不是更好的 Prompt。<br>答案不是更大的上下文窗口。<br><span class="vision-answer" style="color: #a5b4fc; font-weight: 700;">答案是——组织。</span></p>
+    <p class="vision-para vp-setup">给 AI 角色。给 AI 标准。给 AI 记忆。<br>给 AI 纪律。给 AI 协作方式。给 AI 进化机制。</p>
+    <p class="vision-para vp-setup">像管理人类团队一样管理 AI 团队。<br>然后你会发现：<br>一个人 + AI 组织 ≈ 一个完整的产品公司。</p>
     <div class="vision-divider"></div>
     <p class="vision-para vision-final" style="font-weight: bold;">这不是未来。<br>从 2026 年 3 月 10 日开始，这就是我们每天的日常。</p>
   </div>
@@ -1378,9 +1513,10 @@ section#vision .reveal-text .statement {
 <!-- ═══════════════ BLOCK 7: The Call ═══════════════ -->
 <section id="cta" aria-label="行动号召">
   <h2 class="cta-title fade-in">想看看这个组织是怎么运转的？</h2>
+  <p class="cta-subtitle fade-in">所有源码、角色设定、技能代码，全部公开。</p>
   <div class="cta-buttons fade-in">
-    <a href="mailto:shibiao1998@gmail.com" class="btn-primary" aria-label="发送邮件联系我们">跟我们聊聊</a>
-    <a href="https://github.com/ndhy-ai-team" class="btn-ghost" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 上关注我们">在 GitHub 上关注</a>
+    <a href="mailto:shibiao1998@gmail.com" class="btn-primary" target="_blank" aria-label="发送邮件联系我们">跟我们聊聊</a>
+    <a href="https://github.com/shibiao1998-dot/ndhy-workspace" class="btn-ghost" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 上关注我们">在 GitHub 上关注</a>
   </div>
 </section>
 
@@ -1487,7 +1623,7 @@ section#vision .reveal-text .statement {
   var topoAnimated = false;
   var tooltipEl = document.getElementById('tooltip');
   var activeTooltipNode = null;
-  var CX = 450, CY = 480; // SVG center
+  var CX = 480, CY = 500; // SVG center
 
   // Build spoke lines dynamically
   function buildSpokes() {
@@ -1517,7 +1653,7 @@ section#vision .reveal-text .statement {
         var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', best.x); line.setAttribute('y1', best.y);
         line.setAttribute('x2', p3.x); line.setAttribute('y2', p3.y);
-        line.setAttribute('stroke', 'rgba(129,140,248,0.12)');
+        line.setAttribute('stroke', 'rgba(129,140,248,0.2)');
         line.setAttribute('stroke-width', '1');
         spokesG.appendChild(line);
       }
@@ -1529,7 +1665,7 @@ section#vision .reveal-text .statement {
       var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', CX); line.setAttribute('y1', CY);
       line.setAttribute('x2', p2.x); line.setAttribute('y2', p2.y);
-      line.setAttribute('stroke', 'rgba(129,140,248,0.15)');
+      line.setAttribute('stroke', 'rgba(129,140,248,0.25)');
       line.setAttribute('stroke-width', '1.5');
       spokesG.appendChild(line);
     });
@@ -1561,20 +1697,27 @@ section#vision .reveal-text .statement {
     var isLeader = node.classList.contains('leader');
 
     if (isBoss) {
-      circle.setAttribute('fill', '#fbbf24');
+      circle.setAttribute('fill', 'rgba(251,191,36,0.2)');
       circle.setAttribute('stroke', '#fbbf24');
+      circle.setAttribute('stroke-width', '2');
       node.style.filter = 'url(#glow-gold)';
-    } else {
-      circle.setAttribute('fill', '#818cf8');
+    } else if (isLeader) {
+      circle.setAttribute('fill', 'rgba(129,140,248,0.15)');
       circle.setAttribute('stroke', '#818cf8');
-      node.style.filter = isLeader ? 'url(#glow-lg)' : 'url(#glow-md)';
+      circle.setAttribute('stroke-width', '2');
+      node.style.filter = 'url(#glow-lg)';
+    } else {
+      circle.setAttribute('fill', 'rgba(129,140,248,0.12)');
+      circle.setAttribute('stroke', '#818cf8');
+      circle.setAttribute('stroke-width', '1.5');
+      node.style.filter = 'url(#glow-md)';
     }
 
     // Light up label text
     var labels = node.querySelectorAll('text');
     for (var i = 1; i < labels.length; i++) {
       if (isBoss) { labels[i].setAttribute('fill', 'rgba(251,191,36,0.9)'); }
-      else { labels[i].setAttribute('fill', 'rgba(232,232,232,0.85)'); }
+      else { labels[i].setAttribute('fill', '#e0e0f0'); }
     }
 
     if (isLeader) { node.style.animation = 'pulse 3s ease-in-out infinite'; }
@@ -1784,6 +1927,13 @@ section#vision .reveal-text .statement {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function() { isMobile = window.innerWidth <= 600; }, 150);
   });
+
+  // ─── 隐藏待回填占位符 — 回填后删除此段 ───
+  document.querySelectorAll('*').forEach(function(el) {
+    if (el.children.length === 0 && el.textContent.indexOf('[待回填]') !== -1) {
+      el.style.display = 'none';
+    }
+  });
 })();
 </script>
 <!--
@@ -1882,6 +2032,21 @@ section#vision .reveal-text .statement {
   P0-4. 移动端拓扑图适配：
       - SVG viewBox 900×920 + width:100% 自动缩放
       - 所有节点在移动端可见可交互（tap 显示 tooltip）
+  ───────────────────────────────────────────
+  V3.5 Hero 区视觉冲击力升级 (2026-03-16)
+  ───────────────────────────────────────────
+  H1. 背景氛围层：#hook 添加双径向渐变（靛蓝 6%+3%），纯黑不再死板
+  H2. 日期行仪式感：monospace + accent 色 + 0.15em 字间距 + fs-small
+  H3. 关键句字号层级拉大：
+      - 日期 → fs-small (14px), monospace, 靛蓝色
+      - "一个人启动了一个项目。" → fs-h2 (20px)
+      - "6 天后，" → fs-h2 (20px)
+      - "他拥有了一个 28 人的产品团队。" → fs-h1 (28px), bold, bright
+      - "他没有招过一个人。" → fs-display (40px), #ffffff, 靛蓝下划线
+  H4. 下滚箭头升级：accent 色, 1.5rem, opacity 0.6
+  H5. 行间距加大：日期后 sp-8, 各行 sp-6, 强调句前 sp-12
+  H6. 打字机光标保持 accent 色（原代码已有）
+  H7. 强调句 ::after 下划线跟随 visible 状态渐显
   ═══════════════════════════════════════════
 -->
 </body>

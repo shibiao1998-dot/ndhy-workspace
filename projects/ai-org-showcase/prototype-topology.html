@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 组织拓扑图 — 原型</title>
+<style>
+/* ═══════════════════════════════════════════
+   Design Tokens (subset from visual-spec-v3)
+   ═══════════════════════════════════════════ */
+:root {
+  --color-bg: #080810;
+  --color-bg-surface: #1a1a2e;
+  --color-text: #e0e0e0;
+  --color-text-bright: #f5f5f5;
+  --color-text-muted: #b0b0b0;
+  --color-text-dim: #666;
+  --color-accent: #818cf8;
+  --color-accent-dim: #6366f1;
+  --color-accent-glow: rgba(129,140,248,0.35);
+  --color-border: #3a3a55;
+  --font-sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --font-mono: "SF Mono","Fira Code",Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:var(--font-sans);
+  background:var(--color-bg);
+  color:var(--color-text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════════
+   Container
+   ═══════════════════════════════════════════ */
+.topo-wrap{
+  width:100%;
+  max-width:900px;
+  padding:40px 20px 60px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* ═══════════════════════════════════════════
+   SVG Canvas
+   ═══════════════════════════════════════════ */
+.topo-svg{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* ═══════════════════════════════════════════
+   Tooltip
+   ═══════════════════════════════════════════ */
+.tooltip{
+  position:fixed;
+  background:var(--color-bg-surface);
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  padding:8px 14px;
+  font-size:13px;
+  color:var(--color-text);
+  pointer-events:none;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .15s ease-out,transform .15s ease-out;
+  z-index:100;
+  max-width:300px;
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+.tooltip.active{opacity:1;transform:translateY(0)}
+.tooltip .t-emoji{margin-right:4px}
+.tooltip .t-name{font-weight:600;color:var(--color-text-bright)}
+.tooltip .t-desc{color:var(--color-text-muted);margin-left:6px;font-size:12px}
+
+/* ═══════════════════════════════════════════
+   Bottom Text
+   ═══════════════════════════════════════════ */
+.reveal-text{
+  text-align:center;
+  max-width:600px;
+  margin-top:48px;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .8s ease-out,transform .8s ease-out;
+}
+.reveal-text.visible{opacity:1;transform:translateY(0)}
+.reveal-text .statement{
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--color-text-bright);
+  margin-bottom:12px;
+  line-height:1.4;
+}
+.reveal-text .sub{
+  font-size:1rem;
+  color:var(--color-text-muted);
+  line-height:1.6;
+}
+
+/* ═══════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════ */
+@keyframes pulse{
+  0%,100%{filter:url(#glow-lg)}
+  50%{filter:url(#glow-xl)}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-3px)}
+}
+
+/* ═══════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════ */
+@media(max-width:600px){
+  .topo-wrap{padding:20px 10px 40px}
+  .reveal-text .statement{font-size:1.15rem}
+  .reveal-text .sub{font-size:0.875rem}
+  .reveal-text{margin-top:32px}
+}
+</style>
+</head>
+<body>
+
+<div class="topo-wrap">
+  <svg class="topo-svg" viewBox="0 0 900 920" role="img" aria-label="NDHY AI 组织拓扑图：1 个人类 + 28 个 AI 专家的同心环组织网络">
+    <defs>
+      <!-- Glow filters -->
+      <filter id="glow-sm" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-md" x="-100%" y="-100%" width="300%" height="300%">
+        <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-lg" x="-150%" y="-150%" width="400%" height="400%">
+        <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-xl" x="-150%" y="-150%" width="400%" height="400%">
+        <feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-gold" x="-150%" y="-150%" width="400%" height="400%">
+        <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- Center ambient glow -->
+      <radialGradient id="ambient" cx="50%" cy="52%" r="35%">
+        <stop offset="0%" stop-color="rgba(129,140,248,0.08)"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+      <!-- Ring guides (decorative) -->
+      <radialGradient id="ring2grad" cx="50%" cy="52%" r="18%">
+        <stop offset="80%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="rgba(129,140,248,0.03)"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Ambient background glow -->
+    <rect x="0" y="0" width="900" height="920" fill="url(#ambient)"/>
+
+    <!-- Decorative ring guides (very subtle) -->
+    <circle cx="450" cy="480" r="130" fill="none" stroke="rgba(129,140,248,0.04)" stroke-width="1" stroke-dasharray="4 8"/>
+    <circle cx="450" cy="480" r="295" fill="none" stroke="rgba(129,140,248,0.03)" stroke-width="1" stroke-dasharray="4 8"/>
+
+    <!-- === LINES (rendered behind nodes) === -->
+    <g class="lines" opacity="0">
+      <!-- Boss → Leader -->
+      <line x1="450" y1="120" x2="450" y2="440" stroke="rgba(251,191,36,0.25)" stroke-width="2" stroke-dasharray="6 4"/>
+      <!-- Leader → Ring 2 -->
+      <line x1="450" y1="480" x2="330" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
+      <line x1="450" y1="480" x2="570" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
+    </g>
+    <!-- Ring 2 → Ring 3 connection lines (radial spokes) -->
+    <g class="spokes" opacity="0"></g>
+
+    <!-- === NODES === -->
+    <g id="nodes">
+      <!-- L0: Boss (Human) — top center, above everything -->
+      <g class="node boss" data-ring="0" data-order="29" data-emoji="👤" data-name="老板（人类）" data-desc="最终决策者" transform="translate(450,85)">
+        <circle r="34" fill="rgba(20,20,30,0.8)" stroke="rgba(251,191,36,0.2)" stroke-width="2"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="26" fill="#fff">👤</text>
+        <text text-anchor="middle" y="52" font-size="12" fill="rgba(251,191,36,0.15)" font-family="var(--font-sans)">老板</text>
+      </g>
+
+      <!-- L1: Leader — center of the ring system -->
+      <g class="node leader" data-ring="1" data-order="0" data-emoji="🧧" data-name="Leader" data-desc="组织运营，目标定义与调度决策" transform="translate(450,480)">
+        <circle r="30" fill="rgba(20,20,40,0.9)" stroke="rgba(129,140,248,0.15)" stroke-width="2"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="24" fill="#fff">🧧</text>
+        <text text-anchor="middle" y="46" font-size="12" fill="rgba(129,140,248,0.15)" font-family="var(--font-sans)">Leader</text>
+      </g>
+
+      <!-- L2: Ring 2 (PM + Doc) — close orbit, 130px from center -->
+      <g class="node r2" data-ring="2" data-order="1" data-emoji="🏗️" data-name="项目管理专家" data-desc="项目执行调度，指令包组装与上下文管理" transform="translate(330,430)">
+        <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="20">🏗️</text>
+        <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">项目管理</text>
+      </g>
+      <g class="node r2" data-ring="2" data-order="2" data-emoji="📝" data-name="技术文档专家" data-desc="把混乱信息变成清晰知识体系" transform="translate(570,430)">
+        <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="20">📝</text>
+        <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">技术文档</text>
+      </g>
+
+      <!-- L3: Ring 3 — outer orbit, 295px from center (450,480) -->
+      <!-- Arranged in arc segments by domain. 25 nodes, ~14.4° apart -->
+
+      <!-- Domain 1: 需求洞察 (4 nodes) — top-left arc -->
+      <g class="node r3" data-ring="3" data-order="3" data-emoji="🎯" data-name="需求分析专家" data-desc="将模糊想法变为结构化需求" data-domain="insight" transform="translate(215,240)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🎯</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">需求分析</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="4" data-emoji="🔍" data-name="用户研究专家" data-desc="用户画像、旅程地图、需求洞察" data-domain="insight" transform="translate(250,225)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">用户研究</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="5" data-emoji="📊" data-name="市场评估专家" data-desc="市场规模、竞争格局、商业可行性" data-domain="insight" transform="translate(320,195)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📊</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">市场评估</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="6" data-emoji="🔭" data-name="竞品调研专家" data-desc="单个竞品深度拆解与策略分析" data-domain="insight" transform="translate(400,185)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔭</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">竞品调研</text>
+      </g>
+
+      <!-- Domain 2: 战略定义 (2 nodes) — top arc -->
+      <g class="node r3" data-ring="3" data-order="7" data-emoji="🧭" data-name="战略定位专家" data-desc="战略方向选择与竞争定位" data-domain="strategy" transform="translate(490,185)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🧭</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">战略定位</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="8" data-emoji="📐" data-name="产品定义专家" data-desc="产品形态、功能范围、MVP 界定" data-domain="strategy" transform="translate(575,195)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📐</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">产品定义</text>
+      </g>
+
+      <!-- Domain 3: 流程角色 (3 nodes) — top-right arc -->
+      <g class="node r3" data-ring="3" data-order="9" data-emoji="🔩" data-name="流程设计专家" data-desc="执行流程编排与角色协作设计" data-domain="process" transform="translate(650,230)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔩</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">流程设计</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="10" data-emoji="🧬" data-name="角色创造专家" data-desc="AI 专家角色创造与团队组建" data-domain="process" transform="translate(700,285)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🧬</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">角色创造</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="11" data-emoji="🔧" data-name="Skill 开发专家" data-desc="OpenClaw Skill 开发与发布" data-domain="process" transform="translate(730,350)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔧</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">Skill开发</text>
+      </g>
+
+      <!-- Domain 4: 文档调研 (1 node — 技术文档 is in R2, add 技术调研) — right arc -->
+      <g class="node r3" data-ring="3" data-order="12" data-emoji="🔬" data-name="技术调研专家" data-desc="技术选型、可行性评估、方案调研" data-domain="research" transform="translate(740,420)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔬</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术调研</text>
+      </g>
+
+      <!-- Domain 5: 设计 (2 nodes) — right arc -->
+      <g class="node r3" data-ring="3" data-order="13" data-emoji="🎨" data-name="体验设计专家" data-desc="信息架构、任务流程、交互模式" data-domain="design" transform="translate(735,495)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">体验设计</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="14" data-emoji="🎨" data-name="视觉设计专家" data-desc="品牌视觉、配色、排印、设计 Token" data-domain="design" transform="translate(720,565)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">视觉设计</text>
+      </g>
+
+      <!-- Domain 6: 架构数据 (3 nodes) — bottom-right arc -->
+      <g class="node r3" data-ring="3" data-order="15" data-emoji="🏛️" data-name="技术架构专家" data-desc="系统分层、模块边界、技术选型" data-domain="arch" transform="translate(685,630)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🏛️</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术架构</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="16" data-emoji="🗄️" data-name="数据库设计专家" data-desc="数据建模、表结构、字段字典" data-domain="arch" transform="translate(630,690)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🗄️</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据库设计</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="17" data-emoji="📜" data-name="API 设计专家" data-desc="接口契约、错误模型、Mock 输出" data-domain="arch" transform="translate(565,730)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📜</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">API设计</text>
+      </g>
+
+      <!-- Domain 7: 开发 (2 nodes) — bottom arc -->
+      <g class="node r3" data-ring="3" data-order="18" data-emoji="⚙️" data-name="后端开发专家" data-desc="Controller/Service/Repository 全栈实现" data-domain="dev" transform="translate(490,755)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">⚙️</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">后端开发</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="19" data-emoji="🖥️" data-name="前端开发专家" data-desc="组件、状态管理、全态处理" data-domain="dev" transform="translate(405,760)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🖥️</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">前端开发</text>
+      </g>
+
+      <!-- Domain 8: 质量 (3 nodes) — bottom-left arc -->
+      <g class="node r3" data-ring="3" data-order="20" data-emoji="🔍" data-name="代码审查专家" data-desc="代码质量、架构评审、安全审计" data-domain="quality" transform="translate(325,745)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">代码审查</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="21" data-emoji="🔗" data-name="联调集成专家" data-desc="跨模块契约对齐与端到端验证" data-domain="quality" transform="translate(255,710)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔗</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">联调集成</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="22" data-emoji="🧪" data-name="测试专家" data-desc="测试策略、用例设计、发布就绪评估" data-domain="quality" transform="translate(200,650)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🧪</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">测试</text>
+      </g>
+
+      <!-- Domain 9: 交付 (2 nodes) — left arc -->
+      <g class="node r3" data-ring="3" data-order="23" data-emoji="🚀" data-name="部署运维专家" data-desc="发布保障、监控告警、回滚方案" data-domain="delivery" transform="translate(165,580)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🚀</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">部署运维</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="24" data-emoji="📦" data-name="发布策略专家" data-desc="灰度发布、用户培训、变更管理" data-domain="delivery" transform="translate(160,505)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📦</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">发布策略</text>
+      </g>
+
+      <!-- Domain 10: 运营迭代 (3 nodes) — left arc -->
+      <g class="node r3" data-ring="3" data-order="25" data-emoji="📈" data-name="增长运营专家" data-desc="用户获取、激活、留存策略" data-domain="ops" transform="translate(165,425)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">增长运营</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="26" data-emoji="📈" data-name="数据分析专家" data-desc="指标体系、A/B 测试、数据叙事" data-domain="ops" transform="translate(175,350)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
+        <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据分析</text>
+      </g>
+      <g class="node r3" data-ring="3" data-order="27" data-emoji="🔄" data-name="迭代优化专家" data-desc="优先级裁决、MVP 拆解、止损判断" data-domain="ops" transform="translate(200,275)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">🔄</text>
+        <text text-anchor="end" x="-24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">迭代优化</text>
+      </g>
+
+      <!-- Domain 11: 领域专家 (1 node) — top-left, between ops and insight -->
+      <g class="node r3" data-ring="3" data-order="28" data-emoji="📚" data-name="教育领域专家" data-desc="K12 课标、教学设计、学习科学" data-domain="domain" transform="translate(155,330)">
+        <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+        <text text-anchor="middle" dominant-baseline="central" font-size="18">📚</text>
+        <text text-anchor="start" x="24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">教育领域</text>
+      </g>
+    </g>
+  </svg>
+
+  <div class="reveal-text" id="revealText">
+    <p class="statement">一个人类。28 个 AI 专家。一个完整的产品组织。</p>
+    <p class="sub">不是工具。不是框架。不是 Prompt 模板。<br>是一支有灵魂、有纪律、有记忆、会进化的 AI 组织。</p>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip" role="tooltip" aria-hidden="true">
+  <span class="t-emoji"></span><span class="t-name"></span><span class="t-desc"></span>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var CX=450,CY=480; // center of ring system in SVG coords
+
+  // ─── Build connection lines dynamically ───
+  var svg=document.querySelector('.topo-svg');
+  var linesG=svg.querySelector('.lines');
+  var spokesG=svg.querySelector('.spokes');
+  var nodes=Array.from(document.querySelectorAll('.node'));
+
+  // Get node center in SVG coords from transform
+  function getPos(node){
+    var t=node.getAttribute('transform');
+    var m=t.match(/translate\(([^,]+),([^)]+)\)/);
+    return m?{x:parseFloat(m[1]),y:parseFloat(m[2])}:{x:0,y:0};
+  }
+
+  // Draw spoke lines from Ring2 to Ring3 nodes
+  var r2Nodes=nodes.filter(function(n){return n.dataset.ring==='2'});
+  var r3Nodes=nodes.filter(function(n){return n.dataset.ring==='3'});
+  // Simple: connect each R3 to nearest R2
+  r3Nodes.forEach(function(r3){
+    var p3=getPos(r3);
+    var best=null,bestD=Infinity;
+    r2Nodes.forEach(function(r2){
+      var p2=getPos(r2);
+      var d=Math.hypot(p3.x-p2.x,p3.y-p2.y);
+      if(d<bestD){bestD=d;best=p2}
+    });
+    if(best){
+      var line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',best.x);line.setAttribute('y1',best.y);
+      line.setAttribute('x2',p3.x);line.setAttribute('y2',p3.y);
+      line.setAttribute('stroke','rgba(129,140,248,0.12)');
+      line.setAttribute('stroke-width','1');
+      spokesG.appendChild(line);
+    }
+  });
+  // Also draw Leader → R2 spoke group lines
+  r2Nodes.forEach(function(r2){
+    var p2=getPos(r2);
+    var line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',CX);line.setAttribute('y1',CY);
+    line.setAttribute('x2',p2.x);line.setAttribute('y2',p2.y);
+    line.setAttribute('stroke','rgba(129,140,248,0.15)');
+    line.setAttribute('stroke-width','1.5');
+    spokesG.appendChild(line);
+  });
+
+  // ─── Animation sequence ───
+  nodes.sort(function(a,b){return parseInt(a.dataset.order)-parseInt(b.dataset.order)});
+
+  var PHASE_DELAY=400;   // after page load
+  var NODE_INTERVAL=70;  // ms between each node
+  var GROUP_PAUSE=150;   // extra pause between domain groups
+  var LINE_DELAY=0;      // will be calculated
+
+  function litNode(node){
+    var circle=node.querySelector('circle');
+    if(!circle)return;
+    var isBoss=node.classList.contains('boss');
+    var isLeader=node.classList.contains('leader');
+
+    // Light up circle
+    if(isBoss){
+      circle.setAttribute('fill','#fbbf24');
+      circle.setAttribute('stroke','#fbbf24');
+      node.style.filter='url(#glow-gold)';
+    }else{
+      circle.setAttribute('fill','#818cf8');
+      circle.setAttribute('stroke','#818cf8');
+      node.style.filter=isLeader?'url(#glow-lg)':'url(#glow-md)';
+    }
+
+    // Light up label text
+    var labels=node.querySelectorAll('text:not(:first-of-type)');
+    labels.forEach(function(t){
+      if(isBoss){t.setAttribute('fill','rgba(251,191,36,0.9)')}
+      else{t.setAttribute('fill','rgba(232,232,232,0.85)')}
+    });
+
+    // Leader gets pulse
+    if(isLeader){
+      node.style.animation='pulse 3s ease-in-out infinite';
+    }
+  }
+
+  // Sequence: Leader first, then R2, then R3 by domain groups, Boss last
+  var leaderNode=nodes.find(function(n){return n.classList.contains('leader')});
+  var bossNode=nodes.find(function(n){return n.classList.contains('boss')});
+  var r2Sorted=nodes.filter(function(n){return n.dataset.ring==='2'});
+  var r3Sorted=nodes.filter(function(n){return n.dataset.ring==='3'});
+
+  // Group R3 by domain
+  var domainOrder=['insight','strategy','process','research','design','arch','dev','quality','delivery','ops','domain'];
+  var r3Groups=[];
+  domainOrder.forEach(function(d){
+    var group=r3Sorted.filter(function(n){return n.dataset.domain===d});
+    if(group.length)r3Groups.push(group);
+  });
+
+  var t=PHASE_DELAY;
+
+  // Phase 1: Leader
+  setTimeout(function(){litNode(leaderNode)},t);
+  t+=500;
+
+  // Phase 2: R2 nodes
+  r2Sorted.forEach(function(n,i){
+    setTimeout(function(){litNode(n)},t+i*NODE_INTERVAL);
+  });
+  t+=r2Sorted.length*NODE_INTERVAL+300;
+
+  // Phase 3: R3 nodes by domain group
+  r3Groups.forEach(function(group){
+    group.forEach(function(n,i){
+      setTimeout(function(){litNode(n)},t+i*NODE_INTERVAL);
+    });
+    t+=group.length*NODE_INTERVAL+GROUP_PAUSE;
+  });
+
+  LINE_DELAY=t+200;
+
+  // Phase 4: Lines fade in
+  setTimeout(function(){
+    linesG.style.transition='opacity 1.2s ease-out';
+    linesG.style.opacity='1';
+    spokesG.style.transition='opacity 1.5s ease-out';
+    spokesG.style.opacity='1';
+  },LINE_DELAY);
+
+  // Phase 5: Boss node last (dramatic)
+  setTimeout(function(){litNode(bossNode)},LINE_DELAY+600);
+
+  // Phase 6: Bottom text
+  setTimeout(function(){
+    document.getElementById('revealText').classList.add('visible');
+  },LINE_DELAY+1400);
+
+  // ─── Tooltip ───
+  var tooltipEl=document.getElementById('tooltip');
+  var activeNode=null;
+  var isMobile=window.innerWidth<=600;
+
+  function showTip(node,e){
+    activeNode=node;
+    var d=node.dataset;
+    tooltipEl.querySelector('.t-emoji').textContent=d.emoji+' ';
+    tooltipEl.querySelector('.t-name').textContent=d.name;
+    tooltipEl.querySelector('.t-desc').textContent=' — '+d.desc;
+
+    // Position
+    var rect=node.getBoundingClientRect();
+    tooltipEl.style.left='-9999px';tooltipEl.style.top='-9999px';
+    tooltipEl.classList.add('active');
+    var tw=tooltipEl.offsetWidth;
+    tooltipEl.classList.remove('active');
+
+    var left=Math.max(8,Math.min(rect.left+rect.width/2-tw/2,window.innerWidth-tw-8));
+    var top=rect.top-48;
+    if(top<8)top=rect.bottom+12;
+
+    tooltipEl.style.left=left+'px';
+    tooltipEl.style.top=top+'px';
+    tooltipEl.classList.add('active');
+    tooltipEl.setAttribute('aria-hidden','false');
+  }
+  function hideTip(){
+    activeNode=null;
+    tooltipEl.classList.remove('active');
+    tooltipEl.setAttribute('aria-hidden','true');
+  }
+
+  nodes.forEach(function(node){
+    if(!isMobile){
+      node.style.cursor='pointer';
+      node.addEventListener('mouseenter',function(e){showTip(node,e)});
+      node.addEventListener('mouseleave',hideTip);
+    }else{
+      node.style.cursor='pointer';
+      node.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(activeNode===node){hideTip()}
+        else{showTip(node,e)}
+      });
+    }
+  });
+  if(isMobile){document.addEventListener('click',hideTip)}
+
+  // ─── Responsive ───
+  var rt;
+  window.addEventListener('resize',function(){
+    clearTimeout(rt);
+    rt=setTimeout(function(){isMobile=window.innerWidth<=600},150);
+  });
+})();
+</script>
+</body>
+</html>
