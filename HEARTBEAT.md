@@ -23,6 +23,16 @@
 - 记忆规则检查
 - 能力缺口记录
 
+## 4. 每日专家职级评估（凌晨 1:00 Cron 自动触发）
+收到"每日专家职级评估"系统事件时：
+- 读取当天 memory/YYYY-MM-DD.md
+- 用 sessions_list 查当天所有 subagent 会话
+- 加载 expert-leveling Skill（D:\code\openclaw-home\workspace\skills\expert-leveling\SKILL.md）
+- 评估维度：任务完成质量、技能使用率、产出复杂度、协作表现
+- 产出评估建议，不自动晋升（需老板批准）
+- 写入 memory/expert-eval-YYYY-MM-DD.md
+- 有值得晋升的专家 → 通知老板
+
 ## 关键铁律
 - **有任务派发时每 5 分钟巡查一次**——不是建议，是必须执行的铁律
 - 心跳频率（30 分钟）不够密集时，在收到心跳后手动设置 5 分钟计时器持续巡查
