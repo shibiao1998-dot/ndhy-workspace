@@ -290,6 +290,44 @@ function initS2ScrollTrigger(): () => void {
     0.92,
   );
 
+  // ── B7: Post-scroll persistent effects ──
+  // After scroll animation completes, add CSS-driven breathing/flowing effects
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top top',
+    end: '+=120vh',
+    onLeave: () => {
+      // Add breathing pulse to non-boss nodes
+      nonBossNodes.forEach((g) => {
+        g.style.animation = 'nodeBreathing 3s var(--ease-in-out) infinite';
+      });
+      // Leader halo (index 1 = L1)
+      if (nodeGroups[1]) {
+        nodeGroups[1].style.animation = 'leaderHalo 2.5s var(--ease-in-out) infinite';
+      }
+      // Boss halo (index 0 = L0)
+      if (bossNode) {
+        bossNode.style.animation = 'bossHalo 3s var(--ease-in-out) infinite';
+      }
+      // Flowing light on connection lines
+      connectionLines.forEach((line, i) => {
+        line.style.strokeDasharray = '10 10';
+        line.style.animation = `connectionFlow 2s linear infinite`;
+        line.style.animationDelay = `${i * 0.15}s`;
+      });
+    },
+    onEnterBack: () => {
+      // Remove persistent animations when scrolling back
+      nonBossNodes.forEach((g) => { g.style.animation = ''; });
+      if (nodeGroups[1]) nodeGroups[1].style.animation = '';
+      if (bossNode) bossNode.style.animation = '';
+      connectionLines.forEach((line) => {
+        line.style.animation = '';
+        line.style.strokeDasharray = '';
+      });
+    },
+  });
+
   return () => {
     tl.kill();
   };

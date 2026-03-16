@@ -14,7 +14,7 @@ export const scatteredAISteps: ComparisonItem[] = [
   { text: '不对……重新问一遍，加更多描述' },
   { text: '凑合能用了，没人审查，没人测试' },
   { text: '手动部署，忘记安全配置' },
-  { text: '上线了。下次改什么都要从头来。' },
+  { text: '上线了下次改什么都要从头来' },
 ];
 
 export const aiOrgSteps: ComparisonItem[] = [
@@ -28,7 +28,7 @@ export const aiOrgSteps: ComparisonItem[] = [
   { text: '前端开发专家实现（工程级标准）' },
   { text: '代码审查专家审查（系统性质量关卡）' },
   { text: '部署运维专家容器化部署（安全 + 监控）' },
-  { text: '上线。所有决策和过程都被记忆。下次更好。' },
+  { text: '上线所有决策和过程都被记忆下次更好' },
 ];
 
 export const scatteredAITags: ComparisonTag[] = [
