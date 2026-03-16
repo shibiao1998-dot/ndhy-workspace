@@ -125,10 +125,11 @@ function initS2ScrollTrigger(): () => void {
     line.style.opacity = '0';
   });
 
-  // ── Prepare nodes: set initial opacity ──
+  // ── Prepare nodes: set initial opacity + no glow ──
   // Nodes start at opacity 0.3 (visible but dim) — scroll animation brings them to 1
   nodeGroups.forEach((g) => {
     g.style.opacity = '0.3';
+    g.style.filter = 'drop-shadow(0 0 0px oklch(0.70 0.15 265 / 0))';
   });
 
   // ── Prepare bottom text ──
@@ -148,7 +149,7 @@ function initS2ScrollTrigger(): () => void {
   // ── Find the boss node (index 0 = L0) ──
   const bossNode = nodeGroups[0];
   if (bossNode) {
-    gsap.set(bossNode, { opacity: 0 });
+    gsap.set(bossNode, { opacity: 0, y: -30 });
   }
 
   // ── Build the main ScrollTrigger timeline ──
@@ -177,17 +178,18 @@ function initS2ScrollTrigger(): () => void {
   );
 
   // Phase 2: Node light-up sequence (10% → 70%)
-  // Non-boss nodes light up first (indices 1+), boss last
+  // Non-boss nodes light up first (indices 1+), boss last in climax
   const nonBossNodes = Array.from(nodeGroups).slice(1);
   tl.to(
     nonBossNodes,
     {
       opacity: 1,
-      duration: 0.5,
-      stagger: 0.015,
+      filter: 'drop-shadow(0 0 8px oklch(0.70 0.15 265 / 0.6))',
+      duration: 0.60,
+      stagger: 0.60 / Math.max(nonBossNodes.length, 1),
       ease: 'power2.out',
     },
-    0.1,
+    0.10,
   );
 
   // Phase 3: Climax burst sequence (70% → 100%)
@@ -308,81 +310,100 @@ function initS6ScrollTrigger(): () => void {
   );
   if (lines.length === 0) return () => {};
 
-  // Remove IO-driven anim classes — GSAP scrub will control these
-  lines.forEach((el) => {
-    el.classList.remove('anim-fade-up', 'anim-blur-reveal');
-    el.removeAttribute('data-delay');
-  });
+  // Use matchMedia: desktop gets scrub, mobile gets IO fallback
+  const ctx = gsap.context(() => {
+    ScrollTrigger.matchMedia({
+      // Desktop: GSAP scrub drives text fade-in
+      '(min-width: 1024px)': () => {
+        // Remove IO-driven anim classes — GSAP scrub will control these
+        lines.forEach((el) => {
+          el.classList.remove('anim-fade-up', 'anim-blur-reveal');
+          el.removeAttribute('data-delay');
+        });
 
-  // Set all lines to hidden initially
-  gsap.set(lines, { opacity: 0, y: 24 });
+        // Set all lines to hidden initially
+        gsap.set(lines, { opacity: 0, y: 24 });
 
-  // Special treatment for climax line
-  const climax = section.querySelector('.vision__climax') as HTMLElement | null;
-  if (climax) {
-    gsap.set(climax, { opacity: 0, y: 32, filter: 'blur(8px)' });
-  }
+        // Special treatment for climax line
+        const climax = section.querySelector('.vision__climax') as HTMLElement | null;
+        if (climax) {
+          gsap.set(climax, { opacity: 0, y: 32, filter: 'blur(8px)' });
+        }
 
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 80%',
-      end: 'bottom 20%',
-      scrub: 0.5,
-    },
-  });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            scrub: 0.5,
+          },
+        });
 
-  // Each line occupies ~15% of the timeline with slight overlap
-  const segmentDuration = 0.15;
-  const totalLines = lines.length;
+        // Each line occupies ~15% of the timeline with slight overlap
+        const segmentDuration = 0.15;
+        const totalLines = lines.length;
 
-  lines.forEach((line, i) => {
-    const startAt = (i / totalLines) * (1 - segmentDuration);
-    const isClimax = line.classList.contains('vision__climax');
-    const isDivider = line.classList.contains('vision__divider');
+        lines.forEach((line, i) => {
+          const startAt = (i / totalLines) * (1 - segmentDuration);
+          const isClimax = line.classList.contains('vision__climax');
+          const isDivider = line.classList.contains('vision__divider');
 
-    if (isClimax) {
-      // Climax: blur reveal + larger movement
-      tl.to(
-        line,
-        {
-          opacity: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: segmentDuration * 1.5,
-          ease: 'power3.out',
-        },
-        startAt,
-      );
-    } else if (isDivider) {
-      // Divider: just fade in
-      tl.to(
-        line,
-        {
-          opacity: 1,
-          y: 0,
-          duration: segmentDuration * 0.7,
-          ease: 'power2.out',
-        },
-        startAt,
-      );
-    } else {
-      // Normal line: fade-up
-      tl.to(
-        line,
-        {
-          opacity: 1,
-          y: 0,
-          duration: segmentDuration,
-          ease: 'power2.out',
-        },
-        startAt,
-      );
-    }
+          if (isClimax) {
+            // Climax: blur reveal + larger movement
+            tl.to(
+              line,
+              {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: segmentDuration * 1.5,
+                ease: 'power3.out',
+              },
+              startAt,
+            );
+          } else if (isDivider) {
+            // Divider: just fade in
+            tl.to(
+              line,
+              {
+                opacity: 1,
+                y: 0,
+                duration: segmentDuration * 0.7,
+                ease: 'power2.out',
+              },
+              startAt,
+            );
+          } else {
+            // Normal line: fade-up
+            tl.to(
+              line,
+              {
+                opacity: 1,
+                y: 0,
+                duration: segmentDuration,
+                ease: 'power2.out',
+              },
+              startAt,
+            );
+          }
+        });
+      },
+      // Mobile: IO fallback — keep anim classes, let IO handle them
+      '(max-width: 767px)': () => {
+        // Re-add anim classes for IO-driven reveals
+        lines.forEach((el) => {
+          if (el.classList.contains('vision__climax')) {
+            el.classList.add('anim-blur-reveal');
+          } else if (!el.classList.contains('vision__divider')) {
+            el.classList.add('anim-fade-up');
+          }
+        });
+      },
+    });
   });
 
   return () => {
-    tl.kill();
+    ctx.revert();
   };
 }
 
