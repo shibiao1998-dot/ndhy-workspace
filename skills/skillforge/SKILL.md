@@ -1,6 +1,9 @@
 ---
 name: skillforge
-description: "Systematic 7-step Skill generation engine and 3-step fix pipeline with 10-dimension quality audit. Use when creating new skills from scratch OR fixing/improving existing skills. Includes structured requirement analysis (5-dimension framework), architecture decisions, metadata refinement, progressive disclosure planning, quality scoring, and final assembly. Complements skill-creator (base spec) as an advanced generation engine. Triggers: \"forge a skill\", \"generate skill systematically\", \"fix this skill\", \"audit skill quality\", \"skillforge\", or when a skill needs rigorous multi-step creation beyond simple authoring."
+description: >-
+  Use when creating skills systematically from scratch, fixing/improving existing skills with rigorous quality audit,
+  or when skill-creator's base spec needs advanced generation capabilities.
+  Triggers: "forge a skill", "generate skill systematically", "fix this skill", "audit skill quality".
 ---
 
 # SkillForge — 系统化 Skill 生成引擎
@@ -11,12 +14,44 @@ Skill 的进阶创建与修正工具。提供 7 步生成流水线、3 步修正
 ## 核心设计原则
 
 1. **简洁至上** — Context window 是公共资源。只写 AI 不知道的内容
-2. **Description 是触发器** — 决定 Skill 是否被选中。必须包含 WHAT + WHEN
+2. **Description 是触发器** — 决定 Skill 是否被选中。遵循 CSO 规范（见下文）
 3. **渐进式披露** — SKILL.md < 500 行。详细内容拆到 scripts/、references/、templates/
 4. **代码示例 > 文字说明**
 5. **反面案例必不可少** — 用 ❌/✅ 对比格式展示
 6. **祈使语气** — "执行"而非"你应该执行"
 7. **不加辅助文件** — 不创建 README.md、CHANGELOG.md
+
+## CSO（Context-Set-Output）Description 规范
+
+> 来源：Superpowers 框架实测发现 — description 泄漏工作流会导致 Agent 跳过 SKILL.md 正文。
+
+**核心原则**：Description 只回答"什么时候该用这个技能"，绝不回答"这个技能怎么用"或"里面有什么"。
+
+**三要素**：
+- **Context（触发场景）**：什么情况下需要这个技能？
+- **Set（触发词）**：哪些关键词激活？
+- **Output（排除边界）**：什么时候不该用？（可选，NOT for）
+
+**长度**：50-150 词。超过 150 词 = 大概率泄漏。
+
+**禁止暴露的内容**：
+- "覆盖 X 步流程" / "X 大能力方向" / "X 级深度分级"
+- 内部实现路径（probe → fallback、具体工具链）
+- 交付物结构（"标准输出物为 XX（N 文档）"）
+
+❌ 泄漏工作流：
+```yaml
+description: "覆盖9步标准流程，12大能力方向，3级深度分级，标准输出物为实现交付包（6文档+代码）。"
+```
+
+✅ 只含触发条件：
+```yaml
+description: "Use when 需要实现后端 handler/service/repository 层。触发词：后端开发、服务实现、handler。"
+```
+
+**自检**：只看 description，Agent 能否跳过正文自行构建简化工作流？能 = 泄漏，必须修改。
+
+**Step 3 元数据精炼**时，3 个候选 description 必须全部通过 CSO 自检。
 
 ## 两条流水线
 
@@ -121,7 +156,9 @@ description: "Precise description with WHAT + WHEN. 30-200 words covering core f
 
 完成 Skill 后逐条检查：
 
-- [ ] description 包含 WHAT + WHEN，30-200 词
+- [ ] description 通过 CSO 自检：只含触发条件，无工作流/步骤/内部结构泄漏
+- [ ] description 长度 50-150 词
+- [ ] description 包含触发场景 + 触发词（+ 可选 NOT for）
 - [ ] SKILL.md < 500 行
 - [ ] name 为 hyphen-case
 - [ ] 无 README.md / CHANGELOG.md 等辅助文件

@@ -54,3 +54,4 @@ Phase 6 — 部署 + GitHub + 自动更新  🚀 部署运维专家
 - [2026-03-16] UI 设计走查完成：识别 10 个设计问题（3 个致命/2 个重大/4 个中等/1 个轻微），核心问题是"视觉能量密度不足"而非对比度
 - [2026-03-16] UI 重设计方案输出：ui-redesign-spec.md (15KB)，覆盖全局 Token 更新 + 7 区块逐一重设计方案 + 可访问性 + 实现优先级
 - [2026-03-16] 拓扑图原型输出：prototype-topology.html (31KB)，同心环辐射布局替代网格布局，30 个节点含完整动画序列和 tooltip 交互
+- [2026-03-16] V4 前端技术架构方案输出：tech-architecture-v4.md，技术架构专家产出。选型：Astro + React Islands + Tailwind v4 + GSAP ScrollTrigger + Lenis。解决 V3 全部架构问题。

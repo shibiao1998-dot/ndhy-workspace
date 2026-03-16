@@ -271,6 +271,13 @@ claude --permission-mode bypassPermissions --print "任务描述"
 | `web-fetch` | 抓取 API 文档、技术参考 |
 | `feishu-fetch-doc` | 契约文档/需求文档在飞书时读取 |
 
+### Chrome DevTools MCP（Claude Code 内置）
+
+Claude Code 已配置 Chrome DevTools MCP，可在联调过程中直接检查浏览器运行时状态：
+- **网络请求验证**：通过 `list_network_requests` + `get_network_request` 直接查看请求/响应的 Headers、Body、状态码，核对是否符合 API 契约
+- **CORS 与跨域诊断**：网络请求失败时直接看到错误详情和 CORS 头信息，无需人工截图描述
+- **端到端契约验证**：执行前端操作 → 通过 Network 面板捕获实际请求/响应 → 与契约文档逐字段对比，自动化契约一致性核对
+
 ## 协作规范
 
 ### 上游

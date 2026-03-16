@@ -1,12 +1,8 @@
 ---
 name: market-assessment
 description: >-
-  市场评估执行工具箱：覆盖从评估界定到结论交付的完整流程，为项目提供市场层面的现实校准。
-  覆盖5步评估流程，6大能力域，3级深度分级，3级信息源可信度分类。
-  Use when: (1) 新项目需要市场可行性验证, (2) TAM/SAM/SOM市场规模分析,
-  (3) 竞争格局分析, (4) 市场时机评估, (5) 商业可行性初判.
-  Triggers on: market assessment, market sizing, competitive analysis,
-  TAM SAM SOM, competitive landscape, market timing, commercial viability.
+  Use when 新项目需要市场可行性验证、TAM/SAM/SOM 市场规模分析、竞争格局评估，或商业可行性初判。
+  触发词：市场评估、market sizing、competitive landscape、市场时机。
 ---
 
 # market-assessment

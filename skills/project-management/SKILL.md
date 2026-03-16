@@ -1,6 +1,8 @@
 ---
 name: project-management
-description: "Project management for NDHY AI Agent Team. Use when: (1) creating or updating PROJECT.md, (2) managing task tracking with Task Ledger format, (3) compressing PROJECT.md over 80 lines, (4) decomposing large requirements into three-level structure (requirement → module → subtask), (5) managing project folders and naming conventions. NOT for: simple file edits or non-project tasks."
+description: >-
+  Use when 创建或更新 PROJECT.md、管理任务状态跟踪、分解大需求为子任务，或管理项目文件结构。
+  NOT for: 简单文件编辑或非项目任务。
 ---
 
 > 本 Skill 从 AGENTS.md 提取，用于按需加载。

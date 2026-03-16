@@ -1,0 +1,263 @@
+---
+/**
+ * S3TimelineSection — How It Works: Timeline with expandable step cards.
+ * Astro wrapper with placeholder for TimelineAccordion React Island.
+ */
+import { timelineSteps } from '../data/timeline-steps';
+---
+
+<section class="section timeline" aria-label="制作过程">
+  <div class="section-content">
+
+    <!-- Title -->
+    <div class="timeline__header">
+      <h2 class="timeline__title anim-fade-up">
+        你正在看的这个网站，是这样被做出来的。
+      </h2>
+      <p class="timeline__subtitle anim-fade-up" style="transition-delay: var(--dur-micro);">
+        真实过程，0 行人类代码
+      </p>
+    </div>
+
+    <!-- Timeline Accordion — React Island placeholder -->
+    <div class="timeline__accordion" aria-label="制作步骤时间线">
+      <!-- TimelineAccordion React component will be mounted here -->
+
+      <!-- Static fallback / SSR content -->
+      <ol class="timeline__steps" role="list">
+        {timelineSteps.map((step, index) => (
+          <li
+            class="timeline-card anim-fade-up"
+            style={`transition-delay: calc(${index} * var(--delay-stagger));`}
+            data-step={step.step}
+          >
+            <div class="timeline-card__header">
+              <span class="timeline-card__step" aria-hidden="true">{String(step.step).padStart(2, '0')}</span>
+              <span class="timeline-card__emoji" aria-hidden="true">{step.emoji}</span>
+              <div class="timeline-card__meta">
+                <span class="timeline-card__role">{step.role}</span>
+                <span class="timeline-card__title">{step.title}</span>
+              </div>
+              <span class="timeline-card__output">{step.output}</span>
+              <span class="timeline-card__chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 6 8 10 12 6"></polyline>
+                </svg>
+              </span>
+            </div>
+            <div class="timeline-card__body" hidden>
+              <p class="timeline-card__detail">{step.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- Bottom emphasis -->
+    <div class="timeline__bottom">
+      <p class="timeline__emphasis anim-scale-spring">
+        6 天。10 位专家协作。从需求到上线的完整闭环。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Simple accordion toggle for static fallback
+  document.querySelectorAll('.timeline-card__header').forEach((header) => {
+    header.addEventListener('click', () => {
+      const card = header.closest('.timeline-card');
+      if (!card) return;
+      const body = card.querySelector('.timeline-card__body') as HTMLElement;
+      if (!body) return;
+      const isOpen = !body.hidden;
+      body.hidden = isOpen;
+      card.classList.toggle('is-open', !isOpen);
+    });
+  });
+
+  // Scroll-triggered animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.timeline .anim-fade-up, .timeline .anim-scale-spring')
+    .forEach((el) => observer.observe(el));
+</script>
+
+<style>
+  /* === Section === */
+  .timeline {
+    background-color: var(--color-bg);
+  }
+
+  /* === Header === */
+  .timeline__header {
+    text-align: center;
+    margin-bottom: var(--space-10);
+  }
+
+  .timeline__title {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-bright);
+    line-height: var(--lh-heading);
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline__subtitle {
+    font-size: var(--fs-body);
+    color: var(--color-text-muted);
+    letter-spacing: var(--ls-wide);
+  }
+
+  /* === Steps list === */
+  .timeline__steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* === Card === */
+  .timeline-card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .timeline-card:hover,
+  .timeline-card.is-open {
+    border-color: var(--color-border-strong);
+  }
+
+  .timeline-card.is-open {
+    background: var(--color-bg-elevated);
+  }
+
+  /* === Card header === */
+  .timeline-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    user-select: none;
+    min-height: var(--space-12);
+  }
+
+  .timeline-card__step {
+    font-size: var(--fs-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-dim);
+    min-width: var(--space-6);
+    flex-shrink: 0;
+  }
+
+  .timeline-card__emoji {
+    font-size: var(--fs-body);
+    flex-shrink: 0;
+  }
+
+  .timeline-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .timeline-card__role {
+    font-size: var(--fs-xs);
+    color: var(--color-text-dim);
+  }
+
+  .timeline-card__title {
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    color: var(--color-text);
+  }
+
+  .timeline-card__output {
+    display: none;
+    font-size: var(--fs-xs);
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .timeline-card__chevron {
+    color: var(--color-text-dim);
+    flex-shrink: 0;
+    transition: transform var(--dur-fast) var(--ease-out);
+    display: flex;
+    align-items: center;
+  }
+
+  .timeline-card.is-open .timeline-card__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* === Card body === */
+  .timeline-card__body {
+    padding: var(--space-0) var(--space-4) var(--space-4) var(--space-4);
+    padding-left: calc(var(--space-4) + var(--space-6) + var(--space-3) + var(--fs-body) + var(--space-3));
+  }
+
+  .timeline-card__detail {
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+    line-height: var(--lh-body);
+    white-space: pre-line;
+  }
+
+  /* === Bottom emphasis === */
+  .timeline__bottom {
+    text-align: center;
+    margin-top: var(--space-10);
+  }
+
+  .timeline__emphasis {
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-bright);
+    line-height: var(--lh-heading);
+  }
+
+  /* === Desktop === */
+  @media (min-width: 768px) {
+    .timeline-card__output {
+      display: block;
+    }
+
+    .timeline-card__header {
+      padding: var(--space-4) var(--space-5);
+    }
+
+    .timeline-card__body {
+      padding-left: calc(var(--space-5) + var(--space-6) + var(--space-3) + var(--fs-body) + var(--space-3));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .timeline__title {
+      font-size: var(--fs-display);
+    }
+
+    .timeline__emphasis {
+      font-size: var(--fs-h1);
+    }
+  }
+</style>

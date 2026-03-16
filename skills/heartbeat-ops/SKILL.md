@@ -1,6 +1,8 @@
 ---
 name: heartbeat-ops
-description: "Heartbeat monitoring, anomaly recovery, and daily closing operations for NDHY AI Agent Team. Use when: (1) processing heartbeat events, (2) monitoring sub-agent health status, (3) performing anomaly recovery (probe → restart → escalate), (4) executing daily closing routine (git backup, memory rules, capability gaps). NOT for: regular task execution or communication."
+description: >-
+  Use when 处理心跳事件、监控子Agent健康状态、执行异常恢复，或执行日终收尾操作。
+  NOT for: 常规任务执行或沟通。
 ---
 
 > 本 Skill 从 HEARTBEAT.md / AGENTS.md 提取，用于按需加载。

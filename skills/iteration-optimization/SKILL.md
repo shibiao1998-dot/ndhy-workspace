@@ -1,6 +1,8 @@
 ---
 name: iteration-optimization
-description: "迭代优化执行工具箱：在'发布→反馈→改进→再发布'的循环中驱动产品持续进化。覆盖五阶段迭代循环，优先级排序框架（ABCD+ICE），4源改进信号，MVP与渐进式交付，关键决策场景，6条铁律。含10条反模式防范、迭代检查清单。Use when: 迭代优化、版本规划、优先级排序、迭代复盘、MVP拆解。Triggers on: 迭代优化, iteration optimization, 优先级排序, 版本规划, 迭代复盘, MVP拆解, 渐进式交付, 需求排序, ICE评分, 止损决策, 技术债, 需求蔓延, 迭代节奏, 改进信号, 迭代目标."
+description: >-
+  Use when 需要迭代优化、版本规划、需求优先级排序、MVP拆解，或迭代复盘。
+  触发词：迭代优化、优先级排序、版本规划、MVP拆解、迭代复盘、渐进式交付、止损决策。
 ---
 
 # iteration-optimization — 迭代优化执行工具箱

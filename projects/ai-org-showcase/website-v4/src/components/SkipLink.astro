@@ -1,0 +1,20 @@
+---
+/**
+ * SkipLink.astro
+ * Accessibility skip navigation link.
+ * Hidden off-screen by default, visible on keyboard focus.
+ * Styled via .skip-link class defined in global.css.
+ */
+interface Props {
+  /** The ID of the element to skip to */
+  targetId?: string;
+  /** The visible label text */
+  label?: string;
+}
+
+const { targetId = 'main-content', label = '跳转到主要内容' } = Astro.props;
+---
+
+<a href={`#${targetId}`} class="skip-link">
+  {label}
+</a>

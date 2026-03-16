@@ -111,6 +111,14 @@
 | `search-layer` | 多源搜索 — 查找技术文档、npm 包用法、React 模式参考 |
 | `web-fetch` | 抓取技术文档和 API 参考内容 |
 
+### Chrome DevTools MCP（Claude Code 内置）
+
+Claude Code 已配置 Chrome DevTools MCP，可在开发过程中直接操作浏览器调试会话：
+- **运行时验证**：代码变更后通过 `take_screenshot` + `take_snapshot` 自动验证渲染结果，不依赖人工打开浏览器
+- **CSS 调试**：通过 `evaluate_script` 直接读取 computed styles 和 DOM 结构，精确定位布局问题
+- **Console 自动修复**：通过 `list_console_messages` 读取全部 Console 日志，自动定位并修复运行时报错
+- **性能优化闭环**：`performance_start_trace` → 分析 LCP/CLS/INP → 修改代码 → 再验证，形成量化优化循环
+
 ## 协作规范
 
 | 方向 | 角色 | 交互方式 |

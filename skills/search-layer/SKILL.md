@@ -1,13 +1,9 @@
 ---
 name: search-layer
-description: >
-  DEFAULT search tool for ALL search/lookup needs. Multi-source search and deduplication
-  layer with intent-aware scoring. Integrates Brave Search (web_search), Exa, Tavily,
-  and Grok to provide high-coverage, high-quality results. Automatically classifies
-  query intent and adjusts search strategy, scoring weights, and result synthesis.
-  Use for ANY query that requires web search — factual lookups, research, news,
-  comparisons, resource finding, "what is X", status checks, etc. Do NOT use raw
-  web_search directly; always route through this skill.
+description: >-
+  DEFAULT search tool for ALL web search and lookup needs. Use instead of raw web_search
+  for any factual lookup, research, news, comparison, or "what is X" query.
+  Provides multi-source high-coverage results with deduplication.
 ---
 
 # Search Layer v2.2 — 意图感知多源检索协议

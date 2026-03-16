@@ -1,0 +1,302 @@
+---
+/**
+ * S4ContrastSection — Cognitive Gap: Side-by-side comparison.
+ * Left: "散装 AI 的世界" vs Right: "AI 组织的世界"
+ */
+import {
+  scatteredAISteps,
+  aiOrgSteps,
+  scatteredAITags,
+  aiOrgTags,
+} from '../data/comparison-data';
+---
+
+<section class="section contrast" aria-label="认知差距对比">
+  <div class="section-content">
+
+    <!-- Title -->
+    <h2 class="contrast__title anim-fade-up">
+      同一个需求，两种做法。
+    </h2>
+
+    <!-- Comparison columns -->
+    <div class="contrast__grid">
+
+      <!-- Left: Scattered AI -->
+      <div class="contrast__column contrast__column--scattered anim-slide-left" aria-label="散装 AI 的世界">
+        <h3 class="contrast__column-title contrast__column-title--scattered">散装 AI 的世界</h3>
+
+        <ol class="contrast__steps" role="list">
+          {scatteredAISteps.map((item, index) => (
+            <li
+              class="contrast__step"
+              data-delay={index}
+              style={`transition-delay: calc(${index} * var(--delay-stagger));`}
+            >
+              {index > 0 && (
+                <span class="contrast__arrow" aria-hidden="true">→</span>
+              )}
+              <span class="contrast__step-text">{item.text}</span>
+            </li>
+          ))}
+        </ol>
+
+        <div class="contrast__tags">
+          {scatteredAITags.map((tag) => (
+            <span class="contrast__tag contrast__tag--error">
+              <span aria-hidden="true">{tag.icon}</span> {tag.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- VS separator (mobile only) -->
+      <div class="contrast__vs" aria-hidden="true">
+        <span class="contrast__vs-text">VS</span>
+      </div>
+
+      <!-- Right: AI Organization -->
+      <div class="contrast__column contrast__column--org anim-slide-right" style="transition-delay: 300ms;" aria-label="AI 组织的世界">
+        <h3 class="contrast__column-title contrast__column-title--org">AI 组织的世界</h3>
+
+        <ol class="contrast__steps" role="list">
+          {aiOrgSteps.map((item, index) => (
+            <li
+              class="contrast__step"
+              data-delay={index}
+              style={`transition-delay: calc(${index} * var(--delay-stagger));`}
+            >
+              {index > 0 && (
+                <span class="contrast__arrow" aria-hidden="true">→</span>
+              )}
+              <span class="contrast__step-text">{item.text}</span>
+            </li>
+          ))}
+        </ol>
+
+        <div class="contrast__tags">
+          {aiOrgTags.map((tag) => (
+            <span class="contrast__tag contrast__tag--success">
+              <span aria-hidden="true">{tag.icon}</span> {tag.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Scroll-triggered animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll(
+    '.contrast .anim-fade-up, .contrast .anim-slide-left, .contrast .anim-slide-right'
+  ).forEach((el) => observer.observe(el));
+
+  // Stagger steps visibility after column becomes visible
+  const columnObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const steps = entry.target.querySelectorAll('.contrast__step');
+          steps.forEach((step, i) => {
+            const el = step as HTMLElement;
+            setTimeout(() => {
+              el.classList.add('is-visible');
+            }, i * 80);
+          });
+          columnObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  document.querySelectorAll('.contrast__column')
+    .forEach((el) => columnObserver.observe(el));
+</script>
+
+<style>
+  /* === Section === */
+  .contrast {
+    background-color: var(--color-bg);
+  }
+
+  /* === Title === */
+  .contrast__title {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-bright);
+    text-align: center;
+    margin-bottom: var(--space-10);
+    line-height: var(--lh-heading);
+  }
+
+  /* === Grid === */
+  .contrast__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  /* === VS separator === */
+  .contrast__vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-0);
+  }
+
+  .contrast__vs-text {
+    font-size: var(--fs-small);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-dim);
+    letter-spacing: var(--ls-wide);
+    background: var(--color-bg-elevated);
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  /* === Column === */
+  .contrast__column {
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .contrast__column--scattered {
+    border: 1px solid var(--color-border);
+  }
+
+  .contrast__column--org {
+    border: 1px solid var(--color-accent-subtle);
+  }
+
+  /* === Column titles === */
+  .contrast__column-title {
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-heading);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .contrast__column-title--scattered {
+    color: var(--color-text-muted);
+  }
+
+  .contrast__column-title--org {
+    color: var(--color-text-bright);
+  }
+
+  /* === Steps === */
+  .contrast__steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .contrast__step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    opacity: 0;
+    transform: translateY(var(--space-1));
+    transition:
+      opacity var(--dur-normal) var(--ease-out),
+      transform var(--dur-normal) var(--ease-out);
+  }
+
+  .contrast__step.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .contrast__arrow {
+    color: var(--color-text-dim);
+    font-size: var(--fs-xs);
+    flex-shrink: 0;
+    line-height: var(--lh-body);
+    margin-top: var(--space-0);
+  }
+
+  .contrast__step-text {
+    font-size: var(--fs-small);
+    color: var(--color-text);
+    line-height: var(--lh-body);
+  }
+
+  .contrast__column--scattered .contrast__step-text {
+    color: var(--color-text-muted);
+  }
+
+  /* === Tags === */
+  .contrast__tags {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+
+  .contrast__tag {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--space-1);
+    font-size: var(--fs-small);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    line-height: var(--lh-small);
+  }
+
+  .contrast__tag--error {
+    color: var(--color-error);
+    background: var(--color-error-bg);
+  }
+
+  .contrast__tag--success {
+    color: var(--color-success);
+    background: var(--color-success-bg);
+  }
+
+  /* === Desktop: side by side === */
+  @media (min-width: 1024px) {
+    .contrast__title {
+      font-size: var(--fs-display);
+    }
+
+    .contrast__grid {
+      flex-direction: row;
+      gap: var(--space-8);
+      align-items: stretch;
+    }
+
+    .contrast__column {
+      flex: 1;
+      padding: var(--space-6);
+    }
+
+    /* Hide VS on desktop */
+    .contrast__vs {
+      display: none;
+    }
+  }
+</style>

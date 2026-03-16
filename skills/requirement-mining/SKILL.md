@@ -1,19 +1,55 @@
 ---
 name: requirement-mining
-description: >
-  需求挖掘全流程操作手册：从接收模糊需求到输出结构化需求文档。包含 10 维扫描清单、7 大深层挖掘技法、5 轮迭代对话模型和引导技巧集。
-
-  **当以下情况时使用此 Skill**：
-  (1) 收到用户的新需求、新想法、新功能请求，需要进行系统性挖掘
-  (2) 用户描述模糊、需要通过提问澄清真实意图
-  (3) 需要将用户的想法转化为结构化的需求文档
-  (4) 需要评估需求的真伪、优先级和可行性
-  (5) 用户给出了"解法"而非"问题"，需要追问到底层需求
-  (6) 需要画需求边界、理清冲突和约束条件
-  (7) 用户提到"需求"、"想做"、"能不能做"、"我有个想法"、"帮我分析一下"
+description: >-
+  Use when 收到模糊需求需要系统性挖掘，用户描述不清需要提问澄清，或需要输出结构化需求文档。
+  触发词：需求、想做、能不能做、我有个想法、帮我分析、需求边界。
 ---
 
 # 需求挖掘全流程
+
+## 决策流程图
+
+```dot
+digraph requirement_mining {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10];
+
+  start [label="收到需求/想法", shape=ellipse, fillcolor="#E8F5E9"];
+  r1 [label="第1轮：接住 & 复述\n用自己的话确认", fillcolor="#FFF9C4"];
+  heard_right [label="听对了？", shape=diamond, fillcolor="#E3F2FD"];
+  r2 [label="第2轮：挖背景 & 动机\n10维扫描 + 挖掘技法", fillcolor="#FFF9C4"];
+  is_solution [label="用户给的是\n解法还是问题？", shape=diamond, fillcolor="#E3F2FD"];
+  five_why [label="5-Why 追问\n穿透到问题层", fillcolor="#FFF3E0"];
+  scene [label="场景还原法\n走一遍实际流程", fillcolor="#FFF3E0"];
+  r3 [label="第3轮：画边界 & 理冲突\n范围/约束/冲突/假设", fillcolor="#FFF9C4"];
+  boundary_clear [label="边界清晰？", shape=diamond, fillcolor="#E3F2FD"];
+  r4 [label="第4轮：给雏形 & 校准\n初步方案让用户说对不对", fillcolor="#FFF9C4"];
+  calibrated [label="校准通过？", shape=diamond, fillcolor="#E3F2FD"];
+  r5 [label="第5轮：收敛 & 确认\n输出结构化需求文档", fillcolor="#C8E6C9"];
+  selfcheck [label="防错清单自检\n10项逐条过", fillcolor="#F3E5F5"];
+  done [label="需求文档确认\n可进入执行", shape=ellipse, fillcolor="#E8F5E9"];
+
+  start -> r1;
+  r1 -> heard_right;
+  heard_right -> r1 [label="没听对\n重新复述"];
+  heard_right -> r2 [label="确认"];
+  r2 -> is_solution;
+  is_solution -> five_why [label="是解法"];
+  is_solution -> scene [label="场景不清"];
+  is_solution -> r3 [label="是问题\n且场景清晰"];
+  five_why -> r3;
+  scene -> r3;
+  r3 -> boundary_clear;
+  boundary_clear -> r3 [label="模糊\n继续追问"];
+  boundary_clear -> r4 [label="清晰"];
+  r4 -> calibrated;
+  calibrated -> r2 [label="方向偏了\n回第2轮"];
+  calibrated -> r5 [label="对了"];
+  r5 -> selfcheck;
+  selfcheck -> done;
+}
+```
 
 ## 核心流程：5 轮迭代对话模型
 

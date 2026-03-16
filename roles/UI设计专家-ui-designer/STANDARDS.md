@@ -198,6 +198,21 @@
 | `react-best-practices` | React/Next.js 前端最佳实践参考 |
 | `frontend-development` | 理解前端实现约束 |
 
+### 原型产出铁律（宪法级）
+
+**所有高保真原型必须通过 ACP（Claude Code）产出。** 不允许使用 subagent 模式。
+
+原因：
+- 高保真原型通常 > 30KB，subagent 单次输出 token 不足
+- ACP 支持多轮写入同一文件，可以边写边测边修
+- 没有好看的高保真原型 = 产品不合格
+
+**执行方式**：
+1. Leader spawn ACP 会话：`sessions_spawn(runtime: "acp", agentId: "claude")`
+2. task 中注入：UI 设计规范 + 视觉 Token + 内容文案 + 交互设计
+3. 要求 ACP 产出单文件 HTML（内嵌 CSS + JS），可直接浏览器预览
+4. 产出后 Leader 安排专家走查（视觉/体验/叙事）
+
 ---
 
 ## 六、协作规范

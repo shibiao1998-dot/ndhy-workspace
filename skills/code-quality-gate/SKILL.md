@@ -7,6 +7,51 @@ description: "Code quality assurance and review workflows for NDHY AI Agent Team
 
 # 代码质量门禁
 
+## 决策流程图
+
+```dot
+digraph code_quality_gate {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10];
+
+  start [label="子Agent产出\n代码通告", shape=ellipse, fillcolor="#E8F5E9"];
+  auto_verify [label="自动验证\ntest / lint / 类型检查", fillcolor="#FFF9C4"];
+  auto_pass [label="自动验证通过？", shape=diamond, fillcolor="#E3F2FD"];
+  reject_auto [label="❌ 打回子Agent\n修复后重新提交", fillcolor="#FFCDD2"];
+  task_type [label="任务类型判断", shape=diamond, fillcolor="#E3F2FD"];
+  routine [label="常规任务\n(文档/查询/工具)", fillcolor="#C8E6C9"];
+  critical [label="关键任务\n(代码/系统改动/外部交付)", fillcolor="#FFECB3"];
+  leader_direct [label="Leader 直接验收", fillcolor="#E1F5FE"];
+  spawn_reviewer [label="spawn 审查专家\n(含需求+标准+代码路径)", fillcolor="#E1F5FE"];
+  review_pass [label="审查通过？", shape=diamond, fillcolor="#E3F2FD"];
+  dialogue [label="对话式审查\n审查专家 ↔ 开发Agent\n(通过Leader中转)", fillcolor="#FFF3E0"];
+  resolved [label="问题解决？", shape=diamond, fillcolor="#E3F2FD"];
+  rework [label="驳回返工\n状态标记 [rework]", fillcolor="#FFCDD2"];
+  leader_final [label="Leader 终审", fillcolor="#F3E5F5"];
+  deliver [label="交付人类", shape=ellipse, fillcolor="#E8F5E9"];
+
+  start -> auto_verify;
+  auto_verify -> auto_pass;
+  auto_pass -> reject_auto [label="❌ 未通过"];
+  reject_auto -> auto_verify [label="修复后重提"];
+  auto_pass -> task_type [label="✅ 通过"];
+  task_type -> routine [label="常规"];
+  task_type -> critical [label="关键"];
+  routine -> leader_direct;
+  critical -> spawn_reviewer;
+  spawn_reviewer -> review_pass;
+  review_pass -> leader_final [label="✅ 通过"];
+  review_pass -> dialogue [label="发现问题"];
+  dialogue -> resolved;
+  resolved -> leader_final [label="已修复"];
+  resolved -> rework [label="未能解决"];
+  rework -> auto_verify [label="返工后重新提交"];
+  leader_direct -> deliver;
+  leader_final -> deliver;
+}
+```
+
 ## 自动验证（进入人工审查前的前置条件）
 
 借鉴 MetaGPT 可执行反馈机制：子 Agent 产出代码后，必须先运行测试/lint/类型检查，将执行结果附在通告中。**未通过自动验证的产出不进入人工审查环节。**

@@ -1,18 +1,8 @@
 ---
 name: design-to-code-prototype
 description: >-
-  设计到代码原型执行工具箱：将页面设计规范转化为可预览的 HTML/CSS 原型代码。
-  采用 Code-First 工作流，输出可直接在浏览器预览的原型文件。
-  覆盖5步标准流程，4大能力域，3级深度分级。
-  包含原型代码标准、输出规范、评审流程、质量自检清单和常见页面模板。
-  Use when: (1) 需要将设计规范转化为可预览的 HTML/CSS 原型,
-  (2) 需要输出单文件 HTML 原型或 React + Tailwind 原型,
-  (3) 需要为 PM 评审生成可交互的页面预览,
-  (4) 需要验证设计方案的可行性和视觉效果,
-  (5) 需要为前端开发提供参考实现,
-  (6) 需要输出常见页面类型的原型模板.
-  Triggers on: 原型, prototype, HTML原型, 设计转代码, design to code,
-  页面预览, 可交互原型, 原型评审, 代码原型, mockup.
+  Use when 需要将设计规范转化为可预览的 HTML/CSS 原型代码，或为评审生成可交互页面预览。
+  触发词：原型、prototype、HTML原型、设计转代码、页面预览、mockup。
 ---
 
 # design-to-code-prototype

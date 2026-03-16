@@ -1,6 +1,8 @@
 ---
 name: context-management
-description: "Context window and memory management for NDHY AI Agent Team. Use when: (1) context usage exceeds ~60% and Working Buffer needs activation, (2) capturing learning signals from human messages (corrections, preferences, decisions), (3) evaluating pattern promotion (3x confirmation → rule) or demotion (30-day unused → archive), (4) managing MEMORY.md entries. NOT for: regular conversation or task execution."
+description: >-
+  Use when 上下文使用率偏高需要压缩、需要捕获学习信号写入记忆、或需要管理 MEMORY.md 条目的晋升/降级。
+  NOT for: 常规对话或任务执行。
 ---
 
 > 本 Skill 从 AGENTS.md 提取，用于按需加载。

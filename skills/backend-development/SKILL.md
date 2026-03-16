@@ -1,20 +1,8 @@
 ---
 name: backend-development
 description: >-
-  后端服务实现执行工具箱：在既定的数据模型、接口契约、架构约束下，将业务能力准确、稳定、可维护地实现为后端服务。
-  覆盖9步标准流程（理解输入、确认边界、handler层、service层、repository层、补齐横切关注点、测试、自检一致性、输出交付包），
-  13大能力方向（handler实现/service业务逻辑/repository数据访问/输入校验/权限控制/错误处理/事务边界/日志可观测/单元测试/集成测试/服务重构/契约一致性审查/联调交接），
-  3级深度分级（快速实现/标准开发/深度开发），5层深度边界（需求层/模型契约层/服务实现层/架构层/验证交付层），
-  标准输出物为实现交付包（6文档+代码）。
-  包含10条反模式防范、合格后端实现检查清单。
-  Use when: (1) 需要实现接口handler/service/repository层,
-  (2) 需要添加输入校验、权限控制、错误处理、事务边界、日志,
-  (3) 需要编写后端单元测试或集成测试支撑,
-  (4) 需要重构服务边界或审查契约一致性,
-  (5) 用户提到后端开发、服务实现、handler、service、repository、controller.
-  Triggers on: 后端开发, backend development, 服务实现, service implementation,
-  handler, controller, service, repository, DAO, 业务逻辑, 接口实现,
-  错误处理, 事务边界, 单元测试, 集成测试, 联调, 权限控制, 输入校验.
+  Use when 需要实现后端 handler/service/repository 层、添加输入校验/权限控制/错误处理，或编写后端测试。
+  触发词：后端开发、服务实现、handler、controller、service、repository、业务逻辑、事务边界。
 ---
 
 # 后端服务实现

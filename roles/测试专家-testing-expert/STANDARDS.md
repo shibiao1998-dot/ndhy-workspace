@@ -435,6 +435,14 @@ claude --permission-mode bypassPermissions --print "任务描述"
 | `code-quality-gate` | 已有 | 了解整体质量关卡流程，与代码审查环节对接 |
 | `session-logs` | 已有 | 回顾历史测试结论，保持验证标准一致性 |
 
+### Chrome DevTools MCP（Claude Code 内置）
+
+Claude Code 已配置 Chrome DevTools MCP，可在测试过程中直接操作和检查浏览器：
+- **端到端测试**：通过输入自动化工具（`click`/`fill`/`navigate_page`）模拟完整用户流程，配合 `take_screenshot` 验证结果
+- **Console 零报错验证**：通过 `list_console_messages` 直接获取全部 Console 日志，验证运行时无 error/warning
+- **设备与网络模拟**：通过 `emulate` 模拟移动设备、弱网、CPU 节流等环境，覆盖多端兼容性测试
+- **性能指标采集**：通过 `performance_start_trace` / `performance_analyze_insight` 直接获取 LCP/CLS/INP 等 Core Web Vitals 数据，量化性能验证
+
 ---
 
 ## 边界与禁区
