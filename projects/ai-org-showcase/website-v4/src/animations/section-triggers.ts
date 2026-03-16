@@ -29,9 +29,10 @@ const VISIBLE_CLASS = 'is-visible';
 
 /**
  * Minimum ratio at which we consider the element "visible enough" to trigger
- * the entrance animation.
+ * the entrance animation. B9: increased from 0.15 to 0.3 so content appears
+ * closer to screen center.
  */
-const TRIGGER_RATIO = 0.15;
+const TRIGGER_RATIO = 0.3;
 
 // ─── IntersectionObserver-based reveals ─────────────────────────────────────
 

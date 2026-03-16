@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title = 'NDHY AI Agent Team — 一个人类，31 个 AI 专家，一个完整的产品组织',
-  description = '不是工具，不是框架。是一支有灵魂、有纪律、有记忆、会进化的 AI 组织。覆盖产品全链路的每一个环节。',
+  description = '不是工具，不是框架——是一支有灵魂、有纪律、有记忆、会进化的 AI 组织，覆盖产品全链路的每一个环节',
 } = Astro.props;
 ---
 
@@ -22,6 +22,9 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>

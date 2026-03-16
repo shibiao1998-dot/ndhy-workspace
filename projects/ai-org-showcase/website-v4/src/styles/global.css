@@ -73,6 +73,7 @@
 
   /* === 2. Typography === */
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-heading: "Orbitron", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "SF Mono", "Fira Code", Consolas, "Noto Sans Mono", monospace;
 
   --fs-display: 2.5rem;
@@ -230,6 +231,11 @@ body {
   color: var(--color-text);
   background-color: var(--color-bg);
   overflow-x: hidden;
+}
+
+/* === Heading Font — Orbitron for English headings (B2: Cool fonts) === */
+h1, h2, h3, h4, .cta__title, .hero__category {
+  font-family: var(--font-heading);
 }
 
 /* === Accessibility — Focus Visible === */
