@@ -147,6 +147,12 @@
 - **功能正确性验证 > 代码质量检查**（Epsilla+Thoughtworks 共识）：代码可以完美但业务功能灾难性失败。需补充：用户视角 E2E 验证、关键路径 SLO、意图失败检测。我们的质量门需要迭代。（2026-03-16 定期调研）
 - **BAAI 林咏华：改 Agent 系统成本变化 100x，改模型仅 10x**：Skills 层是各行业保持杠杆的地方。推理计算 2026 占比 >70%。验证我们"模型会趋同，Skills 和 Harness 才是护城河"的判断。（2026-03-16 定期调研，上海 AI 金融峰会）
 - **Figma Code to Canvas + Moonchild = 设计新范式**（2026.02-03）：Figma 集成 Anthropic Claude，Moonchild 在设计系统约束内生成多屏 UI 流程。设计师角色从"画界面"转向"定义约束+审查 AI 生成"。（2026-03-16 定期调研）
+- **OpenPencil（724⭐，活跃开发）**：首个支持 Agent Teams 的开源 AI 矢量设计工具。Design-as-Code，内置 MCP 服务器让 Claude Code/Codex 直接编辑 UI 设计稿，支持 Figma 导入。打通"设计→开发"最后一公里。体验设计专家+前端开发专家应重点研究。（2026-03-17 定期调研）
+- **LobeHub（73.7K⭐）推出 Agent Groups**：Agent 协作空间 + Agent 作为工作交互单元 + Harness 级编排。"The harness handles orchestration so your agents can focus on what they're built to do"。与我们的 Leader+专家体系理念一致，参考其 Agent Group 实现。（2026-03-17 定期调研）
+- **Agent-Teams-Lite（785⭐）**：零依赖纯 Markdown 的 Spec-Driven Development，orchestrator + 9 个专业子 Agent。可简化我们的指令包组装流程。（2026-03-17 定期调研）
+- **Antfarm（2.1K⭐）**：基于 OpenClaw 的一键 Agent Team 构建工具。直接适配我们的技术栈，应评估集成价值。（2026-03-17 定期调研）
+- **"AGENTS.md 谬误"持续被验证（2026.03 第二周）**：Epsilla 明确指出单 Markdown 规则文件是脆弱的，会随系统演化而腐化。更强的 Agent 需要更严格（而非更宽松）的约束。我们的四层架构（SOUL+AGENTS+Skills+Memory）比单文件好，但仍需增加"意图偏差检测"——验证产出是否符合业务意图，而非仅检查代码/格式质量。（2026-03-17 定期调研）
+- **教育AI"Agency"方向**：Washington Post+Guardian 报道教育界正在反思——不应仅教学生"如何使用AI"，更应培养学生"对AI的主动权（Agency）"。对 NDHY 教育产品定位有战略参考价值。（2026-03-17 定期调研）
 
 ## 记忆管理规则（本文件的使用说明）
 
