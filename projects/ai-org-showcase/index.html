@@ -3,1037 +3,1886 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NDHY AI Agent Team — 一个人类，26 个 AI 专家，一个完整的产品组织</title>
-<meta name="description" content="不是工具调用，不是 Prompt 技巧。一支有架构、有纪律、有记忆、会进化的 AI 组织。">
-<meta name="theme-color" content="#08080e">
-<meta property="og:title" content="NDHY AI Agent Team — 一个人类，26 个 AI 专家，一个完整的产品组织">
-<meta property="og:description" content="不是工具调用，不是 Prompt 技巧。一支有架构、有纪律、有记忆、会进化的 AI 组织。">
+<title>NDHY-AI-TEAM — 1 Human · 28 AI Experts · 0 Lines of Human Code</title>
+<meta name="description" content="一个人类，28 个 AI 专家，一个完整的产品组织。不是工具，不是框架——是一支有灵魂、有纪律、有记忆、会进化的 AI 组织。">
+<meta name="author" content="NDHY-AI-TEAM">
 <meta property="og:type" content="website">
+<meta property="og:title" content="NDHY-AI-TEAM — 1 Human · 28 AI Experts · 0 Lines of Human Code">
+<meta property="og:description" content="一个人类，28 个 AI 专家，一个完整的产品组织。不是工具，不是框架——是一支有灵魂、有纪律、有记忆、会进化的 AI 组织。">
+<meta property="og:url" content="https://ndhy-ai-team.com">
+<meta property="og:site_name" content="NDHY-AI-TEAM">
+<meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NDHY-AI-TEAM — 1 Human · 28 AI Experts · 0 Lines of Human Code">
+<meta name="twitter:description" content="一个人类，28 个 AI 专家，一个完整的产品组织。">
+<!-- TODO: 替换为真正的 og:image URL -->
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' fill='%230a0a14'%3E%3Crect width='1200' height='630'/%3E%3Ctext x='600' y='280' text-anchor='middle' fill='%23818cf8' font-size='48' font-family='sans-serif'%3ENDHY AI Team%3C/text%3E%3Ctext x='600' y='360' text-anchor='middle' fill='%23e0e0e0' font-size='24' font-family='sans-serif'%3E1 Human · 28 AI Experts · 0 Lines of Human Code%3C/text%3E%3C/svg%3E">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630' fill='%230a0a14'%3E%3Crect width='1200' height='630'/%3E%3Ctext x='600' y='280' text-anchor='middle' fill='%23818cf8' font-size='48' font-family='sans-serif'%3ENDHY AI Team%3C/text%3E%3Ctext x='600' y='360' text-anchor='middle' fill='%23e0e0e0' font-size='24' font-family='sans-serif'%3E1 Human · 28 AI Experts · 0 Lines of Human Code%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧧</text></svg>">
 <style>
-/* ==========================================================================
-   RESET & BASE
-   ========================================================================== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 80px; }
+/* ═══════════════════════════════════════════
+   Design Tokens — from visual-spec-v3.md
+   ═══════════════════════════════════════════ */
+:root {
+  /* Background */
+  --color-bg:          #0d0d14;
+  --color-bg-surface:  #1a1a2e;
+  --color-bg-elevated: #252540;
+  /* Text */
+  --color-text:        #e8e8e8;
+  --color-text-bright: #f5f5f5;
+  --color-text-muted:  #c0c0c0;
+  --color-text-dim:    #999;
+  /* Accent */
+  --color-accent:      #818cf8;
+  --color-accent-dim:  #6366f1;
+  --color-accent-glow: rgba(129,140,248,0.35);
+  /* Border */
+  --color-border:      #3a3a55;
+  --color-border-subtle:#2a2a40;
+  /* Status */
+  --color-positive:    #34d399;
+  --color-positive-bg: rgba(52,211,153,0.10);
+  --color-negative:    #f87171;
+  --color-negative-bg: rgba(248,113,113,0.10);
+  /* Contrast */
+  --contrast-dim: 0.85;
+  /* Font */
+  --font-sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --font-mono: "SF Mono","Fira Code",Consolas,"Noto Sans Mono",monospace;
+  /* Font Size */
+  --fs-display: 2.5rem;
+  --fs-h1:      1.75rem;
+  --fs-h2:      1.25rem;
+  --fs-body:    1rem;
+  --fs-small:   0.875rem;
+  --fs-xs:      0.75rem;
+  /* Font Weight */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold:   600;
+  /* Line Height */
+  --lh-tight:   1.25;
+  --lh-normal:  1.6;
+  --lh-relaxed: 1.8;
+  /* Letter Spacing */
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+  /* Spacing */
+  --sp-1:  4px;  --sp-2:  8px;  --sp-3: 12px;  --sp-4: 16px;
+  --sp-6: 24px;  --sp-8: 32px;  --sp-12: 48px;  --sp-16: 64px;
+  /* Duration */
+  --dur-instant: 100ms;
+  --dur-fast:   150ms;
+  --dur-normal: 300ms;
+  --dur-slow:   600ms;
+  --dur-slower: 800ms;
+  --dur-hero:  1200ms;
+  /* Easing */
+  --ease-out:    cubic-bezier(0.22,1,0.36,1);
+  --ease-in-out: cubic-bezier(0.45,0,0.55,1);
+  --ease-in:     cubic-bezier(0.55,0,1,0.45);
+  /* Block 1 delays */
+  --delay-date:     500ms;
+  --delay-line1:   1500ms;
+  --delay-line2:   3000ms;
+  --delay-emphasis:4500ms;
+  --delay-arrow:   5500ms;
+  /* Topo */
+  --topo-interval:   80ms;
+  --topo-line-delay:1400ms;
+  /* Typewriter */
+  --typewriter-speed: 40ms;
+  /* Breathe arrow */
+  --breathe-range: 6px;
+  --breathe-cycle: 2s;
+  /* Layout */
+  --max-w: 800px;
+  --section-py: var(--sp-16);
+  --section-px: var(--sp-6);
+}
+
+/* ═══════════════════════════════════════════
+   Base Reset & Typography
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Microsoft YaHei", "Helvetica Neue", sans-serif;
-  background: #08080e;
-  color: #c8ccd4;
-  line-height: 1.7;
-  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: var(--lh-normal);
+  letter-spacing: var(--ls-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
-::selection { background: rgba(99, 102, 241, 0.4); color: #fff; }
+body.scroll-locked { overflow: hidden; }
 
-/* ==========================================================================
-   TYPOGRAPHY
-   ========================================================================== */
-h1, h2, h3, h4 { color: #eef0f6; font-weight: 700; line-height: 1.25; }
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.03em; }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; }
-h3 { font-size: clamp(1.15rem, 2vw, 1.5rem); }
-p { color: #9ca3b0; line-height: 1.8; }
-a { color: #818cf8; text-decoration: none; transition: color 0.2s; }
-a:hover { color: #a5b4fc; }
+/* ═══════════════════════════════════════════
+   Focus Visible — keyboard navigation indicator
+   ═══════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
 
-/* ==========================================================================
-   LAYOUT
-   ========================================================================== */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-section { position: relative; padding: 120px 0; }
-@media (max-width: 768px) { section { padding: 80px 0; } }
+/* ═══════════════════════════════════════════
+   Shared Layout
+   ═══════════════════════════════════════════ */
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--section-py) var(--section-px);
+}
+.section-full {
+  width: 100%;
+  padding: var(--section-py) var(--section-px);
+}
+.section-title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-bright);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin-bottom: var(--sp-6);
+}
+.section-subtitle {
+  font-size: var(--fs-h2);
+  color: var(--color-text-muted);
+  font-weight: var(--fw-medium);
+  margin-bottom: var(--sp-8);
+}
 
-/* Section divider */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.25), rgba(59,130,246,0.25), transparent);
-  max-width: 800px;
+/* ═══════════════════════════════════════════
+   Fade-in Animation System
+   ═══════════════════════════════════════════ */
+.fade-in {
+  opacity: 0.05;
+  transform: translateY(16px);
+  transition: opacity var(--dur-slower) var(--ease-out),
+              transform var(--dur-slower) var(--ease-out);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   BLOCK 1 — The Hook (悬念开场)
+   ═══════════════════════════════════════════ */
+#hook {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  padding: var(--sp-8);
+  background: var(--color-bg);
+}
+.hook-line {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-muted);
+  opacity: 0.05;
+  transition: opacity var(--dur-slower) var(--ease-out);
+}
+.hook-line.visible { opacity: 1; }
+.hook-emphasis {
+  color: var(--color-text-bright);
+}
+#hook-typewriter {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-muted);
+  min-height: 1.8em;
+}
+#hook-typewriter .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--color-accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.hook-spacer { height: var(--sp-8); }
+
+.scroll-arrow {
+  position: absolute;
+  bottom: var(--sp-8);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--fs-h1);
+  color: var(--color-text-dim);
+  opacity: 0.05;
+  animation: breathe var(--breathe-cycle) var(--ease-in-out) infinite;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.scroll-arrow.visible { opacity: 1; }
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(var(--breathe-range)); }
+}
+
+/* ═══════════════════════════════════════════
+   BLOCK 2 — The Reveal (揭幕震撼) — Concentric Ring Topology
+   ═══════════════════════════════════════════ */
+#reveal {
+  min-height: 120vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-16) var(--sp-6);
+  position: relative;
+  background: radial-gradient(ellipse at 50% 40%, rgba(129,140,248,0.04) 0%, var(--color-bg) 70%);
+}
+.topo-wrap {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.topo-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* Node interaction */
+.topo-svg .node { cursor: pointer; }
+.topo-svg .node circle {
+  transition: fill 0.4s var(--ease-out), stroke 0.4s var(--ease-out);
+}
+.topo-svg .node text {
+  pointer-events: none;
+}
+
+/* Tooltip */
+.tooltip {
+  position: fixed;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--color-text);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .15s ease-out, transform .15s ease-out;
+  z-index: 100;
+  max-width: 300px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.tooltip.active { opacity: 1; transform: translateY(0); }
+.tooltip .t-emoji { margin-right: 4px; }
+.tooltip .t-name { font-weight: 600; color: var(--color-text-bright); }
+.tooltip .t-desc { color: var(--color-text-muted); margin-left: 6px; font-size: 12px; }
+
+/* Reveal bottom text */
+.reveal-text {
+  text-align: center;
+  max-width: 600px;
+  margin-top: 48px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .8s ease-out, transform .8s ease-out;
+}
+.reveal-text.visible { opacity: 1; transform: translateY(0); }
+.reveal-text .statement {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-bright);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.reveal-text .sub {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Topo animations */
+@keyframes pulse {
+  0%, 100% { filter: url(#glow-lg); }
+  50% { filter: url(#glow-xl); }
+}
+
+/* ═══════════════════════════════════════════
+   BLOCK 3 — How It Works (运转揭秘)
+   ═══════════════════════════════════════════ */
+#process {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-16);
+  min-height: 80vh;
+  background: linear-gradient(180deg, #0d0d1a 0%, #0f0f22 50%, #0d0d1a 100%);
+}
+.timeline {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-6);
+  overflow-x: auto;
+  padding: var(--sp-8) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-border);
+}
+.timeline-step {
+  flex: 0 0 160px;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+}
+.step-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-border);
+  margin: 20px auto var(--sp-3);
+  position: relative;
+  z-index: 2;
+  transition: background var(--dur-normal) var(--ease-out),
+              box-shadow var(--dur-normal) var(--ease-out);
+}
+.timeline-step.lit .step-dot {
+  background: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent-glow);
+}
+.step-emoji { font-size: var(--fs-h2); margin-bottom: var(--sp-1); }
+.step-role { font-size: var(--fs-small); color: var(--color-text-muted); margin-bottom: var(--sp-1); }
+.step-action { font-size: var(--fs-small); color: #e0e0e0; font-weight: var(--fw-medium); }
+.step-meta { font-size: var(--fs-xs); color: var(--color-text-dim); margin-top: var(--sp-1); }
+
+.step-detail {
+  max-width: var(--max-w);
+  margin: var(--sp-6) auto 0;
+  background: var(--color-bg-surface);
+  border-left: 2px solid var(--color-accent);
+  padding: var(--sp-4);
+  border-radius: 0 6px 6px 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height var(--dur-normal) var(--ease-out),
+              opacity var(--dur-normal) var(--ease-out),
+              padding var(--dur-normal) var(--ease-out);
+}
+.step-detail.open {
+  max-height: 400px;
+  opacity: 1;
+  padding: var(--sp-4);
+}
+.step-detail p {
+  font-size: var(--fs-body);
+  color: #c0c0c0;
+  line-height: var(--lh-normal);
+  margin-bottom: var(--sp-2);
+}
+.step-detail p:last-child { margin-bottom: 0; }
+.step-detail .detail-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text-dim);
+  background: var(--color-bg-elevated);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: 4px;
+  margin-top: var(--sp-3);
+}
+
+/* Vertical timeline (mobile) */
+@media (max-width: 600px) {
+  .timeline {
+    flex-direction: column;
+    overflow-x: visible;
+    padding-left: var(--sp-8);
+    gap: 0;
+  }
+  .timeline::before {
+    top: 0; bottom: 0;
+    left: 27px; right: auto;
+    width: 2px; height: auto;
+  }
+  .timeline-step {
+    flex: none;
+    text-align: left;
+    padding-left: var(--sp-8);
+    padding-bottom: var(--sp-6);
+  }
+  .step-dot {
+    position: absolute;
+    left: -8px;
+    top: 4px;
+    margin: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   BLOCK 4 — The Contrast (认知落差)
+   ═══════════════════════════════════════════ */
+#contrast {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-16);
+  min-height: 80vh;
+  background: var(--color-bg);
+}
+.contrast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-8);
+  max-width: 900px;
   margin: 0 auto;
 }
+.contrast-panel {
+  padding: var(--sp-6);
+  border-radius: 8px;
+  border: 1px solid var(--color-border-subtle);
+}
+.contrast-panel.dim {
+  opacity: 0.8;
+  background: var(--color-bg);
+}
+.contrast-panel.bright {
+  background: var(--color-bg-surface);
+  border-color: var(--color-border);
+}
+.panel-heading {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.dim .panel-heading { color: #f5f5f5; border-bottom-style: dashed; }
+.bright .panel-heading { color: #f5f5f5; }
 
-/* ==========================================================================
-   NAV
-   ========================================================================== */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(8, 8, 14, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  transform: translateY(-100%);
-  transition: transform 0.4s ease;
+.flow-step {
+  padding: var(--sp-2) 0;
+  font-size: var(--fs-small);
+  color: #e0e0e0;
+  position: relative;
+  padding-left: var(--sp-6);
+  line-height: var(--lh-normal);
 }
-nav.visible { transform: translateY(0); }
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+.flow-step::before {
+  content: '↓';
+  position: absolute;
+  left: var(--sp-2);
+  color: var(--color-text-dim);
 }
-.nav-brand { font-size: 0.95rem; font-weight: 700; color: #eef0f6; letter-spacing: -0.02em; }
-.nav-brand span { color: #818cf8; }
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a {
-  font-size: 0.85rem; color: #9ca3b0; font-weight: 500;
-  transition: color 0.2s; letter-spacing: 0.01em;
-}
-.nav-links a:hover { color: #eef0f6; }
-.nav-toggle { display: none; background: none; border: none; color: #eef0f6; cursor: pointer; font-size: 1.5rem; }
+.flow-step:first-child::before { content: ''; }
+.dim .flow-step { border-left: 1px dashed var(--color-border-subtle); }
+.bright .flow-step { border-left: 2px solid var(--color-accent); }
+.bright .flow-step::before { color: var(--color-accent); }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; position: absolute; top: 64px; left: 0; right: 0;
-    background: rgba(8, 8, 14, 0.95); backdrop-filter: blur(20px);
-    flex-direction: column; padding: 24px; gap: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .nav-links.open { display: flex; }
-  .nav-toggle { display: block; }
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--color-border-subtle);
 }
-
-/* ==========================================================================
-   HERO
-   ========================================================================== */
-#hero {
-  min-height: 100vh; display: flex; align-items: center;
-  position: relative; overflow: hidden;
+.tag {
+  font-size: var(--fs-small);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
 }
-#hero-canvas {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  z-index: 0; opacity: 0.6;
-}
-.hero-content {
-  position: relative; z-index: 1; text-align: center;
-  max-width: 900px; margin: 0 auto;
-}
-.hero-badge {
-  display: inline-block; padding: 6px 16px; border-radius: 100px;
-  background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.25);
-  font-size: 0.8rem; color: #a5b4fc; font-weight: 500; margin-bottom: 32px;
-  letter-spacing: 0.05em;
-}
-.hero-title { margin-bottom: 24px; }
-.hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem); color: #7c8494;
-  max-width: 640px; margin: 0 auto 48px; line-height: 1.8;
-}
-
-/* Stats */
-.hero-stats {
-  display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
-  margin-bottom: 56px;
-}
-.stat { text-align: center; }
-.stat-number {
-  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800;
-  background: linear-gradient(135deg, #818cf8, #3b82f6, #06b6d4);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; line-height: 1.1;
-}
-.stat-label { font-size: 0.85rem; color: #6b7280; margin-top: 4px; }
-
-/* Scroll indicator */
-.scroll-hint {
-  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-  z-index: 1;
-}
-.scroll-hint span {
-  display: block; width: 24px; height: 38px; border-radius: 12px;
-  border: 2px solid rgba(255,255,255,0.2); position: relative;
-}
-.scroll-hint span::after {
-  content: ''; width: 4px; height: 8px; border-radius: 2px;
-  background: rgba(255,255,255,0.4); position: absolute;
-  top: 6px; left: 50%; transform: translateX(-50%);
-  animation: scrollDot 2s ease-in-out infinite;
-}
-@keyframes scrollDot {
-  0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-  50% { opacity: 0.3; transform: translateX(-50%) translateY(12px); }
+.tag-negative { color: var(--color-negative); background: var(--color-negative-bg); }
+.tag-positive { color: var(--color-positive); background: var(--color-positive-bg); }
+.tag-detail {
+  font-size: var(--fs-xs);
+  color: var(--color-text-dim);
+  display: block;
+  margin-top: 2px;
 }
 
-/* ==========================================================================
-   SECTION HEADERS
-   ========================================================================== */
-.section-header { text-align: center; margin-bottom: 64px; }
-.section-tag {
-  display: inline-block; font-size: 0.75rem; font-weight: 600;
-  color: #818cf8; text-transform: uppercase; letter-spacing: 0.15em;
-  margin-bottom: 16px;
-}
-.section-header h2 { margin-bottom: 16px; }
-.section-header p { max-width: 600px; margin: 0 auto; }
-
-/* ==========================================================================
-   TEAM GRID
-   ========================================================================== */
-.domain-group { margin-bottom: 56px; }
-.domain-label {
-  font-size: 0.8rem; font-weight: 600; color: #818cf8;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  margin-bottom: 20px; padding-bottom: 12px;
-  border-bottom: 1px solid rgba(99,102,241,0.15);
-}
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-.agent-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 12px; padding: 20px;
-  transition: all 0.3s ease;
-  cursor: default;
-}
-.agent-card:hover {
-  background: rgba(99, 102, 241, 0.06);
-  border-color: rgba(99, 102, 241, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.08);
-}
-.agent-card .emoji { font-size: 1.5rem; margin-bottom: 8px; display: block; }
-.agent-card .name { font-size: 0.95rem; font-weight: 600; color: #eef0f6; margin-bottom: 6px; }
-.agent-card .desc { font-size: 0.82rem; color: #7c8494; line-height: 1.6; }
-
-/* Leader special card */
-.leader-card {
-  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(59,130,246,0.08));
-  border: 1px solid rgba(99,102,241,0.2);
-  border-radius: 16px; padding: 32px; text-align: center;
-  margin-top: 48px; max-width: 500px; margin-left: auto; margin-right: auto;
-}
-.leader-card .emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
-.leader-card .name { font-size: 1.2rem; font-weight: 700; color: #eef0f6; margin-bottom: 4px; }
-.leader-card .role { font-size: 0.85rem; color: #818cf8; margin-bottom: 12px; }
-.leader-card .desc { font-size: 0.9rem; color: #9ca3b0; }
-
-/* ==========================================================================
-   INNOVATIONS
-   ========================================================================== */
-.innovation {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
-  align-items: center; margin-bottom: 100px;
-}
-.innovation:nth-child(even) { direction: rtl; }
-.innovation:nth-child(even) > * { direction: ltr; }
-.innovation-content { }
-.innovation-number {
-  font-size: 0.75rem; font-weight: 700; color: #818cf8;
-  letter-spacing: 0.15em; margin-bottom: 12px;
-}
-.innovation-content h3 { margin-bottom: 16px; }
-.innovation-content p { margin-bottom: 16px; }
-.innovation-visual {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 16px; padding: 32px;
-  font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", monospace;
-  font-size: 0.82rem; line-height: 1.9; color: #7c8494;
-  overflow-x: auto;
-}
-.innovation-visual .highlight { color: #818cf8; font-weight: 600; }
-.innovation-visual .dim { color: #4b5563; }
-.innovation-visual .accent { color: #06b6d4; }
-.innovation-visual .warm { color: #f59e0b; }
-
-/* Pipeline animation */
-.pipeline-flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.pipeline-node {
-  padding: 6px 12px; border-radius: 8px;
-  background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
-  font-size: 0.78rem; color: #a5b4fc; white-space: nowrap;
-  transition: all 0.3s ease;
-}
-.pipeline-node.active {
-  background: rgba(99,102,241,0.25); color: #eef0f6;
-  box-shadow: 0 0 20px rgba(99,102,241,0.15);
-}
-.pipeline-arrow { color: #4b5563; font-size: 0.8rem; }
-.pipeline-parallel { display: flex; gap: 8px; }
-.pipeline-parallel .pipeline-node { font-size: 0.72rem; }
-
-/* Layers */
-.layer-stack { display: flex; flex-direction: column; gap: 8px; }
-.layer {
-  padding: 12px 16px; border-radius: 10px; display: flex; align-items: center; gap: 12px;
-  transition: all 0.4s ease;
-}
-.layer:nth-child(1) { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); }
-.layer:nth-child(2) { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); }
-.layer:nth-child(3) { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
-.layer:nth-child(4) { background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); }
-.layer-tag { font-weight: 700; font-size: 0.85rem; min-width: 32px; }
-.layer:nth-child(1) .layer-tag { color: #ef4444; }
-.layer:nth-child(2) .layer-tag { color: #f59e0b; }
-.layer:nth-child(3) .layer-tag { color: #3b82f6; }
-.layer:nth-child(4) .layer-tag { color: #818cf8; }
-.layer-info { font-size: 0.82rem; color: #9ca3b0; }
-.layer-label { font-weight: 600; color: #eef0f6; }
-
-/* Memory layers */
-.memory-layers { display: flex; flex-direction: column; gap: 8px; }
-.memory-layer {
-  padding: 12px 16px; border-radius: 10px; display: flex; align-items: flex-start; gap: 12px;
-}
-.memory-layer:nth-child(1) { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.15); }
-.memory-layer:nth-child(2) { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.15); }
-.memory-layer:nth-child(3) { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15); }
-.memory-layer:nth-child(4) { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); }
-.mem-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-.mem-content { }
-.mem-name { font-weight: 600; font-size: 0.85rem; color: #eef0f6; }
-.mem-desc { font-size: 0.78rem; color: #7c8494; margin-top: 2px; }
-
-/* Heal steps */
-.heal-steps { display: flex; flex-direction: column; gap: 12px; }
-.heal-step {
-  display: flex; align-items: center; gap: 16px;
-  padding: 14px 18px; border-radius: 10px;
-  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-}
-.heal-num {
-  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center;
-  justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
-}
-.heal-step:nth-child(1) .heal-num { background: rgba(34,197,94,0.15); color: #22c55e; }
-.heal-step:nth-child(2) .heal-num { background: rgba(245,158,11,0.15); color: #f59e0b; }
-.heal-step:nth-child(3) .heal-num { background: rgba(239,68,68,0.15); color: #ef4444; }
-.heal-text { font-size: 0.85rem; color: #9ca3b0; }
-.heal-text strong { color: #eef0f6; }
-
-/* Knowledge tiers */
-.knowledge-tiers { display: flex; flex-direction: column; gap: 8px; }
-.k-tier {
-  padding: 14px 18px; border-radius: 10px; display: flex; align-items: center; gap: 14px;
-}
-.k-tier:nth-child(1) { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.25); }
-.k-tier:nth-child(2) { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.15); }
-.k-tier:nth-child(3) { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
-.k-icon { font-size: 1.3rem; }
-.k-content { }
-.k-name { font-weight: 600; font-size: 0.9rem; color: #eef0f6; }
-.k-desc { font-size: 0.78rem; color: #7c8494; margin-top: 2px; }
-
-@media (max-width: 768px) {
-  .innovation { grid-template-columns: 1fr; gap: 32px; }
-  .innovation:nth-child(even) { direction: ltr; }
+@media (max-width: 600px) {
+  .contrast-grid { grid-template-columns: 1fr; }
 }
 
-/* ==========================================================================
-   COMPARISON
-   ========================================================================== */
-.comparison-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-  border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+/* ═══════════════════════════════════════════
+   BLOCK 5 — The Architecture (深层架构)
+   ═══════════════════════════════════════════ */
+#architecture {
+  padding-top: var(--sp-16);
+  padding-bottom: var(--sp-16);
+  min-height: 80vh;
+  background: linear-gradient(180deg, #0d0d1a 0%, #0f0f22 50%, #0d0d1a 100%);
+}
+.cross-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-12);
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.cross-section {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  padding: var(--sp-6);
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-slower) var(--ease-out),
+              transform var(--dur-slower) var(--ease-out);
 }
-.comp-header {
-  padding: 20px 24px; font-weight: 700; font-size: 0.85rem;
-  text-transform: uppercase; letter-spacing: 0.1em; text-align: center;
+.cross-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
-.comp-header.old { background: rgba(255,255,255,0.03); color: #6b7280; }
-.comp-header.new { background: rgba(99,102,241,0.1); color: #a5b4fc; }
-.comp-row { display: contents; }
-.comp-cell {
-  padding: 16px 24px; font-size: 0.88rem; line-height: 1.6;
-  border-top: 1px solid rgba(255,255,255,0.04);
+.cs-subtitle {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
 }
-.comp-cell.old { color: #6b7280; background: rgba(255,255,255,0.01); }
-.comp-cell.new { color: #c8ccd4; background: rgba(99,102,241,0.04); }
-.comp-dim { font-weight: 600; color: #818cf8; font-size: 0.78rem;
-  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.cs-title {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  color: var(--color-accent);
+  margin-bottom: var(--sp-6);
+}
+.cs-row {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: #d0d0d0;
+  padding: var(--sp-2) 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  opacity: 0.05;
+  transform: translateY(8px);
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out);
+}
+.cs-row.visible { opacity: 1; transform: translateY(0); }
+.cs-row .level {
+  color: var(--color-accent);
+  font-weight: var(--fw-bold);
+  min-width: 2.5em;
+}
+.cs-row .desc { flex: 1; color: #d0d0d0; }
+.cs-row .role { color: var(--color-text-bright); }
+.cs-bottom {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--fs-body);
+  color: #d0d0d0;
+  line-height: var(--lh-normal);
+  opacity: 0.05;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.cs-bottom.visible { opacity: 1; }
 
-@media (max-width: 640px) {
-  .comparison-grid { grid-template-columns: 1fr; }
-  .comp-header.old, .comp-header.new { display: none; }
-  .comp-cell { border-left: 3px solid transparent; }
-  .comp-cell.old { border-left-color: #4b5563; }
-  .comp-cell.new { border-left-color: #818cf8; }
-  .comp-cell::before {
-    display: block; font-size: 0.7rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
-  }
-  .comp-cell.old::before { content: '传统方式'; color: #6b7280; }
-  .comp-cell.new::before { content: 'AI 组织'; color: #818cf8; }
+/* Memory heat colors */
+.heat-hot { color: #f87171; }
+.heat-warm { color: #fbbf24; }
+.heat-proj { color: var(--color-accent); }
+.heat-emer { color: #fb923c; }
+
+/* Evolution section */
+.evo-block {
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.evo-block:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.evo-title {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-bright);
+  margin-bottom: var(--sp-2);
+}
+.evo-desc {
+  font-size: var(--fs-small);
+  color: #d0d0d0;
+  line-height: var(--lh-normal);
 }
 
-/* ==========================================================================
-   PROOF
-   ========================================================================== */
-.proof-timeline {
-  display: flex; flex-direction: column; gap: 0;
-  position: relative; padding-left: 48px;
+/* ═══════════════════════════════════════════
+   BLOCK 6 — The Bigger Picture (更大的图景)
+   ═══════════════════════════════════════════ */
+#vision {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sp-16) var(--sp-6);
+  background: linear-gradient(180deg, #0d0d14 0%, #111128 50%, #0d0d14 100%);
 }
-.proof-timeline::before {
-  content: ''; position: absolute; left: 19px; top: 0; bottom: 0;
-  width: 2px; background: linear-gradient(to bottom, rgba(99,102,241,0.4), rgba(59,130,246,0.4), rgba(6,182,212,0.2));
+.vision-content {
+  max-width: var(--max-w);
+  margin: 0 auto;
 }
-.proof-step {
-  position: relative; padding: 20px 0;
+.vision-para {
+  font-size: var(--fs-h2);
+  color: #f5f5f5;
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--sp-8);
+  opacity: 0.05;
+  transform: translateY(16px);
+  transition: opacity var(--dur-slower) var(--ease-out),
+              transform var(--dur-slower) var(--ease-out);
 }
-.proof-dot {
-  position: absolute; left: -37px; top: 24px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: #818cf8; border: 3px solid #08080e;
-  box-shadow: 0 0 12px rgba(99,102,241,0.4);
+.vision-para.visible { opacity: 1; transform: translateY(0); }
+.vision-divider {
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  opacity: 0.4;
+  margin: var(--sp-8) 0;
+  transition: width var(--dur-slow) var(--ease-out);
 }
-.proof-step .emoji { font-size: 1.2rem; margin-right: 8px; }
-.proof-step .role { font-weight: 600; color: #eef0f6; font-size: 0.95rem; }
-.proof-step .action { color: #9ca3b0; font-size: 0.88rem; margin-top: 4px; }
+.vision-divider.visible { width: 120px; }
+.vision-final {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-bright);
+  line-height: var(--lh-relaxed);
+}
 
-/* ==========================================================================
-   CTA
-   ========================================================================== */
+/* ═══════════════════════════════════════════
+   BLOCK 7 — The Call (行动号召)
+   ═══════════════════════════════════════════ */
 #cta {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background: linear-gradient(to bottom, transparent, rgba(99,102,241,0.05));
-  padding: 120px 0 80px;
+  padding: var(--sp-16) var(--sp-6);
+  background: radial-gradient(ellipse at 50% 50%, rgba(129,140,248,0.03) 0%, var(--color-bg) 60%);
 }
-#cta h2 { margin-bottom: 16px; }
-#cta p { max-width: 500px; margin: 0 auto 40px; font-size: 1.05rem; }
-.cta-highlight {
-  display: inline-block; padding: 14px 40px; border-radius: 12px;
-  background: linear-gradient(135deg, #818cf8, #6366f1);
-  color: #fff; font-weight: 600; font-size: 0.95rem;
-  transition: all 0.3s ease; box-shadow: 0 4px 24px rgba(99,102,241,0.25);
+.cta-title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  color: #f5f5f5;
+  margin-bottom: var(--sp-8);
 }
-.cta-highlight:hover {
-  transform: translateY(-2px); box-shadow: 0 8px 40px rgba(99,102,241,0.35);
-  color: #fff;
+.cta-buttons {
+  display: flex;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-16);
 }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--color-accent);
+  color: #0a0a14;
+  border: none;
+  padding: var(--sp-3) var(--sp-8);
+  border-radius: 6px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.btn-primary:hover { background: #9ba3fb; }
+.btn-primary:active { background: var(--color-accent-dim); transform: scale(0.97); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  padding: var(--sp-3) var(--sp-8);
+  border-radius: 6px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.btn-ghost:hover { border-color: var(--color-accent); color: #fff; background: rgba(129,140,248,0.15); }
+.btn-ghost:active { border-color: var(--color-accent-dim); }
 
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
 footer {
-  padding: 40px 0; text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  text-align: center;
+  padding: var(--sp-8) var(--sp-6);
+  border-top: 1px solid var(--color-border-subtle);
 }
-footer p { font-size: 0.82rem; color: #4b5563; }
-
-/* ==========================================================================
-   ANIMATIONS
-   ========================================================================== */
-.reveal {
-  opacity: 0; transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+.footer-brand {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: #999;
+  margin-bottom: var(--sp-2);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+.footer-stats {
+  font-size: var(--fs-small);
+  color: #999;
+  margin-bottom: var(--sp-2);
+  letter-spacing: var(--ls-wide);
+}
+.footer-meta {
+  font-size: var(--fs-xs);
+  color: var(--color-accent);
+  font-style: italic;
+}
 
-/* Staggered cards */
-.agent-card.reveal { transition-delay: calc(var(--i, 0) * 0.05s); }
+@media (max-width: 600px) {
+  .cta-buttons { flex-direction: column; width: 100%; }
+  .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+}
 
-/* Glow */
-.glow-text {
-  background: linear-gradient(135deg, #818cf8, #3b82f6, #06b6d4);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ═══════════════════════════════════════════
+   Responsive Overrides
+   ═══════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  :root {
+    --max-w: 90vw;
+    --section-py: var(--sp-12);
+  }
+  html { font-size: 16px; }
+}
+@media (max-width: 600px) {
+  :root {
+    --max-w: 92vw;
+    --section-py: var(--sp-8);
+    --section-px: 20px;
+    --fs-display: 1.75rem;
+    --fs-h1: 1.375rem;
+  }
+  html { font-size: 15px; }
+  .topo-wrap { padding: 0 4px; }
+  .reveal-text .statement { font-size: 1.15rem; }
+  .reveal-text .sub { font-size: 0.875rem; }
+  .reveal-text { margin-top: 32px; }
+}
+
+/* Skip link for a11y */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-accent);
+  color: #000;
+  padding: var(--sp-2) var(--sp-4);
+  z-index: 1000;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
+/* F4: Section separators — subtle gradient borders */
+#reveal::after,
+#process::after,
+#contrast::after,
+#architecture::after,
+#vision::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 1px;
+  margin: var(--sp-12) auto 0;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   V3.2 — Contrast Overhaul (refined: reduced !important usage)
+   ═══════════════════════════════════════════ */
+
+/* Block 5: Architecture — enhanced specificity instead of !important */
+#architecture .section-title { color: #f5f5f5; }
+#architecture .cs-title { color: #a5b4fc; }
+#architecture .cs-row .desc { color: #d5d5d5; }
+#architecture .cs-bottom { color: #d5d5d5; }
+#architecture .evo-desc { color: #d5d5d5; }
+#architecture .cs-row .level { color: #e0e0e0; }
+#architecture .cs-row .role { color: #e0e0e0; }
+/* Memory heat colors — restored! These colors are semantic, not decorative */
+section#architecture .heat-hot { color: #f87171; }
+section#architecture .heat-warm { color: #fbbf24; }
+section#architecture .heat-proj { color: var(--color-accent); }
+section#architecture .heat-emer { color: #fb923c; }
+#architecture .evo-title { color: #f5f5f5; }
+
+/* Block 6: Vision */
+section#vision .vision-para { color: #f0f0f0; }
+section#vision .vision-para span[style*="color"] { color: #a5b4fc; font-weight: 700; }
+section#vision .vision-divider { border-color: #818cf8; opacity: 0.5; background: #818cf8; }
+
+/* Block 7: CTA */
+section#cta .cta-title { color: #f5f5f5; }
+section#cta .btn-primary { background: #818cf8; color: #0a0a14; font-weight: 600; }
+section#cta .btn-ghost { border: 2px solid #818cf8; color: #a5b4fc; }
+/* Block 7: Footer */
+footer .footer-meta { color: #818cf8; }
+footer .footer-brand { color: #aaa; }
+footer .footer-stats { color: #aaa; }
+
+/* ═══════════════════════════════════════════
+   V3.2 — Block 3/4 card borders
+   ═══════════════════════════════════════════ */
+
+/* Block 3: Timeline step-detail cards */
+#process .step-detail { border: 1px solid #2a2a40; }
+/* Block 4: Contrast panels */
+#contrast .contrast-panel { border: 1px solid #2a2a40; }
+
+/* ═══════════════════════════════════════════
+   V3.3 — Refined brightness (reduced !important)
+   ═══════════════════════════════════════════ */
+
+/* --- Block 2: Topo radial glow background (now in #reveal rule) --- */
+
+/* --- Block 6: Vision section text brightness --- */
+section#vision p,
+section#vision .vision-para,
+section#vision .vision-content p {
+  color: #f0f0f0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+section#vision .vision-para strong,
+section#vision strong {
+  color: #a5b4fc;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+section#vision hr,
+section#vision .vision-divider {
+  border-color: #818cf8;
+  opacity: 0.6;
+  width: 120px;
+}
+section#vision .vision-final,
+section#vision .reveal-text .statement {
+  color: #f5f5f5;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+/* Vision paragraph initial opacity */
+.vision-para {
+  opacity: 0.15;
+}
+.vision-para.visible {
+  opacity: 1;
+}
+
+/* --- Block 3: Timeline cards brightness --- */
+.step-card,
+.step-summary,
+#process .step-summary {
+  background: #1a1a35;
+  border: 1px solid #3a3a55;
+}
+.step-action,
+.step-title {
+  color: #f0f0f0;
+}
+.step-desc,
+.step-summary p {
+  color: #c8c8d0;
 }
 </style>
 </head>
-<body>
+<body class="scroll-locked">
+<a class="skip-link" href="#reveal">跳转到主要内容</a>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <div class="nav-inner">
-    <div class="nav-brand"><span>NDHY</span> AI Agent Team</div>
-    <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">☰</button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#team">组织</a></li>
-      <li><a href="#innovations">创新</a></li>
-      <li><a href="#comparison">对比</a></li>
-      <li><a href="#proof">证据</a></li>
-    </ul>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="container hero-content">
-    <div class="hero-badge">NDHY AI Agent Team</div>
-    <h1 class="hero-title">一个人类，26 个 AI 专家，<br>一个完整的产品组织。</h1>
-    <p class="hero-subtitle">不是工具调用。不是 Prompt 技巧。<br>是一支有架构、有纪律、有记忆、会进化的 AI 组织。</p>
-    <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-number" data-target="1">0</div>
-        <div class="stat-label">人类产品经理</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-target="26">0</div>
-        <div class="stat-label">AI 领域专家</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-target="6">0</div>
-        <div class="stat-label">完整流水线</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" data-target="0" data-suffix=" 行">0 行</div>
-        <div class="stat-label">人类代码（含本站）</div>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-hint"><span></span></div>
+<!-- ═══════════════ BLOCK 1: The Hook ═══════════════ -->
+<section id="hook" aria-label="悬念开场">
+  <div class="hook-line" id="hook-date">2026 年 3 月 10 日</div>
+  <div id="hook-typewriter" aria-live="polite"></div>
+  <div class="hook-spacer"></div>
+  <div class="hook-line" id="hook-later">6 天后，</div>
+  <div class="hook-line" id="hook-team">他拥有了一个 28 人的产品团队。</div>
+  <div class="hook-spacer"></div>
+  <div class="hook-line hook-emphasis" id="hook-punchline">他没有招过一个人。</div>
+  <button class="scroll-arrow" id="scroll-arrow" aria-label="向下滚动" title="向下滚动">↓</button>
 </section>
 
-<div class="section-divider"></div>
+<!-- ═══════════════ BLOCK 2: The Reveal ═══════════════ -->
+<section id="reveal" aria-label="揭幕震撼">
+  <div class="topo-wrap">
+    <svg class="topo-svg" viewBox="0 0 900 920" role="img" aria-label="NDHY AI 组织拓扑图：1 个人类 + 28 个 AI 专家的同心环组织网络">
+      <defs>
+        <filter id="glow-sm" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-md" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-lg" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-xl" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-gold" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="ambient" cx="50%" cy="52%" r="35%">
+          <stop offset="0%" stop-color="rgba(129,140,248,0.08)"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
 
-<!-- TEAM -->
-<section id="team">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">The Team</div>
-      <h2>26 个专家，覆盖产品全链路</h2>
-      <p>从需求到部署，每个环节都有专职 AI 专家。不是一个万能模型，而是一支各有专精的组织。</p>
-    </div>
+      <!-- Ambient background glow -->
+      <rect x="0" y="0" width="900" height="920" fill="url(#ambient)"/>
 
-    <!-- 需求与战略 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">🎯 需求与战略</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🎯</span><div class="name">需求分析专家</div><div class="desc">穿透表达找到真实需求，将模糊想法变成结构化需求文档</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🔍</span><div class="name">用户研究专家</div><div class="desc">从公开数据和真实声音中拼出用户的真实面孔</div></div>
-        <div class="agent-card reveal" style="--i:2"><span class="emoji">📊</span><div class="name">市场评估专家</div><div class="desc">用数据和结构化分析回答：这件事在市场上成不成立</div></div>
-        <div class="agent-card reveal" style="--i:3"><span class="emoji">🔭</span><div class="name">竞品调研专家</div><div class="desc">穿透产品表象，拆解背后的战略意图和决策逻辑</div></div>
-        <div class="agent-card reveal" style="--i:4"><span class="emoji">🧭</span><div class="name">战略定位专家</div><div class="desc">在信息噪音中做出方向决策——做什么、不做什么、凭什么赢</div></div>
-      </div>
-    </div>
+      <!-- Decorative ring guides -->
+      <circle cx="450" cy="480" r="130" fill="none" stroke="rgba(129,140,248,0.04)" stroke-width="1" stroke-dasharray="4 8"/>
+      <circle cx="450" cy="480" r="295" fill="none" stroke="rgba(129,140,248,0.03)" stroke-width="1" stroke-dasharray="4 8"/>
 
-    <!-- 产品与体验 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">📐 产品与体验</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">📐</span><div class="name">产品定义专家</div><div class="desc">把战略方向翻译成看得见摸得着的产品形态</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🎨</span><div class="name">体验设计专家</div><div class="desc">设计用户完成任务的完整经历——每一步怎么走、看到什么</div></div>
-        <div class="agent-card reveal" style="--i:2"><span class="emoji">🔄</span><div class="name">迭代优化专家</div><div class="desc">在"做"和"不做"之间找到最优解的迭代操盘手</div></div>
-      </div>
-    </div>
+      <!-- Connection lines (rendered behind nodes) -->
+      <g class="lines" opacity="0">
+        <line x1="450" y1="120" x2="450" y2="440" stroke="rgba(251,191,36,0.25)" stroke-width="2" stroke-dasharray="6 4"/>
+        <line x1="450" y1="480" x2="330" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
+        <line x1="450" y1="480" x2="570" y2="430" stroke="rgba(129,140,248,0.2)" stroke-width="1.5"/>
+      </g>
+      <!-- Spoke lines (dynamically generated) -->
+      <g class="spokes" opacity="0"></g>
 
-    <!-- 技术架构 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">🏛️ 技术架构</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🏛️</span><div class="name">技术架构专家</div><div class="desc">设计系统的骨架——分层、模块边界、技术选型、数据流</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🔬</span><div class="name">技术调研专家</div><div class="desc">在技术信息洪流中快速定位关键情报，输出可决策的选型结论</div></div>
-      </div>
-    </div>
+      <!-- Nodes -->
+      <g id="nodes">
+        <!-- L0: Boss (Human) — top center -->
+        <g class="node boss" data-ring="0" data-order="29" data-emoji="👤" data-name="老板（人类）" data-desc="最终决策者" transform="translate(450,85)">
+          <circle r="34" fill="rgba(20,20,30,0.8)" stroke="rgba(251,191,36,0.2)" stroke-width="2"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="26" fill="#fff">👤</text>
+          <text text-anchor="middle" y="52" font-size="12" fill="rgba(251,191,36,0.15)" font-family="var(--font-sans)">老板</text>
+        </g>
 
-    <!-- 设计层 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">📜 详细设计</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🗄️</span><div class="name">数据库设计专家</div><div class="desc">设计数据的骨架——实体边界、字段语义、约束策略</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">📜</span><div class="name">API 设计专家</div><div class="desc">设计系统的契约——资源边界、动作语义、错误模型</div></div>
-      </div>
-    </div>
+        <!-- L1: Leader — center -->
+        <g class="node leader" data-ring="1" data-order="0" data-emoji="🧧" data-name="Leader" data-desc="组织运营，目标定义与调度决策" transform="translate(450,480)">
+          <circle r="30" fill="rgba(20,20,40,0.9)" stroke="rgba(129,140,248,0.15)" stroke-width="2"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="24" fill="#fff">🧧</text>
+          <text text-anchor="middle" y="46" font-size="12" fill="rgba(129,140,248,0.15)" font-family="var(--font-sans)">Leader</text>
+        </g>
 
-    <!-- 开发实现 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">⚙️ 开发实现</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">⚙️</span><div class="name">后端开发专家</div><div class="desc">在架构约束下把业务能力准确、稳定地变成后端服务</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🖥️</span><div class="name">前端开发专家</div><div class="desc">把体验方案和接口契约变成用户可触碰的界面</div></div>
-      </div>
-    </div>
+        <!-- L2: Ring 2 — close orbit -->
+        <g class="node r2" data-ring="2" data-order="1" data-emoji="🏗️" data-name="项目管理专家" data-desc="项目执行调度，指令包组装与上下文管理" transform="translate(330,430)">
+          <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">🏗️</text>
+          <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">项目管理</text>
+        </g>
+        <g class="node r2" data-ring="2" data-order="2" data-emoji="📝" data-name="技术文档专家" data-desc="把混乱信息变成清晰知识体系" transform="translate(570,430)">
+          <circle r="24" fill="rgba(20,20,40,0.8)" stroke="rgba(129,140,248,0.1)" stroke-width="1.5"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="20">📝</text>
+          <text text-anchor="middle" y="38" font-size="11" fill="rgba(232,232,232,0.12)" font-family="var(--font-sans)">技术文档</text>
+        </g>
 
-    <!-- 质量保障 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">🔍 质量保障</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🔍</span><div class="name">代码审查专家</div><div class="desc">在代码变成线上事故之前拦住它的质量守门人</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🔗</span><div class="name">联调集成专家</div><div class="desc">验证各模块不只是"各自正确"，而是"整体可跑通"</div></div>
-        <div class="agent-card reveal" style="--i:2"><span class="emoji">🧪</span><div class="name">测试专家</div><div class="desc">站在用户视角系统性验证交付物的最后防线</div></div>
-      </div>
-    </div>
+        <!-- L3: Ring 3 — outer orbit, grouped by domain -->
+        <!-- Domain: 需求洞察 -->
+        <g class="node r3" data-ring="3" data-order="3" data-emoji="🎯" data-name="需求分析专家" data-desc="将模糊想法变为结构化需求" data-domain="insight" transform="translate(215,240)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎯</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">需求分析</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="4" data-emoji="🔍" data-name="用户研究专家" data-desc="用户画像、旅程地图、需求洞察" data-domain="insight" transform="translate(250,225)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">用户研究</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="5" data-emoji="📊" data-name="市场评估专家" data-desc="市场规模、竞争格局、商业可行性" data-domain="insight" transform="translate(320,195)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📊</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">市场评估</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="6" data-emoji="🔭" data-name="竞品调研专家" data-desc="单个竞品深度拆解与策略分析" data-domain="insight" transform="translate(400,185)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔭</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">竞品调研</text>
+        </g>
+        <!-- Domain: 战略定义 -->
+        <g class="node r3" data-ring="3" data-order="7" data-emoji="🧭" data-name="战略定位专家" data-desc="战略方向选择与竞争定位" data-domain="strategy" transform="translate(490,185)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧭</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">战略定位</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="8" data-emoji="📐" data-name="产品定义专家" data-desc="产品形态、功能范围、MVP 界定" data-domain="strategy" transform="translate(575,195)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📐</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">产品定义</text>
+        </g>
+        <!-- Domain: 流程角色 -->
+        <g class="node r3" data-ring="3" data-order="9" data-emoji="🔩" data-name="流程设计专家" data-desc="执行流程编排与角色协作设计" data-domain="process" transform="translate(650,230)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔩</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">流程设计</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="10" data-emoji="🧬" data-name="角色创造专家" data-desc="AI 专家角色创造与团队组建" data-domain="process" transform="translate(700,285)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧬</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">角色创造</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="11" data-emoji="🔧" data-name="Skill 开发专家" data-desc="OpenClaw Skill 开发与发布" data-domain="process" transform="translate(730,350)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔧</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">Skill开发</text>
+        </g>
+        <!-- Domain: 技术调研 -->
+        <g class="node r3" data-ring="3" data-order="12" data-emoji="🔬" data-name="技术调研专家" data-desc="技术选型、可行性评估、方案调研" data-domain="research" transform="translate(740,420)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔬</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术调研</text>
+        </g>
+        <!-- Domain: 设计 -->
+        <g class="node r3" data-ring="3" data-order="13" data-emoji="🎨" data-name="体验设计专家" data-desc="信息架构、任务流程、交互模式" data-domain="design" transform="translate(735,495)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">体验设计</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="14" data-emoji="🎨" data-name="视觉设计专家" data-desc="品牌视觉、配色、排印、设计 Token" data-domain="design" transform="translate(720,565)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🎨</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">视觉设计</text>
+        </g>
+        <!-- Domain: 架构数据 -->
+        <g class="node r3" data-ring="3" data-order="15" data-emoji="🏛️" data-name="技术架构专家" data-desc="系统分层、模块边界、技术选型" data-domain="arch" transform="translate(685,630)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🏛️</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">技术架构</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="16" data-emoji="🗄️" data-name="数据库设计专家" data-desc="数据建模、表结构、字段字典" data-domain="arch" transform="translate(630,690)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🗄️</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据库设计</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="17" data-emoji="📜" data-name="API 设计专家" data-desc="接口契约、错误模型、Mock 输出" data-domain="arch" transform="translate(565,730)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📜</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">API设计</text>
+        </g>
+        <!-- Domain: 开发 -->
+        <g class="node r3" data-ring="3" data-order="18" data-emoji="⚙️" data-name="后端开发专家" data-desc="Controller/Service/Repository 全栈实现" data-domain="dev" transform="translate(490,755)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">⚙️</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">后端开发</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="19" data-emoji="🖥️" data-name="前端开发专家" data-desc="组件、状态管理、全态处理" data-domain="dev" transform="translate(405,760)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🖥️</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">前端开发</text>
+        </g>
+        <!-- Domain: 质量 -->
+        <g class="node r3" data-ring="3" data-order="20" data-emoji="🔍" data-name="代码审查专家" data-desc="代码质量、架构评审、安全审计" data-domain="quality" transform="translate(325,745)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔍</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">代码审查</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="21" data-emoji="🔗" data-name="联调集成专家" data-desc="跨模块契约对齐与端到端验证" data-domain="quality" transform="translate(255,710)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔗</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">联调集成</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="22" data-emoji="🧪" data-name="测试专家" data-desc="测试策略、用例设计、发布就绪评估" data-domain="quality" transform="translate(200,650)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🧪</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">测试</text>
+        </g>
+        <!-- Domain: 交付 -->
+        <g class="node r3" data-ring="3" data-order="23" data-emoji="🚀" data-name="部署运维专家" data-desc="发布保障、监控告警、回滚方案" data-domain="delivery" transform="translate(165,580)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🚀</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">部署运维</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="24" data-emoji="📦" data-name="发布策略专家" data-desc="灰度发布、用户培训、变更管理" data-domain="delivery" transform="translate(160,505)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📦</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">发布策略</text>
+        </g>
+        <!-- Domain: 运营迭代 -->
+        <g class="node r3" data-ring="3" data-order="25" data-emoji="📈" data-name="增长运营专家" data-desc="用户获取、激活、留存策略" data-domain="ops" transform="translate(165,425)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">增长运营</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="26" data-emoji="📈" data-name="数据分析专家" data-desc="指标体系、A/B 测试、数据叙事" data-domain="ops" transform="translate(175,350)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📈</text>
+          <text text-anchor="middle" y="32" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">数据分析</text>
+        </g>
+        <g class="node r3" data-ring="3" data-order="27" data-emoji="🔄" data-name="迭代优化专家" data-desc="优先级裁决、MVP 拆解、止损判断" data-domain="ops" transform="translate(200,275)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">🔄</text>
+          <text text-anchor="end" x="-24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">迭代优化</text>
+        </g>
+        <!-- Domain: 领域专家 -->
+        <g class="node r3" data-ring="3" data-order="28" data-emoji="📚" data-name="教育领域专家" data-desc="K12 课标、教学设计、学习科学" data-domain="domain" transform="translate(155,330)">
+          <circle r="20" fill="rgba(20,20,40,0.7)" stroke="rgba(129,140,248,0.08)" stroke-width="1"/>
+          <text text-anchor="middle" dominant-baseline="central" font-size="18">📚</text>
+          <text text-anchor="start" x="24" y="4" font-size="10" fill="rgba(232,232,232,0.1)" font-family="var(--font-sans)">教育领域</text>
+        </g>
+      </g>
+    </svg>
 
-    <!-- 交付与运营 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">🚀 交付与运营</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🚀</span><div class="name">部署运维专家</div><div class="desc">把验证过的交付物安全、可控地部署到生产环境</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">📦</span><div class="name">发布策略专家</div><div class="desc">设计产品从"开发完成"到"用户成功用起来"的全过程</div></div>
-        <div class="agent-card reveal" style="--i:2"><span class="emoji">📈</span><div class="name">增长运营专家</div><div class="desc">让产品的用户越来越多、用得越来越深</div></div>
-        <div class="agent-card reveal" style="--i:3"><span class="emoji">📈</span><div class="name">数据分析专家</div><div class="desc">从数据中发现问题、挖掘机会、验证假设，驱动决策</div></div>
-      </div>
-    </div>
-
-    <!-- 组织基建 -->
-    <div class="domain-group reveal">
-      <div class="domain-label">🔧 组织基建</div>
-      <div class="team-grid">
-        <div class="agent-card reveal" style="--i:0"><span class="emoji">🔩</span><div class="name">流程设计专家</div><div class="desc">拆解出谁来做、做什么、怎么配合</div></div>
-        <div class="agent-card reveal" style="--i:1"><span class="emoji">🧬</span><div class="name">角色创造专家</div><div class="desc">赋予每个 AI 专家独立的身份、认知和行为规范</div></div>
-        <div class="agent-card reveal" style="--i:2"><span class="emoji">🔧</span><div class="name">Skill 开发专家</div><div class="desc">创建和改进 AI 能力包——让每个 Agent 越来越强</div></div>
-        <div class="agent-card reveal" style="--i:3"><span class="emoji">📝</span><div class="name">技术文档专家</div><div class="desc">把混乱的信息变成清晰的知识体系</div></div>
-        <div class="agent-card reveal" style="--i:4"><span class="emoji">🏗️</span><div class="name">项目管理专家</div><div class="desc">把需求变成可执行的多专家协作计划，驱动交付闭环</div></div>
-      </div>
-    </div>
-
-    <!-- Leader -->
-    <div class="leader-card reveal">
-      <span class="emoji">🧧</span>
-      <div class="name">Leader · 发发</div>
-      <div class="role">组织运营者</div>
-      <div class="desc">需求验证门 → 目标定义 → 调度决策 → 质量把关 → 交付汇报<br>人类与 AI 团队之间的唯一接口</div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<!-- INNOVATIONS -->
-<section id="innovations">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">Innovations</div>
-      <h2>五大颠覆性创新</h2>
-      <p>不是把 AI 当工具用，而是建立了一套完整的 AI 组织运作体系。</p>
-    </div>
-
-    <!-- 1. 全链路流水线 -->
-    <div class="innovation reveal">
-      <div class="innovation-content">
-        <div class="innovation-number">INNOVATION 01</div>
-        <h3>全链路 AI 流水线</h3>
-        <p>从一句话需求到产品上线，全程 AI 驱动。人类只在起点（提需求）和终点（验收结果）介入。</p>
-        <p>这不是自动化脚本。每个节点都是一个有独立专业判断能力的 AI 专家，根据上游产出做出自己领域内的最佳决策。</p>
-      </div>
-      <div class="innovation-visual">
-        <div class="pipeline-flow" id="pipelineFlow">
-          <div class="pipeline-node">需求分析</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">战略定位</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">产品定义</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">体验设计</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">技术架构</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-parallel">
-            <div class="pipeline-node">DB 设计</div>
-            <div class="pipeline-node">API 设计</div>
-          </div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-parallel">
-            <div class="pipeline-node">后端</div>
-            <div class="pipeline-node">前端</div>
-          </div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">联调</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">审查</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">测试</div><span class="pipeline-arrow">→</span>
-          <div class="pipeline-node">部署</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. 权力分层 -->
-    <div class="innovation reveal">
-      <div class="innovation-content">
-        <div class="innovation-number">INNOVATION 02</div>
-        <h3>权力分层模型</h3>
-        <p>四层决策体系，每层只管自己该管的。人类不是所有决策的瓶颈——大部分决策在 AI 组织内部完成。</p>
-        <p>不是 AI 替代人类决策，而是人类授权 AI 在各自专业范围内自主决策。</p>
-      </div>
-      <div class="innovation-visual">
-        <div class="layer-stack">
-          <div class="layer"><span class="layer-tag">L0</span><div class="layer-info"><div class="layer-label">战略层 · 人类</div>做不做、方向对不对</div></div>
-          <div class="layer"><span class="layer-tag">L1</span><div class="layer-info"><div class="layer-label">目标层 · Leader</div>做成什么样、验收标准</div></div>
-          <div class="layer"><span class="layer-tag">L2</span><div class="layer-info"><div class="layer-label">执行层 · 项目管理</div>怎么拆、谁先做、依赖关系</div></div>
-          <div class="layer"><span class="layer-tag">L3</span><div class="layer-info"><div class="layer-label">专业层 · 26 专家</div>自己领域内怎么做最好</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. 分层记忆 -->
-    <div class="innovation reveal">
-      <div class="innovation-content">
-        <div class="innovation-number">INNOVATION 03</div>
-        <h3>分层记忆体系</h3>
-        <p>AI 最大的短板是"记不住"。四层记忆体系让团队持续积累经验。</p>
-        <p>每一次纠正都是最高优先级信号——立即记录，永不重犯。同一模式出现三次，自动提炼为规则。</p>
-      </div>
-      <div class="innovation-visual">
-        <div class="memory-layers">
-          <div class="memory-layer"><span class="mem-icon">🔥</span><div class="mem-content"><div class="mem-name">HOT · 全局规则</div><div class="mem-desc">偏好、跨项目教训、通用规则 — 每次唤醒加载</div></div></div>
-          <div class="memory-layer"><span class="mem-icon">🟡</span><div class="mem-content"><div class="mem-name">WARM · 每日记忆</div><div class="mem-desc">当天事件、决策、上下文 — 按日归档</div></div></div>
-          <div class="memory-layer"><span class="mem-icon">📁</span><div class="mem-content"><div class="mem-name">PROJECT · 项目记忆</div><div class="mem-desc">技术栈、决策、进度 — 项目独立维护</div></div></div>
-          <div class="memory-layer"><span class="mem-icon">🆘</span><div class="mem-content"><div class="mem-name">BUFFER · 应急缓冲</div><div class="mem-desc">上下文溢出时的连续性保障</div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. 自愈机制 -->
-    <div class="innovation reveal">
-      <div class="innovation-content">
-        <div class="innovation-number">INNOVATION 04</div>
-        <h3>自愈机制</h3>
-        <p>AI Agent 不是永远可靠的。关键在于系统能不能自己恢复。</p>
-        <p>不需要人类时刻盯着，但也不会让问题悄悄烂掉。</p>
-      </div>
-      <div class="innovation-visual">
-        <div class="heal-steps">
-          <div class="heal-step"><div class="heal-num">1</div><div class="heal-text"><strong>追问</strong> — 超时未完成，追问进度</div></div>
-          <div class="heal-step"><div class="heal-num">2</div><div class="heal-text"><strong>重启</strong> — 确认卡死，终止并重启（携带上下文）</div></div>
-          <div class="heal-step"><div class="heal-num">3</div><div class="heal-text"><strong>上报</strong> — 连续 2 次失败，停止重试，上报人类</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. 知识治理 -->
-    <div class="innovation reveal">
-      <div class="innovation-content">
-        <div class="innovation-number">INNOVATION 05</div>
-        <h3>知识治理协议</h3>
-        <p>三层知识架构，让信息按需流动。每个 AI 专家都有自己的"灵魂文件"——不是 prompt 模板，是数字人格。</p>
-        <p>新知识的准入有严格流程，信息不堆积，按需流动。</p>
-      </div>
-      <div class="innovation-visual">
-        <div class="knowledge-tiers">
-          <div class="k-tier"><span class="k-icon">📜</span><div class="k-content"><div class="k-name">设定 · 宪法</div><div class="k-desc">始终加载，每一行都是强制执行的专业本质</div></div></div>
-          <div class="k-tier"><span class="k-icon">🛠️</span><div class="k-content"><div class="k-name">技能 · 操作手册</div><div class="k-desc">按需加载，匹配当前任务</div></div></div>
-          <div class="k-tier"><span class="k-icon">📚</span><div class="k-content"><div class="k-name">参考 · 百科全书</div><div class="k-desc">按需递归，需要时才读</div></div></div>
-        </div>
-      </div>
+    <div class="reveal-text" id="reveal-text">
+      <p class="statement">一个人类。28 个 AI 专家。一个完整的产品组织。</p>
+      <p class="sub">不是工具。不是框架。不是 Prompt 模板。<br>是一支有灵魂、有纪律、有记忆、会进化的 AI 组织。</p>
     </div>
   </div>
 </section>
 
-<div class="section-divider"></div>
+<!-- ═══════════════ BLOCK 3: How It Works ═══════════════ -->
+<section id="process" class="section" aria-label="运转揭秘">
+  <h2 class="section-title fade-in">你正在看的这个网站，是这样被做出来的。</h2>
+  <p class="section-subtitle fade-in">真实过程，0 行人类代码</p>
 
-<!-- COMPARISON -->
-<section id="comparison">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">Comparison</div>
-      <h2>差距不在单点能力，在组织方式</h2>
-      <p>同样的 AI 模型，散装使用和组织化使用，产出的质量和效率天差地别。</p>
-    </div>
+  <div class="timeline" role="list" aria-label="制作过程时间线">
+    <article class="timeline-step" role="listitem" data-step="0">
+      <div class="step-dot"></div>
+      <div class="step-emoji">👤</div>
+      <div class="step-role">老板</div>
+      <div class="step-action">写了一份设计方案</div>
+      <div class="step-meta">[待回填] · design-v3.md</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="1">
+      <div class="step-dot"></div>
+      <div class="step-emoji">📝</div>
+      <div class="step-role">技术文档专家</div>
+      <div class="step-action">策划全站内容文案</div>
+      <div class="step-meta">[待回填] · content-v3.md</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="2">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🎨</div>
+      <div class="step-role">体验设计专家</div>
+      <div class="step-action">设计信息架构和交互体验</div>
+      <div class="step-meta">[待回填] · experience-design-v3.md</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="3">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🎨</div>
+      <div class="step-role">视觉设计专家</div>
+      <div class="step-action">视觉规范与设计 Token</div>
+      <div class="step-meta">[待回填] · visual-spec-v3.md</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="4">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🖥️</div>
+      <div class="step-role">前端开发专家</div>
+      <div class="step-action">实现完整页面</div>
+      <div class="step-meta">[待回填] · index.html</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="5">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🔍</div>
+      <div class="step-role">代码审查专家</div>
+      <div class="step-action">代码质量审查</div>
+      <div class="step-meta">[待回填] · REVIEW.md</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="6">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🚀</div>
+      <div class="step-role">部署运维专家</div>
+      <div class="step-action">容器化部署 + GitHub</div>
+      <div class="step-meta">[待回填] · Dockerfile</div>
+    </article>
+    <article class="timeline-step" role="listitem" data-step="7">
+      <div class="step-dot"></div>
+      <div class="step-emoji">🏗️</div>
+      <div class="step-role">项目管理专家</div>
+      <div class="step-action">全程协调 8 位专家</div>
+      <div class="step-meta">[待回填]</div>
+    </article>
+  </div>
 
-    <div class="comparison-grid reveal">
-      <div class="comp-header old">传统方式</div>
-      <div class="comp-header new">AI 组织方式</div>
-
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">架构</div>单点 AI 助手，人类手动串联各步骤</div>
-        <div class="comp-cell new"><div class="comp-dim">架构</div>26 专家协作网络，Leader 自动调度协作</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">能力</div>一个模型包揽一切，人类判断调用顺序</div>
-        <div class="comp-cell new"><div class="comp-dim">能力</div>角色专精，每个专家自带专业标准和技能体系</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">记忆</div>对话结束一切归零，经验无法积累</div>
-        <div class="comp-cell new"><div class="comp-dim">记忆</div>四层记忆持续积累，团队越用越聪明</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">质量</div>靠人工逐一检查 AI 产出</div>
-        <div class="comp-cell new"><div class="comp-dim">质量</div>内建审查验收闭环，不达标自动打回重做</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">进化</div>靠人类手动调整 prompt</div>
-        <div class="comp-cell new"><div class="comp-dim">进化</div>每次纠正自动记录，三次模式自动提炼规则</div>
-      </div>
-      <div class="comp-row">
-        <div class="comp-cell old"><div class="comp-dim">扩展</div>加人 = 加成本，线性增长</div>
-        <div class="comp-cell new"><div class="comp-dim">扩展</div>加 Agent = 加能力包，边际成本趋近于零</div>
-      </div>
-    </div>
+  <div class="step-detail" id="detail-0">
+    <p>老板写了一份设计方案。</p>
+    <p>不是"做个官网"三个字。是一份完整的叙事策略、视觉哲学、技术方案。</p>
+    <p>然后交给了 Leader。</p>
+  </div>
+  <div class="step-detail" id="detail-1">
+    <p>📝 技术文档专家接到任务。</p>
+    <p>先搞清楚读者是谁，再决定怎么写。</p>
+    <p>7 个叙事区块，每个区块的文案基调、信息密度、情绪曲线——全部结构化输出。</p>
+    <p class="detail-meta">产出：[待回填] 字的结构化内容文案。</p>
+  </div>
+  <div class="step-detail" id="detail-2">
+    <p>🎨 体验设计专家接手。</p>
+    <p>基于内容文案，设计信息架构、滚动节奏、交互模式、响应式策略。</p>
+    <p>不是画线框图。是设计用户的阅读体验。</p>
+    <p class="detail-meta">产出：[待回填] 的交互方案文档。</p>
+  </div>
+  <div class="step-detail" id="detail-3">
+    <p>🎨 视觉设计专家定义视觉语言。</p>
+    <p>配色系统、字体排印、视觉层次、动效规范——全部量化为设计 Token。</p>
+    <p>克制感不是"少用颜色"。是每一个视觉决策都有理由。</p>
+    <p class="detail-meta">产出：[待回填] 的视觉规范 + Token。</p>
+  </div>
+  <div class="step-detail" id="detail-4">
+    <p>🖥️ 前端开发专家实现。</p>
+    <p>纯 HTML/CSS/JS，零框架零依赖。一个文件，加载即运行。</p>
+    <p>不是"能用就行"。是 Lighthouse 满分级别的工程标准。</p>
+    <p class="detail-meta">产出：[待回填] KB 的 index.html。</p>
+  </div>
+  <div class="step-detail" id="detail-5">
+    <p>🔍 代码审查专家逐行审查。</p>
+    <p>不是"看看有没有 bug"。是从架构到安全到性能的系统性审查。</p>
+    <p class="detail-meta">产出：[待回填] 项改进建议，[待回填] 个阻断问题。</p>
+  </div>
+  <div class="step-detail" id="detail-6">
+    <p>🚀 部署运维专家容器化部署。</p>
+    <p>安全头、只读文件系统、资源限制、健康检查——一个都不少。</p>
+    <p class="detail-meta">产出：Docker 镜像 + Caddy 反向代理 + GitHub 仓库。</p>
+  </div>
+  <div class="step-detail" id="detail-7">
+    <p>🏗️ 项目管理专家全程协调。</p>
+    <p>8 位专家、6 个 Phase、串行依赖链——每个 Phase 的产出是下游的输入。</p>
+    <p>不是群发任务等结果。是精确的指令包组装、上下文管理、质量闭环。</p>
   </div>
 </section>
 
-<div class="section-divider"></div>
+<!-- ═══════════════ BLOCK 4: The Contrast ═══════════════ -->
+<section id="contrast" class="section" aria-label="认知落差">
+  <h2 class="section-title fade-in">同一个需求，两种做法。</h2>
 
-<!-- PROOF -->
-<section id="proof">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-tag">Living Proof</div>
-      <h2>这个网站本身就是证据</h2>
-      <p>你正在看的每一个像素，都是这个 AI 组织的作品。全程 0 行人类代码。</p>
-    </div>
+  <div class="contrast-grid">
+    <article class="contrast-panel dim fade-in" aria-label="散装 AI 的世界">
+      <h3 class="panel-heading">散装 AI 的世界</h3>
+      <div class="flow-step">"做个产品官网"</div>
+      <div class="flow-step">打开 ChatGPT："帮我写个网站"</div>
+      <div class="flow-step">复制一段看起来还行的代码</div>
+      <div class="flow-step">不对……重新问一遍，加更多描述</div>
+      <div class="flow-step">凑合能用了，没人审查，没人测试</div>
+      <div class="flow-step">手动部署，忘记安全配置</div>
+      <div class="flow-step">上线了。下次改什么都要从头来。</div>
+      <div class="tags">
+        <span class="tag tag-negative">❌ 没有记忆<small class="tag-detail">每次对话都从零开始</small></span>
+        <span class="tag tag-negative">❌ 没有标准<small class="tag-detail">质量取决于你的 Prompt 水平</small></span>
+        <span class="tag tag-negative">❌ 没有协作<small class="tag-detail">一个模型扮演所有角色</small></span>
+        <span class="tag tag-negative">❌ 没有进化<small class="tag-detail">同样的错误可以犯无数次</small></span>
+      </div>
+    </article>
 
-    <div class="proof-timeline reveal">
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">📝</span><span class="role">技术文档专家</span>
-        <div class="action">策划全部内容文案——结构设计、信息编排、语气把控</div>
+    <article class="contrast-panel bright fade-in" aria-label="AI 组织的世界">
+      <h3 class="panel-heading">AI 组织的世界</h3>
+      <div class="flow-step">"做个产品官网"</div>
+      <div class="flow-step">Leader 接收需求，验证价值，定义目标</div>
+      <div class="flow-step">项目管理专家设计执行拓扑，分解 6 个 Phase</div>
+      <div class="flow-step">📝 技术文档专家策划内容（结构化文案）</div>
+      <div class="flow-step">🎨 体验设计专家设计交互（信息架构 + 响应式）</div>
+      <div class="flow-step">🎨 视觉设计专家定义视觉语言（Token 化规范）</div>
+      <div class="flow-step">🖥️ 前端开发专家实现（零依赖，工程级标准）</div>
+      <div class="flow-step">🔍 代码审查专家审查（系统性质量关卡）</div>
+      <div class="flow-step">🚀 部署运维专家容器化部署（安全 + 监控）</div>
+      <div class="flow-step">上线。所有决策和过程都被记忆。下次更好。</div>
+      <div class="tags">
+        <span class="tag tag-positive">✅ 分层记忆<small class="tag-detail">价值观永久记忆，项目上下文按需加载，每次纠正立即写入</small></span>
+        <span class="tag tag-positive">✅ 专业标准<small class="tag-detail">每个专家有独立的 SOUL.md（信条）+ STANDARDS.md（规范）</small></span>
+        <span class="tag tag-positive">✅ 多专家协作<small class="tag-detail">28 个角色各司其职，串行依赖 + 并行执行</small></span>
+        <span class="tag tag-positive">✅ 持续进化<small class="tag-detail">同一模式出现 3 次自动提炼规则，同一错误不犯两次</small></span>
       </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🎨</span><span class="role">体验设计专家</span>
-        <div class="action">设计信息架构和交互体验——导航结构、滚动叙事、响应式策略</div>
-      </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🖥️</span><span class="role">前端开发专家</span>
-        <div class="action">实现完整页面——组件开发、动效实现、性能优化</div>
-      </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🔍</span><span class="role">代码审查专家</span>
-        <div class="action">独立代码质量审查——逐条检查，不达标打回</div>
-      </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🚀</span><span class="role">部署运维专家</span>
-        <div class="action">容器化部署——Docker + Caddy 反向代理 + 安全加固</div>
-      </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🏗️</span><span class="role">项目管理专家</span>
-        <div class="action">全程调度协作——任务拆解、依赖编排、质量闭环</div>
-      </div>
-      <div class="proof-step">
-        <div class="proof-dot"></div>
-        <span class="emoji">🧧</span><span class="role">Leader · 发发</span>
-        <div class="action">验收交付——对照验收标准逐条检查</div>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 64px;" class="reveal">
-      <p style="font-size: 1.1rem; color: #eef0f6; font-weight: 600;">人类只做了一件事：提出需求，然后验收结果。</p>
-    </div>
+    </article>
   </div>
 </section>
 
-<div class="section-divider"></div>
+<!-- ═══════════════ BLOCK 5: The Architecture ═══════════════ -->
+<section id="architecture" class="section" aria-label="深层架构">
+  <h2 class="section-title fade-in">三张剖面图。</h2>
+  <p class="section-subtitle fade-in">切开这个 AI 组织，看看它为什么能运转。</p>
 
-<!-- CTA -->
-<section id="cta">
-  <div class="container reveal">
-    <h2>这不是未来。<br>这是正在发生的事。</h2>
-    <p>AI 不缺能力，缺的是组织。<br>而组织 AI，是下一个超级杠杆。</p>
+  <div class="cross-sections">
+    <!-- Cross Section 1: Power Structure -->
+    <article class="cross-section" aria-label="剖面一：权力结构">
+      <div class="cs-subtitle">剖面 1</div>
+      <h3 class="cs-title">不是所有 AI 都平等</h3>
+      <div class="cs-row"><span class="level">L0</span><span class="role">老板</span><span class="desc">━━ 做不做</span></div>
+      <div class="cs-row"><span class="level">L1</span><span class="role">Leader</span><span class="desc">━━ 做成什么样</span></div>
+      <div class="cs-row"><span class="level">L2</span><span class="role">项目管理专家</span><span class="desc">━━ 怎么拆、谁先做</span></div>
+      <div class="cs-row"><span class="level">L3</span><span class="role">各领域专家</span><span class="desc">━━ 自己领域内怎么做最好</span></div>
+      <div class="cs-bottom">不是 AI 替代人类决策。<br>是人类授权 AI 在专业范围内自主决策。</div>
+    </article>
+
+    <!-- Cross Section 2: Memory System -->
+    <article class="cross-section" aria-label="剖面二：记忆体系">
+      <div class="cs-subtitle">剖面 2</div>
+      <h3 class="cs-title">AI 组织为什么越用越强</h3>
+      <div class="cs-row"><span class="level heat-hot">🔥 HOT</span><span class="desc">价值观、经验法则 ━━ 永远记住</span></div>
+      <div class="cs-row"><span class="level heat-warm">🟡 WARM</span><span class="desc">今天发生了什么 ━━ 每日归档</span></div>
+      <div class="cs-row"><span class="level heat-proj">📁 PROJ</span><span class="desc">这个项目的上下文 ━━ 项目生命周期</span></div>
+      <div class="cs-row"><span class="level heat-emer">🆘 应急</span><span class="desc">上下文溢出备份 ━━ 按需调用</span></div>
+      <div class="cs-bottom">每一次纠正 → 最高优先级信号 → 立即记录 → 永不重犯</div>
+    </article>
+
+    <!-- Cross Section 3: Continuous Evolution -->
+    <article class="cross-section" aria-label="剖面三：持续进化">
+      <div class="cs-subtitle">剖面 3</div>
+      <h3 class="cs-title">为什么这个组织越用越强</h3>
+      <div class="evo-block">
+        <div class="evo-title">纠正即学习</div>
+        <div class="evo-desc">人类纠正一次 → 立即写入记忆 → 同一错误不再出现</div>
+      </div>
+      <div class="evo-block">
+        <div class="evo-title">模式识别</div>
+        <div class="evo-desc">同一模式出现 3 次 → 自动提炼为规则 → 全组织生效</div>
+      </div>
+      <div class="evo-block">
+        <div class="evo-title">经验沉淀</div>
+        <div class="evo-desc">每个项目的决策、教训、最佳实践 → 归档为组织知识<br>下一个项目自动继承，不从零开始</div>
+      </div>
+      <div class="cs-bottom">不靠"下次注意"。<br>靠写入记忆文件的硬规则驱动行为改变。</div>
+    </article>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══════════════ BLOCK 6: The Bigger Picture ═══════════════ -->
+<section id="vision" aria-label="更大的图景">
+  <div class="vision-content">
+    <p class="vision-para">AI 不缺能力。</p>
+    <p class="vision-para">GPT-4 能写代码。Claude 能做分析。<br>Gemini 能搜索。Midjourney 能设计。</p>
+    <p class="vision-para">但它们是散兵。<br>散兵赢不了战争。</p>
+    <div class="vision-divider"></div>
+    <p class="vision-para">2026 年，AI 行业的真正问题不是<br>"模型够不够强"，<br>而是<br>"怎么把强大的模型组织成可靠的生产力"。</p>
+    <p class="vision-para">答案不是更好的 Prompt。<br>答案不是更大的上下文窗口。<br><span style="color: #a5b4fc; font-weight: 700;">答案是——组织。</span></p>
+    <p class="vision-para">给 AI 角色。给 AI 标准。给 AI 记忆。<br>给 AI 纪律。给 AI 协作方式。给 AI 进化机制。</p>
+    <p class="vision-para">像管理人类团队一样管理 AI 团队。<br>然后你会发现：<br>一个人 + AI 组织 ≈ 一个完整的产品公司。</p>
+    <div class="vision-divider"></div>
+    <p class="vision-para vision-final" style="font-weight: bold;">这不是未来。<br>从 2026 年 3 月 10 日开始，这就是我们每天的日常。</p>
+  </div>
+</section>
+
+<!-- ═══════════════ BLOCK 7: The Call ═══════════════ -->
+<section id="cta" aria-label="行动号召">
+  <h2 class="cta-title fade-in">想看看这个组织是怎么运转的？</h2>
+  <div class="cta-buttons fade-in">
+    <a href="mailto:shibiao1998@gmail.com" class="btn-primary" aria-label="发送邮件联系我们">跟我们聊聊</a>
+    <a href="https://github.com/ndhy-ai-team" class="btn-ghost" target="_blank" rel="noopener noreferrer" aria-label="在 GitHub 上关注我们">在 GitHub 上关注</a>
+  </div>
+</section>
+
 <footer>
-  <div class="container">
-    <p>Built by NDHY AI Agent Team · 1 Human + 26 AI Experts · 0 Lines of Human Code</p>
-  </div>
+  <div class="footer-brand">Built by NDHY-AI-TEAM</div>
+  <div class="footer-stats">1 Human · 28 AI Experts · 43 Skills · 0 Lines of Human Code</div>
+  <div class="footer-meta">包括你正在看的这个网站。</div>
 </footer>
 
-<!-- SCRIPTS -->
+<!-- Tooltip element -->
+<div class="tooltip" id="tooltip" role="tooltip" aria-hidden="true">
+  <span class="t-emoji"></span>
+  <span class="t-name"></span>
+  <span class="t-desc"></span>
+</div>
+
 <script>
-/* ==================================================
-   Particle Canvas (Hero background)
-   ================================================== */
+/* ═══════════════════════════════════════════
+   Performance-first JS — single IO, minimal DOM
+   ═══════════════════════════════════════════ */
 (function() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let w, h, particles = [], mouse = { x: -1000, y: -1000 };
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const isMobile = window.innerWidth < 768;
-  const PARTICLE_COUNT = isMobile ? 30 : Math.min(80, Math.floor(window.innerWidth / 15));
-  const CONNECTION_DIST = isMobile ? 100 : 150;
+  'use strict';
 
-  function resize() {
-    w = canvas.width = canvas.offsetWidth;
-    h = canvas.height = canvas.offsetHeight;
-  }
+  // ─── Utilities ───
+  var isMobile = window.innerWidth <= 600;
+  var twSpeed = isMobile ? 30 : 40;
 
-  function createParticle() {
-    return {
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      r: Math.random() * 1.5 + 0.5,
-      alpha: Math.random() * 0.5 + 0.3
-    };
-  }
+  // ─── BLOCK 1: The Hook — Typewriter + Sequence ───
+  var hookPhase = 0;
+  var hookDone = false;
 
-  function init() {
-    resize();
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    // connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < CONNECTION_DIST) {
-          const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
-          ctx.strokeStyle = `rgba(129, 140, 248, ${alpha})`;
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
+  function typeWriter(el, text, speed, cb) {
+    var i = 0;
+    var span = document.createElement('span');
+    el.textContent = '';
+    el.appendChild(span);
+    var cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    el.appendChild(cursor);
+    function tick() {
+      if (i < text.length) {
+        span.textContent += text.charAt(i);
+        i++;
+        requestAnimationFrame(function() {
+          setTimeout(tick, speed);
+        });
+      } else {
+        cursor.remove();
+        if (cb) cb();
       }
     }
-    // particles
-    for (const p of particles) {
-      ctx.fillStyle = `rgba(129, 140, 248, ${p.alpha})`;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    tick();
   }
 
-  function update() {
-    for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      // slight mouse repulsion
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        p.vx += dx / dist * 0.03;
-        p.vy += dy / dist * 0.03;
-      }
-      // dampen
-      p.vx *= 0.999;
-      p.vy *= 0.999;
-    }
+  function runHookSequence() {
+    var date = document.getElementById('hook-date');
+    var tw = document.getElementById('hook-typewriter');
+    var later = document.getElementById('hook-later');
+    var team = document.getElementById('hook-team');
+    var punch = document.getElementById('hook-punchline');
+    var arrow = document.getElementById('scroll-arrow');
+
+    setTimeout(function() { date.classList.add('visible'); }, 500);
+    setTimeout(function() {
+      typeWriter(tw, '一个人启动了一个项目。', twSpeed, function() {
+        setTimeout(function() {
+          later.classList.add('visible');
+          setTimeout(function() { team.classList.add('visible'); }, 500);
+        }, 800);
+        setTimeout(function() { punch.classList.add('visible'); }, 2000);
+        setTimeout(function() {
+          arrow.classList.add('visible');
+          unlockScroll();
+          hookDone = true;
+        }, 3000);
+      });
+    }, 1500);
   }
 
-  function loop() {
-    update();
-    draw();
-    requestAnimationFrame(loop);
+  function unlockScroll() { document.body.classList.remove('scroll-locked'); }
+
+  function skipHook() {
+    if (hookDone) return;
+    hookDone = true;
+    ['hook-date','hook-later','hook-team','hook-punchline','scroll-arrow'].forEach(function(id) {
+      document.getElementById(id).classList.add('visible');
+    });
+    document.getElementById('hook-typewriter').textContent = '一个人启动了一个项目。';
+    unlockScroll();
   }
 
-  window.addEventListener('resize', resize);
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+  document.addEventListener('keydown', function(e) {
+    if (!hookDone && (e.key === 'Escape' || e.key === 'ArrowDown' || e.key === ' ')) skipHook();
   });
-  canvas.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+  document.getElementById('hook').addEventListener('click', function() { if (!hookDone) skipHook(); });
+  document.getElementById('hook').addEventListener('touchstart', function() { if (!hookDone) skipHook(); }, { passive: true });
+  document.getElementById('scroll-arrow').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('reveal').scrollIntoView({ behavior: 'smooth' });
+  });
+  runHookSequence();
 
-  init();
-  loop();
-})();
+  // ─── BLOCK 2: Concentric Ring Topology Animation ───
+  var topoAnimated = false;
+  var tooltipEl = document.getElementById('tooltip');
+  var activeTooltipNode = null;
+  var CX = 450, CY = 480; // SVG center
 
-/* ==================================================
-   Number Counter Animation
-   ================================================== */
-(function() {
-  const stats = document.querySelectorAll('.stat-number');
-  let animated = false;
+  // Build spoke lines dynamically
+  function buildSpokes() {
+    var svg = document.querySelector('.topo-svg');
+    var spokesG = svg.querySelector('.spokes');
+    var nodes = Array.from(document.querySelectorAll('.node'));
 
-  function animateNumbers() {
-    if (animated) return;
-    animated = true;
-    stats.forEach(el => {
-      const target = parseInt(el.dataset.target, 10);
-      const suffix = el.dataset.suffix || '';
-      const duration = 1500;
-      const start = Date.now();
-      function tick() {
-        const elapsed = Date.now() - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-        const current = Math.round(target * eased);
-        el.textContent = current + suffix;
-        if (progress < 1) requestAnimationFrame(tick);
+    function getPos(node) {
+      var t = node.getAttribute('transform');
+      var m = t.match(/translate\(([^,]+),([^)]+)\)/);
+      return m ? { x: parseFloat(m[1]), y: parseFloat(m[2]) } : { x: 0, y: 0 };
+    }
+
+    var r2Nodes = nodes.filter(function(n) { return n.dataset.ring === '2'; });
+    var r3Nodes = nodes.filter(function(n) { return n.dataset.ring === '3'; });
+
+    // Connect each R3 to nearest R2
+    r3Nodes.forEach(function(r3) {
+      var p3 = getPos(r3);
+      var best = null, bestD = Infinity;
+      r2Nodes.forEach(function(r2) {
+        var p2 = getPos(r2);
+        var d = Math.hypot(p3.x - p2.x, p3.y - p2.y);
+        if (d < bestD) { bestD = d; best = p2; }
+      });
+      if (best) {
+        var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', best.x); line.setAttribute('y1', best.y);
+        line.setAttribute('x2', p3.x); line.setAttribute('y2', p3.y);
+        line.setAttribute('stroke', 'rgba(129,140,248,0.12)');
+        line.setAttribute('stroke-width', '1');
+        spokesG.appendChild(line);
       }
-      tick();
+    });
+
+    // Leader → R2 lines
+    r2Nodes.forEach(function(r2) {
+      var p2 = getPos(r2);
+      var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', CX); line.setAttribute('y1', CY);
+      line.setAttribute('x2', p2.x); line.setAttribute('y2', p2.y);
+      line.setAttribute('stroke', 'rgba(129,140,248,0.15)');
+      line.setAttribute('stroke-width', '1.5');
+      spokesG.appendChild(line);
     });
   }
 
-  // Trigger when hero is in view
-  const heroObs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) animateNumbers();
-  }, { threshold: 0.5 });
-  heroObs.observe(document.getElementById('hero'));
-})();
+  buildSpokes();
 
-/* ==================================================
-   Scroll Reveal
-   ================================================== */
-(function() {
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+  // ─── Mobile: Enlarge touch targets (min 44×44px) ───
+  if (isMobile) {
+    document.querySelectorAll('.node').forEach(function(node) {
+      var circle = node.querySelector('circle');
+      if (!circle) return;
+      var r = parseFloat(circle.getAttribute('r')) || 20;
+      if (r < 22) {
+        var hitArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        hitArea.setAttribute('r', '22');
+        hitArea.setAttribute('fill', 'transparent');
+        hitArea.setAttribute('stroke', 'none');
+        hitArea.style.pointerEvents = 'all';
+        node.insertBefore(hitArea, node.firstChild);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => observer.observe(el));
-})();
+  }
 
-/* ==================================================
-   Nav visibility on scroll
-   ================================================== */
-(function() {
-  const nav = document.getElementById('mainNav');
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    if (currentScroll > 300) {
-      nav.classList.add('visible');
+  function litNode(node) {
+    var circle = node.querySelector('circle');
+    if (!circle) return;
+    var isBoss = node.classList.contains('boss');
+    var isLeader = node.classList.contains('leader');
+
+    if (isBoss) {
+      circle.setAttribute('fill', '#fbbf24');
+      circle.setAttribute('stroke', '#fbbf24');
+      node.style.filter = 'url(#glow-gold)';
     } else {
-      nav.classList.remove('visible');
+      circle.setAttribute('fill', '#818cf8');
+      circle.setAttribute('stroke', '#818cf8');
+      node.style.filter = isLeader ? 'url(#glow-lg)' : 'url(#glow-md)';
     }
-    lastScroll = currentScroll;
-  }, { passive: true });
-})();
 
-/* ==================================================
-   Mobile nav toggle
-   ================================================== */
-(function() {
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      links.classList.toggle('open');
-      toggle.textContent = links.classList.contains('open') ? '✕' : '☰';
+    // Light up label text
+    var labels = node.querySelectorAll('text');
+    for (var i = 1; i < labels.length; i++) {
+      if (isBoss) { labels[i].setAttribute('fill', 'rgba(251,191,36,0.9)'); }
+      else { labels[i].setAttribute('fill', 'rgba(232,232,232,0.85)'); }
+    }
+
+    if (isLeader) { node.style.animation = 'pulse 3s ease-in-out infinite'; }
+  }
+
+  function animateTopo() {
+    if (topoAnimated) return;
+    topoAnimated = true;
+
+    var svg = document.querySelector('.topo-svg');
+    var linesG = svg.querySelector('.lines');
+    var spokesG = svg.querySelector('.spokes');
+    var nodes = Array.from(document.querySelectorAll('.node'));
+
+    var leaderNode = nodes.find(function(n) { return n.classList.contains('leader'); });
+    var bossNode = nodes.find(function(n) { return n.classList.contains('boss'); });
+    var r2Sorted = nodes.filter(function(n) { return n.dataset.ring === '2'; });
+    var r3Sorted = nodes.filter(function(n) { return n.dataset.ring === '3'; });
+
+    // Group R3 by domain
+    var domainOrder = ['insight','strategy','process','research','design','arch','dev','quality','delivery','ops','domain'];
+    var r3Groups = [];
+    domainOrder.forEach(function(d) {
+      var group = r3Sorted.filter(function(n) { return n.dataset.domain === d; });
+      if (group.length) r3Groups.push(group);
     });
-    links.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        links.classList.remove('open');
-        toggle.textContent = '☰';
+
+    var NODE_INTERVAL = 70;
+    var GROUP_PAUSE = 150;
+    var t = 400; // initial delay
+
+    // Phase 1: Leader
+    setTimeout(function() { litNode(leaderNode); }, t);
+    t += 500;
+
+    // Phase 2: R2
+    r2Sorted.forEach(function(n, i) {
+      setTimeout(function() { litNode(n); }, t + i * NODE_INTERVAL);
+    });
+    t += r2Sorted.length * NODE_INTERVAL + 300;
+
+    // Phase 3: R3 by domain
+    r3Groups.forEach(function(group) {
+      group.forEach(function(n, i) {
+        setTimeout(function() { litNode(n); }, t + i * NODE_INTERVAL);
+      });
+      t += group.length * NODE_INTERVAL + GROUP_PAUSE;
+    });
+
+    var lineDelay = t + 200;
+
+    // Phase 4: Lines fade in
+    setTimeout(function() {
+      linesG.style.transition = 'opacity 1.2s ease-out';
+      linesG.style.opacity = '1';
+      spokesG.style.transition = 'opacity 1.5s ease-out';
+      spokesG.style.opacity = '1';
+    }, lineDelay);
+
+    // Phase 5: Boss last
+    setTimeout(function() { litNode(bossNode); }, lineDelay + 600);
+
+    // Phase 6: Bottom text
+    setTimeout(function() {
+      document.getElementById('reveal-text').classList.add('visible');
+    }, lineDelay + 1400);
+  }
+
+  // ─── Tooltip ───
+  function showTip(node) {
+    activeTooltipNode = node;
+    var d = node.dataset;
+    tooltipEl.querySelector('.t-emoji').textContent = d.emoji + ' ';
+    tooltipEl.querySelector('.t-name').textContent = d.name;
+    tooltipEl.querySelector('.t-desc').textContent = ' — ' + d.desc;
+
+    var rect = node.getBoundingClientRect();
+    tooltipEl.style.left = '-9999px'; tooltipEl.style.top = '-9999px';
+    tooltipEl.classList.add('active');
+    var tw = tooltipEl.offsetWidth;
+    tooltipEl.classList.remove('active');
+
+    var left = Math.max(8, Math.min(rect.left + rect.width / 2 - tw / 2, window.innerWidth - tw - 8));
+    var top = rect.top - 48;
+    if (top < 8) top = rect.bottom + 12;
+
+    tooltipEl.style.left = left + 'px';
+    tooltipEl.style.top = top + 'px';
+    tooltipEl.classList.add('active');
+    tooltipEl.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideTip() {
+    activeTooltipNode = null;
+    tooltipEl.classList.remove('active');
+    tooltipEl.setAttribute('aria-hidden', 'true');
+  }
+
+  var allNodes = document.querySelectorAll('.node');
+  var tooltipTimer = null;
+  if (!isMobile) {
+    allNodes.forEach(function(node) {
+      node.style.cursor = 'pointer';
+      node.addEventListener('mouseenter', function() {
+        clearTimeout(tooltipTimer);
+        tooltipTimer = setTimeout(function() { showTip(node); }, 200);
+      });
+      node.addEventListener('mouseleave', function() {
+        clearTimeout(tooltipTimer);
+        hideTip();
       });
     });
+  } else {
+    allNodes.forEach(function(node) {
+      node.style.cursor = 'pointer';
+      node.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (activeTooltipNode === node) { hideTip(); }
+        else { showTip(node); }
+      });
+    });
+    document.addEventListener('click', hideTip);
   }
-})();
 
-/* ==================================================
-   Pipeline Animation
-   ================================================== */
-(function() {
-  const pipelineFlow = document.getElementById('pipelineFlow');
-  if (!pipelineFlow) return;
-  const nodes = pipelineFlow.querySelectorAll('.pipeline-node');
-  let currentIndex = 0;
-  let intervalId = null;
-
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      if (!intervalId) startPipelineAnimation();
-    } else {
-      if (intervalId) { clearInterval(intervalId); intervalId = null; }
-    }
-  }, { threshold: 0.3 });
-  observer.observe(pipelineFlow);
-
-  function startPipelineAnimation() {
-    intervalId = setInterval(() => {
-      nodes.forEach(n => n.classList.remove('active'));
-      if (currentIndex < nodes.length) {
-        nodes[currentIndex].classList.add('active');
-        currentIndex++;
+  // ─── BLOCK 3: Timeline Accordion ───
+  var activeStep = null;
+  document.querySelectorAll('.timeline-step').forEach(function(step) {
+    step.addEventListener('click', function() {
+      var idx = step.dataset.step;
+      var detail = document.getElementById('detail-' + idx);
+      if (!detail) return;
+      if (activeStep === idx) {
+        detail.classList.remove('open');
+        activeStep = null;
       } else {
-        currentIndex = 0;
+        if (activeStep !== null) {
+          var prev = document.getElementById('detail-' + activeStep);
+          if (prev) prev.classList.remove('open');
+        }
+        detail.classList.add('open');
+        activeStep = idx;
       }
-    }, 400);
+    });
+  });
+
+  // ─── BLOCK 5: Cross Section Row Animation ───
+  function animateCrossSection(section) {
+    section.classList.add('visible');
+    var rows = section.querySelectorAll('.cs-row, .evo-block');
+    rows.forEach(function(row, i) {
+      setTimeout(function() { row.classList.add('visible'); }, 150 * (i + 1));
+    });
+    var bottom = section.querySelector('.cs-bottom');
+    if (bottom) {
+      setTimeout(function() { bottom.classList.add('visible'); }, 150 * (rows.length + 2));
+    }
   }
+
+  // ─── IntersectionObserver — Single Instance ───
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+
+      if (el.classList.contains('fade-in')) {
+        el.classList.add('visible');
+        observer.unobserve(el);
+        return;
+      }
+      if (el.id === 'reveal') {
+        animateTopo();
+        observer.unobserve(el);
+        return;
+      }
+      if (el.classList.contains('timeline-step')) {
+        el.classList.add('lit');
+        observer.unobserve(el);
+        return;
+      }
+      if (el.classList.contains('cross-section')) {
+        animateCrossSection(el);
+        observer.unobserve(el);
+        return;
+      }
+      if (el.classList.contains('vision-para') || el.classList.contains('vision-divider')) {
+        el.classList.add('visible');
+        observer.unobserve(el);
+        return;
+      }
+    });
+  }, {
+    threshold: [0, 0.2, 0.4],
+    rootMargin: '0px 0px -10% 0px'
+  });
+
+  // Register elements
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+  var revealEl = document.getElementById('reveal');
+  if (revealEl) observer.observe(revealEl);
+  document.querySelectorAll('.timeline-step').forEach(function(el) { observer.observe(el); });
+  document.querySelectorAll('.cross-section').forEach(function(el) { observer.observe(el); });
+  document.querySelectorAll('.vision-para, .vision-divider').forEach(function(el) { observer.observe(el); });
+
+  // ─── Responsive Update ───
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() { isMobile = window.innerWidth <= 600; }, 150);
+  });
 })();
 </script>
+<!--
+  ═══════════════════════════════════════════
+  V3 修复记录 (2026-03-16)
+  ═══════════════════════════════════════════
+  F1. 区块一 100vh 全屏 — 已确认 #hook 本身有 min-height:100vh（原代码已实现）
+  F2. 区块二 SVG 拓扑重建 — viewBox 1060×860，节点 r=24-30，30 个节点分层布局，
+      带 name 标签，连线完整，逐个亮起动画
+  F3. 全站文字对比度修复 — --color-text-muted: #b0b0b0, --color-text-dim: #777,
+      --contrast-dim: 0.75（散装AI面板）
+  F4. 区块最小高度 + 视觉分隔 — 各 section min-height: 80vh，
+      交替背景色 #0a0a0a / #0f0f0f，渐变分隔线
+  R1. data-order 去重 — 30 个节点 0-29 唯一，老板=29，Leader=28
+  R2. 死 CSS 选择器清理 — 删除 .topo-node.lit + .topo-label 等无效规则
+  R3. 移动端 touchstart 跳过 — 添加 touchstart 事件监听
+  S1. Tooltip 动态居中 — 用 offsetWidth/2 替代固定偏移
+  S3. resize 事件 debounce — 150ms 防抖
+  ───────────────────────────────────────────
+  V3.1 修复记录 (2026-03-16 第二轮)
+  ───────────────────────────────────────────
+  T1. 拓扑图震撼升级：
+      - SVG glow filter (#glow + #glow-boss) 替代 drop-shadow
+      - 节点 fill 从 var(--color-bg) 改为 #1a1a2e（未亮起近乎不可见）
+      - 亮起后 fill 变为 #818cf8（靛蓝），老板节点 #fbbf24（金色）
+      - 所有节点 r≥24，Leader/老板 r=30
+      - 连线 stroke: #818cf8, stroke-width: 1.5, opacity 0.3→0.6
+      - 文字标签 font-size=13px，亮起后 fill: #e0e0e0，添加 .lit class
+      - viewBox 扩大至 1060×860
+      - 底部行节点补齐 name 标签
+  T2. 区块五对比度修复：
+      - .cs-title 改用 var(--color-accent) 强调色
+      - .cs-row .desc / .cs-bottom / .evo-desc 改为 #d0d0d0
+  T3. 区块六对比度修复：
+      - .vision-para 改为 #f5f5f5
+      - "答案是——组织" 用 accent + bold 内联样式
+      - .vision-final 加 font-weight: bold
+      - .vision-divider 改用 accent 色 + opacity 0.4
+  T4. 区块七对比度修复：
+      - .btn-primary color: #fff（白色文字）
+      - .btn-ghost border/color 改用 accent 色
+      - .footer-brand/.footer-stats 改为 #999
+      - .footer-meta 改用 accent 色（"包括你正在看的这个网站"）
+  T5. 区块三四对比度微调：
+      - .step-action color: #e0e0e0
+      - .step-detail p color: #c0c0c0
+      - .contrast-panel.dim opacity: 0.8
+      - .dim/.bright .panel-heading color: #f5f5f5
+      - .flow-step color: #e0e0e0
+  ───────────────────────────────────────────
+  V3.2 对比度大修 (2026-03-16 第三轮)
+  ───────────────────────────────────────────
+  C1. Design Tokens 全面提亮：
+      - --color-bg: #0d0d14 (从 #0a0a0a), 略带深蓝底色
+      - --color-bg-surface: #1a1a2e, --color-bg-elevated: #252540
+      - --color-text: #e8e8e8, --color-text-muted: #c0c0c0, --color-text-dim: #999
+      - --color-border: #3a3a55, --color-border-subtle: #2a2a40
+      - --contrast-dim: 0.85
+  C2. 区块背景分层 — 交替深蓝底色打破"一片黑"：
+      - Hero: --color-bg, Reveal: #0f0f1a, Process: #111122
+      - Contrast: #0f0f1a, Architecture: #111122
+      - Vision: #0f0f1a, CTA: #111122
+  C3. 拓扑图初始可见度提升：
+      - .topo-node: 0.08→0.2, .topo-line: 0→0.08, .topo-name: 0→0.1
+  C4. 全站初始 opacity 0→0.05：
+      - .fade-in, .hook-line, .scroll-arrow, .topo-list-item
+      - .cs-row, .cs-bottom, .vision-para
+  C5. 区块五到七文字亮度 !important 覆盖：
+      - Architecture: 标题 #f5f5f5, cs-title #a5b4fc, 描述/底部 #d5d5d5
+      - Vision: 段落 #f0f0f0, "答案是——组织" #a5b4fc+700
+      - CTA: 标题 #f5f5f5, 主按钮 #818cf8, 次按钮 2px border
+      - Footer: #aaa, meta #818cf8
+  C6. 区块三四卡片边框 1px solid #2a2a40
+  ───────────────────────────────────────────
+  V3.4 P0 视觉升级 (2026-03-16)
+  ───────────────────────────────────────────
+  P0-1. 区块二拓扑图替换为同心环辐射布局：
+      - 从网格/表格布局 → 同心环辐射布局（Leader 为圆心）
+      - viewBox: 900×920，3 层环：L0 老板(顶部)→L1 Leader(圆心)→L2(近轨)→L3(外轨)
+      - 25 个 L3 节点按 11 个职能域分组环绕
+      - 动态生成 spoke 连线（JS buildSpokes）
+      - 动画序列：Leader→R2→R3按域→连线→老板→底部文字
+      - 移动端保留 SVG 拓扑图（删除 display:none 媒体查询和 topo-list 降级）
+      - SVG 通过 viewBox + width:100% 自适应小屏
+      - 移动端 tap 代替 hover 显示 tooltip
+  P0-2. 区块背景渐变分层：
+      - #reveal: radial-gradient accent 4%
+      - #process/#architecture: linear-gradient 微蓝
+      - #vision: linear-gradient 深蓝
+      - #cta: radial-gradient accent 3%
+      - #contrast/#hero: var(--color-bg) 纯色
+  P0-3. 清理 !important 覆盖：
+      - 所有 !important 替换为提升选择器优先级（section#id .class）
+      - 恢复记忆体系颜色编码：🔥红 #f87171 · 🟡黄 #fbbf24 · 📁蓝 accent · 🆘橙 #fb923c
+      - 删除 V3.2/V3.3 中 heat-hot/warm/proj/emer → #d5d5d5 的灰色覆盖
+  P0-4. 移动端拓扑图适配：
+      - SVG viewBox 900×920 + width:100% 自动缩放
+      - 所有节点在移动端可见可交互（tap 显示 tooltip）
+  ═══════════════════════════════════════════
+-->
 </body>
 </html>
