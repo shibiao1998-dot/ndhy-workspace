@@ -1,12 +1,22 @@
 # CLAUDE.md 项目模板
 
-> 每个项目目录必须部署此文件（按项目需求定制内容），Claude Code 启动时自动读取
+> 每个项目目录必须部署此文件，Claude Code 启动时自动读取
 
 ## 工具限制
 - **禁止使用** 内置 `web_search` 和 `web_fetch`（地域限制不可用）
-- **替代方案**：`ddgs-search` MCP（搜索）、`fetch` MCP（抓取网页）
+- **替代方案**：`ddgs-search` MCP（搜索）、`fetch` MCP（抓取）、`context7` MCP（框架文档）
+
+## 可用 MCP 工具
+- `context7` — 实时获取 React/Astro/GSAP 等框架最新文档
+- `ddgs-search` — DuckDuckGo 搜索
+- `fetch` — 网页抓取
+- `chrome-devtools` — 浏览器调试
+- `playwright` — 浏览器自动化测试 + 截图
+- `github` — GitHub PR/Issue/Branch 管理
+- `sequential-thinking` — 复杂逻辑增强推理
 
 ## 执行风格
+- **使用 Agent Team**：多文件修改时 spawn teammates 并行处理
 - **增量写入**：每完成一个模块/组件就写入文件，不要最后一次性大输出
 - **每步验证**：每做完一个有意义的改动就跑 build/test，确认无报错再继续
 - **小步前进**：遇到复杂问题先解决一小块，验证通过后再扩展

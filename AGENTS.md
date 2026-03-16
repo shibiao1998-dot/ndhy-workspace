@@ -34,6 +34,20 @@
 2. **CLAUDE.md 必须部署**——每个项目目录放 CLAUDE.md，注入规范/禁令/质量标准
 3. **ACP 标准开头**——所有 ACP task 必须包含：禁用 web_search/web_fetch + 增量写入要求 + 每步 build/test
 
+### ACP 开发任务必须使用 Agent Team（宪法级）
+Agent Team = 多个 Claude 实例共享代码库、自主协调、并行开发。这是加速开发效率、提高质量、保持协作沟通的最强能力。
+
+**所有通过 ACP 执行的开发任务，task 中必须包含以下指引**：
+```
+USE AGENT TEAMS: For this task, use Agent Teams to parallelize work.
+Spawn teammates for independent file modifications.
+Use subagents for parallel research or analysis.
+The main agent acts as team lead: decompose → delegate → verify.
+```
+
+**适用场景**：多文件修改、大型重构、并行修复多个独立 bug、同时做开发+测试。
+**不适用**：单文件修改、简单 bug fix、配置变更。
+
 ### subagent 仅限场景
 审查报告（≤5KB）、文案（≤5KB）、规范文档（≤10KB）、评估报告（≤5KB）、流程设计（≤5KB）。超过 15KB 一律 ACP。
 
