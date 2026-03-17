@@ -107,6 +107,12 @@
 
 ## 工具使用知识
 - **默认搜索引擎：Tavily**：Brave Search 不可达，走 Tavily API。（2026-03-17）
+- **AIAE 网关已接入（2026-03-18）**：138 个模型统一 API，OpenAI Compatible。Base URL: `https://ai-gateway.aiae.ndhy.com/v1`，Key 在 `.env`。已创建 model-router Skill。
+- **图像生成两种端点**：Gemini Image 走 `chat/completions`，GPT Image/Seedream/MJ 走 `images/generations`。（2026-03-18 实测验证）
+- **PowerShell curl JSON 转义坑**：PowerShell 会破坏 JSON 引号。解法：写入文件后用 `@file.json` 引用。（2026-03-18）
+- **Nano Banana 2（gemini-3.1-flash-image-preview）= 2026 SOTA 图像生成**：Image Arena #1，4K，文字渲染最强，价格仅 Pro 一半。UI Mockup 首选。（2026-03-18 调研）
+- **Doubao Seed 2.0 Pro = 中文旗舰**：SuperCLUE 国内第一、AIME25 98.3（数学全球顶级）。中文创作首选。（2026-03-18 调研）
+- **模型选用核心策略**：Claude Opus 4.6 仍是编程/Agentic 首选（SWE-Bench 81.4%）；中文任务用国产模型省钱提质；推理任务用 o3/o4-mini；图像用 Gemini Flash Image。（2026-03-18）
 - **browser evaluate 的 fn 必须是表达式**：用箭头函数 `() => { ... }`，不能裸语句。（2026-03-16）
 - **ACP Runtime 已配置**：acpx 0.3.0，defaultAgent=claude，permissionMode=approve-all。（2026-03-16）
 - **acpx Windows 安装注意**：需全局 `npm install -g acpx`，插件配置设 `command: "acpx"` + `expectedVersion: "any"`。（2026-03-16）
