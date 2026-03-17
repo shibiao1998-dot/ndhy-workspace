@@ -1,0 +1,83 @@
+---
+interface Props {
+  text: string;
+  charInterval?: number;
+  startDelay?: number;
+  class?: string;
+}
+
+const { text, charInterval = 40, startDelay = 1000, class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={['typewriter', className]}
+  data-typewriter-text={text}
+  data-typewriter-interval={charInterval}
+  data-typewriter-delay={startDelay}
+  aria-label={text}
+>
+  <span class="typewriter__text"></span>
+</span>
+
+<script>
+  document.querySelectorAll('[data-typewriter-text]').forEach((el) => {
+    const text = el.getAttribute('data-typewriter-text') || '';
+    const interval = parseInt(el.getAttribute('data-typewriter-interval') || '40', 10);
+    const delay = parseInt(el.getAttribute('data-typewriter-delay') || '1000', 10);
+    const textEl = el.querySelector('.typewriter__text') as HTMLElement;
+    if (!textEl) return;
+
+    let charIndex = 0;
+    let lastTime = 0;
+    let started = false;
+
+    function type(timestamp: number) {
+      if (!started) {
+        lastTime = timestamp;
+        started = true;
+      }
+
+      if (timestamp - lastTime >= interval) {
+        charIndex++;
+        textEl.textContent = text.slice(0, charIndex);
+        lastTime = timestamp;
+      }
+
+      if (charIndex < text.length) {
+        requestAnimationFrame(type);
+      } else {
+        // Stop cursor blink after 2s
+        setTimeout(() => {
+          el.classList.add('typewriter--done');
+        }, 2000);
+      }
+    }
+
+    setTimeout(() => {
+      requestAnimationFrame(type);
+    }, delay);
+  });
+</script>
+
+<style>
+  .typewriter {
+    display: inline-flex;
+  }
+
+  .typewriter__text {
+    display: inline-block;
+    border-right: 2px solid var(--color-text-bright);
+    animation: blink 530ms step-end infinite;
+    white-space: nowrap;
+  }
+
+  .typewriter--done .typewriter__text {
+    border-right-color: transparent;
+    animation: none;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>

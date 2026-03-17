@@ -1,0 +1,262 @@
+---
+/**
+ * S7CtaSection — CTA + Footer. Emotional closure.
+ * Brand statement, contact links, and meta-recursive footer.
+ */
+---
+
+<section class="section cta" aria-label="联系我们">
+  <div class="section-content">
+
+    <!-- Brand Statement -->
+    <div class="cta__brand">
+      <h2 class="cta__title anim-fade-up">NDHY AI Agent Team</h2>
+      <p class="cta__stat anim-fade-up" data-delay="120">
+        一个人类 · 31 个 AI 专家 · 47 项专业技能
+      </p>
+      <p class="cta__stat anim-fade-up" data-delay="240">
+        覆盖产品全链路的每一个环节
+      </p>
+      <p class="cta__callback anim-blur-reveal" data-delay="400">
+        这个网站，是它的作品之一
+      </p>
+    </div>
+
+    <!-- Contact -->
+    <div class="cta__contact">
+      <a
+        href="mailto:shibiao1998@gmail.com"
+        class="cta__email anim-fade-up"
+        data-delay="520"
+        aria-label="发送邮件至 shibiao1998@gmail.com"
+      >
+        shibiao1998@gmail.com
+      </a>
+      <a
+        href="https://github.com/shibiao1998-dot/ndhy-workspace"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cta__source anim-fade-up"
+        data-delay="600"
+        aria-label="查看源码"
+      >
+        源码公开 →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer — outside the CTA section, semantic <footer> -->
+<footer class="site-footer" role="contentinfo">
+  <div class="section-content">
+    <div class="footer__inner">
+      <p class="footer__line">Built by NDHY AI Agent Team</p>
+      <p class="footer__line">1 Human · 31 AI Experts · 47 Skills · 0 Lines of Human Code</p>
+      <p class="footer__line">包括你正在看的这个网站</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { createObserver } from '../utils/createObserver';
+
+  // S7: Observe all animated elements within .cta section.
+  // Handles data-delay → transition-delay conversion.
+  const section = document.querySelector('.cta');
+  if (section) {
+    const elements = section.querySelectorAll<HTMLElement>('[class*="anim-"]');
+    elements.forEach((el) => {
+      const delay = el.dataset.delay;
+      if (delay) {
+        const ms = parseInt(delay, 10);
+        if (!Number.isNaN(ms) && ms > 0) {
+          el.style.transitionDelay = `${ms}ms`;
+        }
+      }
+    });
+
+    const observer = createObserver({ threshold: 0.15 });
+    elements.forEach((el) => observer.observe(el));
+  }
+</script>
+
+<style>
+  /* === CTA Section === */
+  .cta {
+    background-color: transparent;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === Brand Statement === */
+  .cta__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-16);
+    background: oklch(0.12 0.02 270 / 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid oklch(0.78 0.15 195 / 0.12);
+    border-radius: var(--radius-xl);
+    padding: var(--space-10) var(--space-8);
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+
+  .cta__brand:hover {
+    border-color: oklch(0.78 0.15 195 / 0.25);
+    box-shadow: 0 0 40px oklch(0.78 0.15 195 / 0.08);
+  }
+
+  .cta__title {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-bold);
+    font-family: var(--font-display, "Orbitron", sans-serif);
+    background: linear-gradient(135deg, var(--color-cyan, oklch(0.78 0.15 195)), var(--color-indigo, oklch(0.67 0.12 270)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: var(--lh-heading);
+    letter-spacing: var(--ls-wide);
+    filter: drop-shadow(0 0 30px oklch(0.78 0.15 195 / 0.3));
+  }
+
+  .cta__stat {
+    font-size: var(--fs-body);
+    color: var(--color-text);
+    line-height: var(--lh-body);
+  }
+
+  .cta__callback {
+    font-size: var(--fs-body);
+    color: var(--color-text-muted);
+    line-height: var(--lh-body);
+    margin-top: var(--space-4);
+  }
+
+  /* === Contact === */
+  .cta__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .cta__email,
+  .cta__source {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-small);
+    border: 1px solid var(--color-glass-border, oklch(0.78 0.15 195 / 0.12));
+    background: var(--color-glass-bg, oklch(0.12 0.02 270 / 0.65));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--color-text);
+    line-height: var(--lh-body);
+    transition: all var(--dur-fast) var(--ease-out);
+  }
+
+  .cta__email:hover,
+  .cta__source:hover {
+    border-color: var(--color-cyan, oklch(0.78 0.15 195));
+    box-shadow: 0 0 30px oklch(0.78 0.15 195 / 0.3);
+    transform: translateY(-2px);
+    color: var(--color-cyan, oklch(0.78 0.15 195));
+  }
+
+  /* === Footer === */
+  .site-footer {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+    padding-left: var(--section-px);
+    padding-right: var(--section-px);
+    background-color: transparent;
+    border-top: 1px solid oklch(1 0 0 / 0.05);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+  }
+
+  .footer__line {
+    font-size: var(--fs-small);
+    color: var(--color-text-muted);
+    line-height: var(--lh-small);
+    opacity: 0.7;
+  }
+
+  /* === Mobile adjustments === */
+  @media (max-width: 767px) {
+    .cta {
+      min-height: auto;
+    }
+
+    .cta__email {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: var(--space-12);
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .cta__source {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: var(--space-12);
+    }
+
+    .cta__contact {
+      width: 100%;
+    }
+
+    .site-footer {
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-8);
+    }
+  }
+
+  /* === Desktop refinements === */
+  @media (min-width: 1024px) {
+    .cta__title {
+      font-size: var(--fs-display);
+    }
+
+    .cta__stat {
+      font-size: var(--fs-h2);
+    }
+
+    .cta__callback {
+      font-size: var(--fs-h2);
+    }
+
+    .cta__contact {
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--space-8);
+    }
+  }
+</style>

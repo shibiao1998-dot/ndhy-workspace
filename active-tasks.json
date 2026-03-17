@@ -1,0 +1,14 @@
+{
+  "activeTasks": [
+    {
+      "type": "acp",
+      "label": "V5 Phase 2.1 — P0 阻断 + 老板反馈修复",
+      "sessionKey": "agent:claude:acp:5a67d764-3d72-4844-aeed-a83eb1073f6f",
+      "startedAt": "2026-03-16T23:33:00+08:00",
+      "targetDir": "D:\\code\\openclaw-home\\workspace\\projects\\ai-org-showcase\\website-v4\\src",
+      "status": "completed",
+      "lastBuild": "2026-03-17T00:00:15+08:00"
+    }
+  ],
+  "updatedAt": "2026-03-17T00:59:00+08:00"
+}

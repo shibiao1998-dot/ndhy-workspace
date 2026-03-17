@@ -1,0 +1,128 @@
+# 2026-03-17 工作日志
+
+## 每日收盘（00:03，来自 2026-03-16 日终）
+- **备份**：✅ `git commit + push` 成功（commit 74445d29）
+- **记忆变更**：
+  - 无降级（所有条目 < 30 天）
+  - 无晋升（系统运行仅 5 天）
+  - 检查到 MEMORY.md 今日新增重要规则，已在 AGENTS.md 宪法中落地：
+    - 指令包 6 层结构（第 6 层：必须使用的技能）
+    - 子 Agent 巡查机制（5 分钟间隔，10 分钟无产出→终止拆分）
+    - ACP 开发任务监控铁律
+- **能力缺口**：
+  - `prompt-evaluation` Skill 仍待创建（promptfoo）
+  - V4 官网修复后尚未做第二轮审查验证，待老板安排
+- **配置调整**：
+  - heartbeat 模型已配置为 `claude-sonnet-4-6`，Gateway 重启后生效
+  - `.gitignore` 缺少 `node_modules/`，本次提交已包含大量 node_modules（待老板确认后清理）
+
+## 收盘补充（00:08）
+- 子 Agent 无活跃任务
+- git 二次备份：commit 44327971（push 到 master 成功）
+- MEMORY.md 规则扫描：无降级/晋升/清理需要，所有条目有效
+
+---
+
+## 组织重大进化（00:08-00:45，老板批准的宪法级变更）
+
+### ACP-First 架构（宪法级）
+- **调研发现**：Claude Code 能连续跑不卡的核心原因——Agent Loop（多次短调用循环）+ 自动压缩 + 文件即记忆
+- **与 subagent 的本质区别**：subagent = 1 次调用做完所有事（token 耗尽就超时）；ACP = N 次短调用，每次做一小步（永不超时）
+- **决策树写入 AGENTS.md**：≤15KB → subagent，>15KB 或多轮迭代 → ACP，不确定 → 默认 ACP
+- **指令包从 6 层升级为 7 层**：新增第 7 层"执行模式指令"（ACP/subagent 选择 + CLAUDE.md 部署 + 增量写入要求）
+- **ACP 三条铁律**：①每步增量写入文件 ②CLAUDE.md 必须部署 ③标准开头（禁用 web_search/web_fetch + 增量写入 + 每步验证）
+
+### Agent Team 强制使用（宪法级）
+- Agent Team = 多个 Claude 实例共享代码库、自主协调、并行开发
+- 所有 ACP 开发任务的 task 中必须包含 Agent Team 指引
+- 适用：多文件修改、大型重构、并行修复。不适用：单文件修改、简单配置
+
+### 7 个 MCP 工具全量配置
+| MCP | 状态 | 包名 |
+|-----|------|------|
+| ddgs-search | ✅ | python ddgs-search-server.py |
+| fetch | ✅ | python -m mcp_server_fetch |
+| chrome-devtools | ⚠️ 浏览器冲突 | npx chrome-devtools-mcp@latest |
+| context7 | 🔄 修复后待验证 | npx -y @upstash/context7-mcp@latest |
+| github | ✅ | npx -y @modelcontextprotocol/server-github |
+| playwright | 🔄 修复后待验证 | npx -y @anthropic/mcp-server-playwright |
+| sequential-thinking | 🔄 修复后待验证 | npx -y @anthropic/mcp-server-sequential-thinking |
+- 首次测试：3 个通过、1 个冲突、3 个包名错误
+- 已修复包名：context7（→@upstash）、playwright（→@anthropic）、sequential-thinking（→@anthropic）
+
+### 心跳机制修复
+- 频率：30 分钟 → 5 分钟
+- 模型：opus → sonnet-4-6（省成本）
+- lightContext：最初设 true（导致失效——Sonnet 只看 HEARTBEAT.md 无法执行实际巡查）→ 改回 false
+- HEARTBEAT.md 清理了"手动设 timer"旧规则
+
+### 每日专家职级评估 Cron
+- 创建了 Cron 任务：每天凌晨 1:00 自动触发
+- Job ID: 02b4cce8-1f49-440e-acdf-cb2126e020bf
+- 流程：读当天日志 → 查 subagent 会话 → 加载 expert-leveling Skill → 评估 → 报告（不自动晋升）
+
+---
+
+## V5 官网迭代进度
+
+### Phase 1（设计补丁）✅ 完成
+3 个 subagent 并行，3 分钟全部完成：
+- 🎨 体验设计：动效补丁规范（GSAP scrub/pin 参数 + 高潮序列时序 + pathDraw 规格）→ design-patch-animation-v5.md
+- 🎨🖌️ 视觉+UI：等级徽章设计 + 5 态交互规范 + focus-visible → design-patch-visual-ui-v5.md
+- 📖 叙事策略：3 项内容更新文案 + S5 底文建议删除 → content-patch-v5.md
+
+### Phase 2.1（P0 阻断 + 老板反馈修复）✅ 完成
+- ACP（Claude Code）执行，11 个文件修改，00:00 build 成功
+- 修复内容：global.css Token 补充、section-triggers.ts GSAP 实现、7 个 Section 组件更新、内容文案替换
+
+### Phase 2.2（P2 建议 + N1 等级徽章）⏳ 下一步
+### Phase 3（审查 + 测试 + 部署）⏳
+
+---
+
+## UI 原型产出铁律
+- 所有高保真原型必须通过 ACP（Claude Code）产出，不允许 subagent 模式
+- 已写入 UI 设计专家 STANDARDS.md
+- 原因：subagent 单次输出 ≈15-20KB，原型通常 >30KB → 超时
+- V4 原型：49KB→41.5KB，ACP 完成，老板批准
+
+## 监控失职记录
+- V4 首版开发：spawn 后完全没监控
+- V4 修复开发：23:06 查一次后停止，22:09 老板追问才发现已完成
+- V5 Phase 2.1：ACP 00:00 完成，到 00:31 才确认（31 分钟延迟）
+- 根因：lightContext=true 导致心跳无法执行实际巡查 → 已修复为 false
+
+---
+
+## MCP 验证测试结果（00:38-00:55）
+
+### 首次测试（00:09）
+- ddgs-search ✅、fetch ✅、github ✅
+- chrome-devtools ⚠️ 浏览器冲突
+- context7 ❌、playwright ❌、sequential-thinking ❌（包名错误）
+
+### 修复动作
+- context7：`@context7/mcp-server` → `@upstash/context7-mcp@latest`
+- playwright：`@executeautomation/playwright-mcp-server` → `@anthropic/mcp-server-playwright`
+- sequential-thinking：`@anthropic/mcp-server-sequential-thinking` → `@modelcontextprotocol/server-sequential-thinking`（两次修复）
+
+### 复测结果（00:38）
+- context7 ✅ 修复成功（Astro 文档 5437 代码片段）
+- chrome-devtools ✅ 修复成功（导航+截图通过）
+- sequential-thinking ❌ 配置正确但仍未在会话中加载（可能需首次下载依赖）
+
+### 最终 MCP 状态
+6/7 验证通过，sequential-thinking 配置正确但待首次加载验证，不阻塞工作
+
+## 心跳机制调试（00:20-00:50）
+- 老板多次指出心跳未触发巡查
+- 配置：every=5m, model=sonnet-4-6, lightContext=false
+- 多次重启 Gateway 后配置已正确
+- 等待验证心跳是否正常自动触发
+
+## V5 任务清理（04:03-04:41 巡查）
+- 04:03 发现 ACP V5 视觉移植任务（03:14启动）49分钟零产出，website-v5 目录不存在，ACP 会话已消失
+- 04:41 发现 HEARTBEAT.md 残留 3 条孤立任务（ACP V5 Phase 2.2 完成 + 2 个 subagent 标记运行中但不存在）
+- 均来自前一个已失效会话，无活跃子 Agent
+- 已清除 HEARTBEAT.md 所有任务记录
+- 教训：跨会话恢复时 HEARTBEAT.md 的任务记录可能是孤立的，需验证 subagents list 后再信任

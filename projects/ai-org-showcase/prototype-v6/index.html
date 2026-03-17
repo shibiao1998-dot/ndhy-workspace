@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDHY AI Agent Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-snap-type: y mandatory; overflow-y: scroll; scroll-behavior: smooth; }
+body { background: #0a0a0f; color: #e0e0e0; font-family: 'Orbitron', -apple-system, sans-serif; }
+.section { height: 100vh; scroll-snap-align: start; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+
+/* 进度指示器 */
+.progress { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column; gap: 12px; }
+.progress-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: all 0.4s; cursor: pointer; }
+.progress-dot.active { background: oklch(0.70 0.15 265); box-shadow: 0 0 12px oklch(0.70 0.15 265 / 0.6); transform: scale(1.3); }
+
+/* S1 Hero */
+.s1 { flex-direction: column; gap: 24px; text-align: center; }
+.s1 canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+.s1 .content { position: relative; z-index: 1; }
+.s1 .date { font-size: 18px; color: #666; opacity: 0; letter-spacing: 0.3em; text-transform: uppercase; }
+.s1 .title { font-size: clamp(40px, 7vw, 80px); font-weight: 900; color: #fff; opacity: 0; letter-spacing: 0.05em; text-shadow: 0 0 20px rgba(255,255,255,0.1); transition: text-shadow 0.3s; }
+.s1 .title:hover { text-shadow: 0 0 40px rgba(255,255,255,0.3), 0 0 80px oklch(0.70 0.15 265 / 0.2); }
+.s1 .subtitle { font-size: clamp(22px, 4vw, 40px); color: #999; opacity: 0; font-weight: 400; letter-spacing: 0.08em; }
+.s1 .highlight { font-size: clamp(28px, 5vw, 52px); font-weight: 900; color: oklch(0.78 0.15 195); text-shadow: 0 0 40px oklch(0.78 0.15 195 / 0.6), 0 0 80px oklch(0.78 0.15 195 / 0.3), 0 0 120px oklch(0.78 0.15 195 / 0.15); opacity: 0; position: relative; transition: transform 0.3s, text-shadow 0.3s; cursor: default; }
+.s1 .highlight:hover { transform: scale(1.05); text-shadow: 0 0 60px oklch(0.78 0.15 195 / 0.8), 0 0 120px oklch(0.78 0.15 195 / 0.5), 0 0 200px oklch(0.78 0.15 195 / 0.2); }
+/* 扫描线效果 */
+.s1 .highlight::after { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, oklch(0.78 0.15 195 / 0.15), transparent); transform: translateX(-100%); animation: scanline 3s ease-in-out infinite; }
+@keyframes scanline { 0% { transform: translateX(-100%); } 50% { transform: translateX(100%); } 100% { transform: translateX(100%); } }
+.s1 .bigtext { font-family: 'Orbitron', monospace; }
+.s1 .bigtext { font-size: clamp(48px, 12vw, 160px); font-weight: 900; color: rgba(255,255,255,0.04); letter-spacing: 0.15em; opacity: 0; position: absolute; bottom: 5vh; left: 50%; transform: translateX(-50%); white-space: nowrap; z-index: 1; text-shadow: 0 0 60px oklch(0.70 0.15 265 / 0.08); animation: bigtext-pulse 4s ease-in-out infinite; }
+@keyframes bigtext-pulse { 0%, 100% { color: rgba(255,255,255,0.03); text-shadow: 0 0 40px oklch(0.70 0.15 265 / 0.05); } 50% { color: rgba(255,255,255,0.06); text-shadow: 0 0 80px oklch(0.70 0.15 265 / 0.12); } }
+
+/* 鼠标跟随光效 */
+.mouse-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, oklch(0.70 0.15 265 / 0.08), transparent 70%); pointer-events: none; z-index: 998; transform: translate(-50%, -50%); transition: left 0.3s ease-out, top 0.3s ease-out; }
+
+/* S2 拓扑 */
+.s2 { flex-direction: column; gap: 32px; }
+.s2-title { font-size: clamp(28px, 5vw, 48px); font-weight: 700; text-align: center; background: linear-gradient(135deg, oklch(0.78 0.15 195), oklch(0.67 0.12 270)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0; }
+.s2-topo { width: min(600px, 80vw); height: min(600px, 80vw); position: relative; opacity: 0; }
+.s2-bottom { text-align: center; opacity: 0; }
+.s2-headline { font-size: clamp(16px, 3vw, 28px); font-weight: 600; background: linear-gradient(135deg, oklch(0.78 0.15 195), oklch(0.67 0.12 270)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.s2-subtext { font-size: 16px; color: #888; margin-top: 12px; line-height: 1.6; }
+
+/* 占位区块 */
+.placeholder { color: #333; font-size: 24px; }
+
+/* SVG 连线电流 */
+@keyframes dashFlow {
+  to { stroke-dashoffset: -20; }
+}
+.topo-line {
+  stroke-dasharray: 4 6;
+  animation: dashFlow 1.5s linear infinite;
+}
+.topo-line.slow { animation-duration: 2.2s; }
+.topo-line.fast { animation-duration: 0.8s; }
+</style>
+</head>
+<body>
+
+<div class="mouse-glow" id="mouseGlow"></div>
+<nav class="progress" id="progress"></nav>
+
+<!-- S1 Hero -->
+<section class="section s1" id="s1">
+  <canvas id="starfield"></canvas>
+  <div class="content">
+    <p class="date" id="s1-date">2026 年 3 月 10 日</p>
+    <h1 class="title" id="s1-title">一个人启动了一个项目</h1>
+    <p class="subtitle" id="s1-sub">6 天后，他拥有了一个 31 人的产品团队</p>
+    <p class="highlight" id="s1-hl">他没有招过一个人</p>
+  </div>
+  <div class="bigtext" id="s1-big">AI ORGANIZATION</div>
+</section>
+
+<!-- S2 拓扑 -->
+<section class="section s2" id="s2">
+  <h2 class="s2-title" id="s2-title">组织拓扑</h2>
+  <div class="s2-topo" id="s2-topo">
+    <svg id="topo-svg" viewBox="0 0 600 600" width="100%" height="100%">
+      <defs>
+        <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- 连线组 -->
+      <g id="topo-lines"></g>
+      <!-- L3 专家外环 -->
+      <g id="topo-l3"></g>
+      <!-- L0 老板 - 中心 -->
+      <g class="topo-node n-l0" opacity="0" filter="url(#glow-gold)">
+        <circle cx="300" cy="300" r="35" fill="rgba(180,130,40,0.08)" stroke="oklch(0.80 0.15 65)" stroke-width="2"/>
+        <text x="300" y="295" text-anchor="middle" fill="oklch(0.80 0.15 65)" font-size="20">👤</text>
+        <text x="300" y="320" text-anchor="middle" fill="oklch(0.80 0.15 65)" font-size="11" font-weight="600">老板 · 人类</text>
+      </g>
+      <!-- L1 Leader - 内环 4 个 -->
+      <g id="topo-l1"></g>
+      <!-- L2 PM - 中环 -->
+      <g id="topo-l2"></g>
+    </svg>
+  </div>
+  <div class="s2-bottom" id="s2-bottom">
+    <p class="s2-headline">一个人类 · 31 个 AI 专家 · 一个完整的产品组织</p>
+    <p class="s2-subtext">不是工具，不是框架，不是 Prompt 模板<br/>是一支有灵魂、有纪律、有记忆、会进化的 AI 组织</p>
+  </div>
+</section>
+
+<!-- S3-S7 占位 -->
+<section class="section" id="s3"><h2 class="placeholder">S3 · 时间线（待添加）</h2></section>
+<section class="section" id="s4"><h2 class="placeholder">S4 · 对比（待添加）</h2></section>
+<section class="section" id="s5"><h2 class="placeholder">S5 · 架构（待添加）</h2></section>
+<section class="section" id="s6"><h2 class="placeholder">S6 · 愿景（待添加）</h2></section>
+<section class="section" id="s7"><h2 class="placeholder">S7 · CTA（待添加）</h2></section>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ============================================================
+     1. 星空粒子 Canvas
+  ============================================================ */
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  const STAR_COUNT = 200;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.3,
+        alpha: Math.random() * 0.6 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.005,
+        twinklePhase: Math.random() * Math.PI * 2,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.1
+      });
+    }
+  }
+  initStars();
+
+  let mouseX = canvas.width / 2, mouseY = canvas.height / 2;
+
+  function drawStars(time) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const s of stars) {
+      // gentle drift
+      s.x += s.vx;
+      s.y += s.vy;
+      if (s.x < -5) s.x = canvas.width + 5;
+      if (s.x > canvas.width + 5) s.x = -5;
+      if (s.y < -5) s.y = canvas.height + 5;
+      if (s.y > canvas.height + 5) s.y = -5;
+
+      const twinkle = Math.sin(time * s.twinkleSpeed + s.twinklePhase) * 0.3 + 0.7;
+      const a = s.alpha * twinkle;
+
+      // mouse proximity glow
+      const dx = s.x - mouseX;
+      const dy = s.y - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const boost = dist < 200 ? (1 - dist / 200) * 0.6 : 0;
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r + boost * 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200, 220, 255, ${Math.min(a + boost, 1)})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(drawStars);
+  }
+  requestAnimationFrame(drawStars);
+
+  /* ============================================================
+     2. S1 文字入场 GSAP Timeline
+  ============================================================ */
+  gsap.registerPlugin(ScrollTrigger);
+
+  const s1tl = gsap.timeline({ delay: 0.5 });
+  s1tl
+    .to('#s1-date', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' })
+    .to('#s1-title', { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, '-=0.3')
+    .to('#s1-sub', { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, '-=0.3')
+    .to('#s1-hl', { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, '-=0.2')
+    .to('#s1-big', { opacity: 1, duration: 1.5, ease: 'power1.out' }, '-=0.5');
+
+  // Set initial y offsets for text animation
+  gsap.set(['#s1-date','#s1-title','#s1-sub','#s1-hl'], { y: 30 });
+
+  /* ============================================================
+     3. 鼠标跟随光效
+  ============================================================ */
+  const glow = document.getElementById('mouseGlow');
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  /* ============================================================
+     4. 进度指示器
+  ============================================================ */
+  const sections = document.querySelectorAll('.section');
+  const progressNav = document.getElementById('progress');
+
+  sections.forEach((sec, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot';
+    dot.title = sec.id.toUpperCase();
+    dot.addEventListener('click', () => {
+      sec.scrollIntoView({ behavior: 'smooth' });
+    });
+    progressNav.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.progress-dot');
+
+  function updateProgress() {
+    const scrollY = window.scrollY;
+    const vh = window.innerHeight;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (scrollY >= sec.offsetTop - vh * 0.5) activeIdx = i;
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  /* ============================================================
+     5 & 6. S2 拓扑图 - 动态生成节点 + 连线 + 入场动画
+  ============================================================ */
+  const CX = 300, CY = 300;
+  const NS = 'http://www.w3.org/2000/svg';
+
+  // L1 Leaders (4个)
+  const l1Data = [
+    { label: 'Leader', emoji: '🧠', angle: -90 },
+    { label: 'Tech Lead', emoji: '⚙️', angle: 0 },
+    { label: 'Design Lead', emoji: '🎨', angle: 90 },
+    { label: 'QA Lead', emoji: '🔍', angle: 180 }
+  ];
+  const L1_R = 90; // 内环半径
+  const l1Group = document.getElementById('topo-l1');
+
+  l1Data.forEach((d, i) => {
+    const rad = (d.angle * Math.PI) / 180;
+    const x = CX + L1_R * Math.cos(rad);
+    const y = CY + L1_R * Math.sin(rad);
+
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'topo-node n-l1');
+    g.setAttribute('opacity', '0');
+    g.setAttribute('filter', 'url(#glow-blue)');
+
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', '28');
+    circle.setAttribute('fill', 'rgba(80,80,200,0.06)');
+    circle.setAttribute('stroke', 'oklch(0.70 0.15 265)');
+    circle.setAttribute('stroke-width', '1.5');
+
+    const emoji = document.createElementNS(NS, 'text');
+    emoji.setAttribute('x', x);
+    emoji.setAttribute('y', y - 5);
+    emoji.setAttribute('text-anchor', 'middle');
+    emoji.setAttribute('fill', 'oklch(0.70 0.15 265)');
+    emoji.setAttribute('font-size', '16');
+    emoji.textContent = d.emoji;
+
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', x);
+    label.setAttribute('y', y + 15);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', 'oklch(0.70 0.15 265)');
+    label.setAttribute('font-size', '9');
+    label.textContent = d.label;
+
+    g.appendChild(circle);
+    g.appendChild(emoji);
+    g.appendChild(label);
+    l1Group.appendChild(g);
+  });
+
+  // L2 PMs (6个)
+  const l2Data = [
+    { label: 'PM 产品', emoji: '📋' },
+    { label: 'PM 技术', emoji: '🔧' },
+    { label: 'PM 运营', emoji: '📊' },
+    { label: 'PM 数据', emoji: '📈' },
+    { label: 'PM 设计', emoji: '🖌️' },
+    { label: 'PM 测试', emoji: '✅' }
+  ];
+  const L2_R = 160;
+  const l2Group = document.getElementById('topo-l2');
+
+  l2Data.forEach((d, i) => {
+    const angle = (i / l2Data.length) * 360 - 60;
+    const rad = (angle * Math.PI) / 180;
+    const x = CX + L2_R * Math.cos(rad);
+    const y = CY + L2_R * Math.sin(rad);
+
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'topo-node n-l2');
+    g.setAttribute('opacity', '0');
+    g.setAttribute('filter', 'url(#glow-teal)');
+
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', '22');
+    circle.setAttribute('fill', 'rgba(60,150,150,0.05)');
+    circle.setAttribute('stroke', 'oklch(0.65 0.12 220)');
+    circle.setAttribute('stroke-width', '1');
+
+    const emoji = document.createElementNS(NS, 'text');
+    emoji.setAttribute('x', x);
+    emoji.setAttribute('y', y - 3);
+    emoji.setAttribute('text-anchor', 'middle');
+    emoji.setAttribute('fill', 'oklch(0.65 0.12 220)');
+    emoji.setAttribute('font-size', '13');
+    emoji.textContent = d.emoji;
+
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', x);
+    label.setAttribute('y', y + 13);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', 'oklch(0.65 0.12 220)');
+    label.setAttribute('font-size', '8');
+    label.textContent = d.label;
+
+    g.appendChild(circle);
+    g.appendChild(emoji);
+    g.appendChild(label);
+    l2Group.appendChild(g);
+  });
+
+  // L3 专家 (30个，外环弧线)
+  const l3Roles = [
+    '前端','后端','算法','数据','测试','运维',
+    'UI','UX','安全','架构','产品','文案',
+    '营销','客服','培训','财务','法务','HR',
+    'DBA','SRE','ML','NLP','CV','推荐',
+    '搜索','音视频','嵌入式','区块链','云原生','全栈'
+  ];
+  const l3Emojis = [
+    '💻','🖥️','🧮','📊','🧪','🔧',
+    '🎨','👁️','🛡️','🏗️','📦','✍️',
+    '📢','🎧','📚','💰','⚖️','👥',
+    '🗄️','🚀','🤖','💬','📷','🎯',
+    '🔎','🎬','⚡','🔗','☁️','🌐'
+  ];
+  const L3_R = 250;
+  const l3Group = document.getElementById('topo-l3');
+
+  l3Roles.forEach((role, i) => {
+    const angle = (i / 30) * 360 - 90;
+    const rad = (angle * Math.PI) / 180;
+    const x = CX + L3_R * Math.cos(rad);
+    const y = CY + L3_R * Math.sin(rad);
+
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'topo-node n-l3');
+    g.setAttribute('opacity', '0');
+
+    const circle = document.createElementNS(NS, 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', '16');
+    circle.setAttribute('fill', 'rgba(100,100,180,0.03)');
+    circle.setAttribute('stroke', 'oklch(0.55 0.10 280)');
+    circle.setAttribute('stroke-width', '0.8');
+
+    const emoji = document.createElementNS(NS, 'text');
+    emoji.setAttribute('x', x);
+    emoji.setAttribute('y', y - 1);
+    emoji.setAttribute('text-anchor', 'middle');
+    emoji.setAttribute('fill', 'oklch(0.60 0.10 280)');
+    emoji.setAttribute('font-size', '11');
+    emoji.textContent = l3Emojis[i];
+
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', x);
+    label.setAttribute('y', y + 11);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', 'oklch(0.55 0.10 280)');
+    label.setAttribute('font-size', '7');
+    label.textContent = role;
+
+    g.appendChild(circle);
+    g.appendChild(emoji);
+    g.appendChild(label);
+    l3Group.appendChild(g);
+  });
+
+  /* ============================================================
+     7. 连线生成（L0→L1, L1→L2, L2→L3）
+  ============================================================ */
+  const linesGroup = document.getElementById('topo-lines');
+
+  function makeLine(x1, y1, x2, y2, color, speedClass) {
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '0.8');
+    line.setAttribute('opacity', '0.4');
+    line.setAttribute('class', 'topo-line ' + (speedClass || ''));
+    linesGroup.appendChild(line);
+    return line;
+  }
+
+  // L0 → L1
+  l1Data.forEach((d, i) => {
+    const rad = (d.angle * Math.PI) / 180;
+    const x = CX + L1_R * Math.cos(rad);
+    const y = CY + L1_R * Math.sin(rad);
+    makeLine(CX, CY, x, y, 'oklch(0.75 0.12 65 / 0.5)', 'fast');
+  });
+
+  // L1 → L2 (each L1 connects to nearby L2)
+  l1Data.forEach((d1, i) => {
+    const rad1 = (d1.angle * Math.PI) / 180;
+    const x1 = CX + L1_R * Math.cos(rad1);
+    const y1 = CY + L1_R * Math.sin(rad1);
+    // connect to 1-2 nearby L2 nodes
+    const startIdx = Math.floor((i / l1Data.length) * l2Data.length);
+    for (let j = 0; j < 2; j++) {
+      const idx = (startIdx + j) % l2Data.length;
+      const angle2 = (idx / l2Data.length) * 360 - 60;
+      const rad2 = (angle2 * Math.PI) / 180;
+      const x2 = CX + L2_R * Math.cos(rad2);
+      const y2 = CY + L2_R * Math.sin(rad2);
+      makeLine(x1, y1, x2, y2, 'oklch(0.65 0.12 265 / 0.35)', '');
+    }
+  });
+
+  // L2 → L3 (each L2 connects to 5 nearby L3 nodes)
+  l2Data.forEach((d2, i) => {
+    const angle2 = (i / l2Data.length) * 360 - 60;
+    const rad2 = (angle2 * Math.PI) / 180;
+    const x2 = CX + L2_R * Math.cos(rad2);
+    const y2 = CY + L2_R * Math.sin(rad2);
+    const startIdx = i * 5;
+    for (let j = 0; j < 5; j++) {
+      const idx = (startIdx + j) % 30;
+      const angle3 = (idx / 30) * 360 - 90;
+      const rad3 = (angle3 * Math.PI) / 180;
+      const x3 = CX + L3_R * Math.cos(rad3);
+      const y3 = CY + L3_R * Math.sin(rad3);
+      makeLine(x2, y2, x3, y3, 'oklch(0.55 0.10 220 / 0.25)', 'slow');
+    }
+  });
+
+  /* ============================================================
+     S2 入场动画 (ScrollTrigger)
+  ============================================================ */
+  const s2tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#s2',
+      start: 'top 60%',
+      end: 'center center',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+  s2tl
+    // 标题
+    .to('#s2-title', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' })
+    // 拓扑容器
+    .to('#s2-topo', { opacity: 1, duration: 0.5, ease: 'power1.out' }, '-=0.3')
+    // L0 老板 - 中心亮起
+    .to('.n-l0', { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.5)' }, '-=0.2')
+    // L1 内环亮起
+    .to('.n-l1', { opacity: 1, scale: 1, duration: 0.4, stagger: 0.08, ease: 'back.out(1.2)' }, '-=0.1')
+    // 连线亮起
+    .to('#topo-lines', { opacity: 1, duration: 0.6, ease: 'power1.out' }, '-=0.2')
+    // L2 中环亮起
+    .to('.n-l2', { opacity: 1, scale: 1, duration: 0.4, stagger: 0.06, ease: 'back.out(1.2)' }, '-=0.3')
+    // L3 外环 - 快速逐个亮起
+    .to('.n-l3', { opacity: 1, scale: 1, duration: 0.3, stagger: 0.03, ease: 'power1.out' }, '-=0.2')
+    // 底部文案
+    .to('#s2-bottom', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3');
+
+  // Set initial states for S2
+  gsap.set('#s2-title', { y: 30 });
+  gsap.set('#s2-bottom', { y: 20 });
+  gsap.set('#topo-lines', { opacity: 0 });
+  gsap.set(['.n-l0','.n-l1','.n-l2','.n-l3'], { scale: 0.7 });
+
+})();
+</script>
+</body>
+</html>

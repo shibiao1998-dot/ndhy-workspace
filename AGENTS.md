@@ -72,6 +72,16 @@ The main agent acts as team lead: decompose → delegate → verify.
 
 工作流概览：`需求进入 → 需求验证门 → 需求分诊 → 执行拓扑判断 → 指令包组装 → 调度执行 → 质量检查 → 交付/自省`
 
+**对抗式协作（宪法级）**：关键流程节点必须引入对抗环节，单向产出→放行不够，必须有质疑→回应→再判循环。
+
+| 流程节点 | 对抗对 | 对抗方式 |
+|---------|--------|---------|
+| 需求确认 | 🎯 需求分析 ↔ 📐 产品定义 | 需求分析出文档 → 产品定义质疑挑战 → 迭代后确认 |
+| 代码审查 | 🖥️ 前端开发 ↔ 🔍 代码审查 | 开发提交 → 审查提问 → 开发回应 → 审查再判（最多 2 轮） |
+| 技术选型 | 🔬 技术调研 ↔ 🏛️ 技术架构 | 调研出方案 → 架构质疑可行性 → 对抗后确定 |
+| 测试验收 | 🖥️ 前端开发 ↔ 🧪 测试专家 | 开发提交 → 测试破坏性测试 → 开发修复 → 测试再验 |
+| 设计实现 | 🎨 体验设计 ↔ 🏛️ 技术架构 | 体验追求丰富 → 架构评估性能成本 → 平衡后确定 |
+
 **Leader 直接管理项目。** 完成需求验证后，Leader 亲自驱动项目执行全流程：需求分诊、执行拓扑判断、指令包组装、调度 spawn 执行专家、产出质量检查、状态跟踪、整合交付。`maxSpawnDepth: 2` 允许 Leader 直接 spawn 执行专家。
 
 > 📖 各步骤详细操作流程见 Skill: leader-workflow、project-execution、project-management
@@ -121,6 +131,21 @@ The main agent acts as team lead: decompose → delegate → verify.
 | 🟡 小问题 | 格式/命名等非实质问题 | 自行修正，继续推进 |
 | 🟠 方向性问题 | 内容偏离目标或与上游矛盾 | 重新调度附修正指引（最多 2 次） |
 | 🔴 根本性问题 | 需求模糊/能力不匹配/流程缺陷 | 暂停，重新评估 |
+
+### 进度管理机制（宪法级）
+
+**动态心跳巡查**：有任务时每 5 分钟汇报，无任务时安静。
+
+**Leader 必须执行的动作**：
+1. **spawn 任务时** → 在 HEARTBEAT.md「当前活跃任务」段落写入任务信息（类型/名称/目标目录/启动时间）
+2. **心跳触发时** → 读 HEARTBEAT.md，有任务则巡查目标目录并汇报进度（不回 HEARTBEAT_OK），无任务则静默
+3. **任务完成时** → 清除 HEARTBEAT.md 中的任务信息
+
+**巡查规则**：
+- 连续 2 次巡查（10 分钟）无文件产出 → 终止 + 拆分任务重新派发
+- ACP 任务额外检查：build 状态、Token 遵循度
+
+**违反后果**：spawn 后不写入 HEARTBEAT.md = 放弃进度管理 = 失职。
 
 ### 状态跟踪
 
@@ -262,3 +287,82 @@ The main agent acts as team lead: decompose → delegate → verify.
 
 ---
 _这个手册定义了你的工作方式。随着实战经验积累，你可以更新它。_
+
+<!-- gitnexus:start -->
+# GitNexus — Code Intelligence
+
+This project is indexed by GitNexus as **workspace** (1712 symbols, 2794 relationships, 76 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+
+> If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
+
+## Always Do
+
+- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `gitnexus_impact({target: "symbolName", direction: "upstream"})` and report the blast radius (direct callers, affected processes, risk level) to the user.
+- **MUST run `gitnexus_detect_changes()` before committing** to verify your changes only affect expected symbols and execution flows.
+- **MUST warn the user** if impact analysis returns HIGH or CRITICAL risk before proceeding with edits.
+- When exploring unfamiliar code, use `gitnexus_query({query: "concept"})` to find execution flows instead of grepping. It returns process-grouped results ranked by relevance.
+- When you need full context on a specific symbol — callers, callees, which execution flows it participates in — use `gitnexus_context({name: "symbolName"})`.
+
+## When Debugging
+
+1. `gitnexus_query({query: "<error or symptom>"})` — find execution flows related to the issue
+2. `gitnexus_context({name: "<suspect function>"})` — see all callers, callees, and process participation
+3. `READ gitnexus://repo/workspace/process/{processName}` — trace the full execution flow step by step
+4. For regressions: `gitnexus_detect_changes({scope: "compare", base_ref: "main"})` — see what your branch changed
+
+## When Refactoring
+
+- **Renaming**: MUST use `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` first. Review the preview — graph edits are safe, text_search edits need manual review. Then run with `dry_run: false`.
+- **Extracting/Splitting**: MUST run `gitnexus_context({name: "target"})` to see all incoming/outgoing refs, then `gitnexus_impact({target: "target", direction: "upstream"})` to find all external callers before moving code.
+- After any refactor: run `gitnexus_detect_changes({scope: "all"})` to verify only expected files changed.
+
+## Never Do
+
+- NEVER edit a function, class, or method without first running `gitnexus_impact` on it.
+- NEVER ignore HIGH or CRITICAL risk warnings from impact analysis.
+- NEVER rename symbols with find-and-replace — use `gitnexus_rename` which understands the call graph.
+- NEVER commit changes without running `gitnexus_detect_changes()` to check affected scope.
+
+## Tools Quick Reference
+
+| Tool | When to use | Command |
+|------|-------------|---------|
+| `query` | Find code by concept | `gitnexus_query({query: "auth validation"})` |
+| `context` | 360-degree view of one symbol | `gitnexus_context({name: "validateUser"})` |
+| `impact` | Blast radius before editing | `gitnexus_impact({target: "X", direction: "upstream"})` |
+| `detect_changes` | Pre-commit scope check | `gitnexus_detect_changes({scope: "staged"})` |
+| `rename` | Safe multi-file rename | `gitnexus_rename({symbol_name: "old", new_name: "new", dry_run: true})` |
+| `cypher` | Custom graph queries | `gitnexus_cypher({query: "MATCH ..."})` |
+
+## Impact Risk Levels
+
+| Depth | Meaning | Action |
+|-------|---------|--------|
+| d=1 | WILL BREAK — direct callers/importers | MUST update these |
+| d=2 | LIKELY AFFECTED — indirect deps | Should test |
+| d=3 | MAY NEED TESTING — transitive | Test if critical path |
+
+## Resources
+
+| Resource | Use for |
+|----------|---------|
+| `gitnexus://repo/workspace/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/workspace/clusters` | All functional areas |
+| `gitnexus://repo/workspace/processes` | All execution flows |
+| `gitnexus://repo/workspace/process/{name}` | Step-by-step execution trace |
+
+## Self-Check Before Finishing
+
+Before completing any code modification task, verify:
+1. `gitnexus_impact` was run for all modified symbols
+2. No HIGH/CRITICAL risk warnings were ignored
+3. `gitnexus_detect_changes()` confirms changes match expected scope
+4. All d=1 (WILL BREAK) dependents were updated
+
+## CLI
+
+- Re-index: `npx gitnexus analyze`
+- Check freshness: `npx gitnexus status`
+- Generate docs: `npx gitnexus wiki`
+
+<!-- gitnexus:end -->

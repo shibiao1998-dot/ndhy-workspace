@@ -1,0 +1,258 @@
+---
+/**
+ * S1HeroSection — Cinematic opening with typewriter effect.
+ * Full viewport, dark background, sequential text reveals.
+ */
+import Typewriter from '../components/Typewriter.astro';
+---
+
+<section class="hero" aria-label="开场叙事">
+  <!-- Ambient glow orbs -->
+  <div class="hero__orb hero__orb--cyan" aria-hidden="true"></div>
+  <div class="hero__orb hero__orb--purple" aria-hidden="true"></div>
+
+  <h1 class="sr-only">一个人启动了一个项目，6 天后拥有了 31 人的产品团队</h1>
+
+  <div class="hero__content">
+    <!-- Line 1: Date -->
+    <p class="hero__line hero__date" aria-label="日期">
+      2026 年 3 月 10 日
+    </p>
+
+    <!-- Line 2: Typewriter -->
+    <p class="hero__line hero__typewriter">
+      <Typewriter text="一个人启动了一个项目" class="hero__typewriter-wrap" />
+    </p>
+
+    <!-- Line 3: Two-line reveal -->
+    <div class="hero__line hero__reveal-group" aria-label="6 天后的结果">
+      <p class="hero__reveal-line-1">6 天后，</p>
+      <p class="hero__reveal-line-2">他拥有了一个 31 人的产品团队</p>
+    </div>
+
+    <!-- Line 4: Punch line -->
+    <p class="hero__line hero__punch" aria-label="他没有招过一个人">
+      他没有招过一个人    </p>
+  </div>
+
+  <!-- Category hint -->
+  <span class="hero__category" aria-hidden="true">AI Organization</span>
+
+  <!-- Scroll arrow -->
+  <div class="hero__scroll-arrow" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+<style>
+  /* === Hero Section === */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    padding-left: var(--section-px);
+    padding-right: var(--section-px);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  /* === Ambient glow orbs === */
+  .hero__orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(80px);
+  }
+
+  .hero__orb--cyan {
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 15%;
+    background: radial-gradient(circle, oklch(0.78 0.15 195 / 0.12), transparent 70%);
+    animation: orbFloat 8s var(--ease-in-out) infinite alternate;
+  }
+
+  .hero__orb--purple {
+    width: 400px;
+    height: 400px;
+    bottom: 15%;
+    right: 10%;
+    background: radial-gradient(circle, oklch(0.50 0.25 295 / 0.10), transparent 70%);
+    animation: orbFloat 10s var(--ease-in-out) infinite alternate-reverse;
+  }
+
+  @keyframes orbFloat {
+    from { transform: translate(0, 0); }
+    to { transform: translate(30px, -20px); }
+  }
+
+  /* Visually hidden heading for a11y */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* === Content container === */
+  .hero__content {
+    max-width: var(--max-w-content);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    text-align: center;
+    font-family: var(--font-sans);
+  }
+
+  /* === Shared line styles === */
+  .hero__line {
+    font-size: var(--fs-h2);
+    line-height: var(--lh-heading);
+    color: var(--color-text);
+  }
+
+  /* === Line 1: Date — fade in === */
+  .hero__date {
+    font-size: var(--fs-body);
+    color: var(--color-text-muted);
+    letter-spacing: var(--ls-wide);
+    opacity: 0;
+    animation: heroFadeIn var(--dur-slow) var(--ease-out) forwards;
+    animation-delay: 300ms;
+  }
+
+  /* === Line 2: Typewriter === */
+  .hero__typewriter {
+    display: flex;
+    justify-content: center;
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-medium);
+    text-shadow: 0 0 40px oklch(0.78 0.15 195 / 0.15);
+  }
+
+  /* === Line 3: Reveal group === */
+  .hero__reveal-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .hero__reveal-line-1,
+  .hero__reveal-line-2 {
+    font-size: var(--fs-h2);
+    opacity: 0;
+    animation: heroFadeIn var(--dur-slow) var(--ease-out) forwards;
+  }
+
+  .hero__reveal-line-1 {
+    animation-delay: 3s;
+  }
+
+  .hero__reveal-line-2 {
+    animation-delay: 3.5s;
+  }
+
+  /* === Line 4: Punch line === */
+  .hero__punch {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-bold);
+    background: linear-gradient(90deg, var(--color-cyan, oklch(0.78 0.15 195)), var(--color-indigo, oklch(0.67 0.12 270)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px oklch(0.78 0.15 195 / 0.3));
+    opacity: 0;
+    animation: heroFadeIn var(--dur-slow) var(--ease-out) forwards;
+    animation-delay: 4.5s;
+  }
+
+  /* === Category hint === */
+  .hero__category {
+    position: absolute;
+    bottom: var(--space-16);
+    opacity: 0.08;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-family: var(--font-display, "Orbitron", sans-serif);
+    letter-spacing: 0.2em;
+    color: var(--color-cyan, oklch(0.78 0.15 195));
+    text-transform: uppercase;
+    user-select: none;
+  }
+
+  /* === Scroll arrow === */
+  .hero__scroll-arrow {
+    position: absolute;
+    bottom: var(--space-8);
+    color: var(--color-text-dim);
+    animation: breathe 2s var(--ease-in-out) infinite;
+  }
+
+  .hero__scroll-arrow svg {
+    display: block;
+  }
+
+  /* === Keyframes === */
+  @keyframes heroFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(var(--space-2));
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* === Mobile adjustments === */
+  @media (max-width: 767px) {
+    .hero__line {
+      font-size: var(--fs-body);
+    }
+
+    .hero__typewriter {
+      font-size: var(--fs-h2);
+    }
+
+    .hero__punch {
+      font-size: var(--fs-h2);
+    }
+
+    .hero__category {
+      bottom: var(--space-12);
+    }
+  }
+
+  /* === Desktop adjustments === */
+  @media (min-width: 1024px) {
+    .hero__content {
+      gap: var(--space-8);
+    }
+
+    .hero__line {
+      font-size: var(--fs-h1);
+    }
+
+    .hero__typewriter {
+      font-size: var(--fs-display);
+    }
+
+    .hero__punch {
+      font-size: var(--fs-display);
+    }
+  }
+</style>

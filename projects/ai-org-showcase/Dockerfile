@@ -3,8 +3,8 @@ FROM caddy:2-alpine
 # Copy Caddyfile
 COPY Caddyfile /etc/caddy/Caddyfile
 
-# Copy static site files
-COPY index.html /srv/index.html
+# Copy Astro build output (V5)
+COPY website/dist/ /srv/
 
 # Expose port 80
 EXPOSE 80
