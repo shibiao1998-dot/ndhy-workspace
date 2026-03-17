@@ -152,6 +152,12 @@
 - **子 Agent 每轮修复需重新 spawn**：优化方向是共享文件减少上下文重复。（2026-03-15）
 
 ## 行业情报（精选，指导行动的）
+- **NVIDIA GTC 2026 发布 NemoClaw**：集成 OpenClaw 的企业级 AI Agent 平台，Adobe/Salesforce/SAP 等 17 家合作。Agent 从实验进入企业级部署。（2026-03-18 调研）
+- **claude-mem（37K⭐）值得评估**：Claude Code 持久记忆插件，自动捕获+压缩会话上下文，已原生支持 OpenClaw。可能增强我们的手动记忆管理。（2026-03-18 调研）
+- **OpenViking（15K⭐，字节出品）**：开源上下文数据库，文件系统范式管理 Agent 上下文，L0/L1/L2 三级加载+可视化检索轨迹。与我们的 HOT/WARM/项目级架构类似但更系统化。（2026-03-18 调研）
+- **forge-orchestrator 契约先行模式**：先生成接口契约再让 Agent 并行编码，多级审查门（build→lint→test→LLM review→契约合规→merge）。与我们"对抗式协作"高度一致。（2026-03-18 调研）
+- **功能正确性验证是行业盲区**：Harness Engineering 论文指出"内部质量好≠业务功能正确"，当前 Agent 系统过度关注 lint/doc 而忽视端到端业务验证。我们也需警惕。（2026-03-18 调研）
+- **Context Engineering 正式取代 Prompt Engineering（行业共识 2026）**：从单条指令到管理系统指令+检索知识+工具定义+对话摘要+任务元数据的完整上下文。我们的四层架构就是 CE 实践。（2026-03-18 调研）
 - **Harness Engineering = 行业新范式**：Agent = Model + Harness。我们的 SOUL+STANDARDS+Skills = Harness 实践。（2026-03-17）
 - **Sub-Agent = Context Firewall**：隔离上下文窗口防噪音累积。验证 ACP-First 架构。（2026-03-17）
 - **Skills = Instruction Modules**：行业视 Skills 为知识渐进式披露机制。与我们"设定=宪法，技能=操作手册"一致。（2026-03-17）

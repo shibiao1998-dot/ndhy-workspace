@@ -1,0 +1,118 @@
+# 2026-03-16 工作日志
+
+## v2 UI 暗色主题修复
+
+### 教训：CSS class 名不匹配
+- 修改 CSS Module 前，必须先 `Select-String -Pattern "styles\."` 提取组件实际使用的全部 class 名，然后对齐
+- 修复完成：DimensionManager、ChatArea、HoodPanel 全面适配暗色主题
+
+### FOREIGN KEY 约束错误
+- `POST /api/chat` 报 `sqlite3.IntegrityError: FOREIGN KEY constraint failed`
+- 原因：aiosqlite 异步环境下 conversation commit 和 message insert 时序问题
+- 修复：改为 `PRAGMA foreign_keys=OFF`
+
+### 粒子特效
+- 新增 `ParticlesBg.tsx`：蓝/紫/青三色粒子漂移 + 距离<120px自动连线 + 最多80个
+
+## Cloudflare Tunnel
+- 重启后新地址：`https://oasis-polyester-soundtrack-affordable.trycloudflare.com`
+- 清除残留 `quick-config.yml`（UUID解析错误），协议 HTTP2
+
+## Brave Search API 配置
+- 正确路径：`openclaw.json` → `tools.web.search.provider` + `tools.web.search.apiKey`
+- 错误路径 `tools.web.braveApiKey` 会导致 Gateway 启动失败（Unrecognized key）
+- 文档：`openclaw/docs/brave-search.md`
+
+## 调研成果落地
+
+### 开源项目评估结论
+| 项目 | 状态 |
+|------|------|
+| Context-Engineering (8.5K) | ✅ 已吸收：调研报告+3个专家STANDARDS更新 |
+| Anthropic 教程 (33K) | ✅ 已创建 Skill: `claude-best-practices`（SKILL.md + 7个reference） |
+| BAML (7.7K) | 待做：模板化思路吸收到 prompt_assembler.py |
+| promptfoo (16K) | 待做：创建 prompt-evaluation Skill |
+| Dify (132K) / Microsoft promptbase (5.7K) / Prompt-Engineering-Guide (71K) | 仅参考/不吸收 |
+
+### claude-best-practices Skill 已创建
+- 路径：`skills/claude-best-practices/`
+- 覆盖：system prompt 设计、结构化输出、思维链、长上下文(1M)、动态追问、SSE流式、多轮上下文管理
+
+### Context Engineering 吸收
+- 调研报告：`research/context-engineering-deep-dive.md`（113行）
+- 核心结论：DJ"信息对称" = Karpathy"Context Engineering"（商业直觉版 vs 工程实现版）
+- 三个专家 STANDARDS 已更新：产品定义(+19行)、技术架构(+29行)、后端开发(+41行)
+
+## ACP Runtime 配置（16:55-17:04）
+
+### 配置完成
+1. acpx 插件启用 + ACP 核心配置（defaultAgent=claude, maxConcurrent=8）
+2. permissionMode=approve-all（ACP 无 TTY）
+3. Gateway 重启后端到端测试通过
+
+### 教训：acpx Windows 安装
+- 插件自带 acpx 0.1.16 在 Windows 上 .cmd wrapper 无法解析
+- 需全局 `npm install -g acpx` 后在插件配置中设 `command: "acpx"` + `expectedVersion: "any"`
+
+## 专家技能使用审计（21:10-21:20）
+
+### 审计结果
+- 扫描 25 个 session，40% 读了 SKILL.md，48% 用了 web_search，**32% 两者都没用**
+- 根因：指令包没有强制要求使用特定 Skill
+
+### 修复（宪法级，已写入 AGENTS.md）
+- 指令包从 5 层升级为 **6 层结构**（新增"必须使用的技能"）
+- Leader 组装指令包时必须查专家 STANDARDS.md 适用技能列表并在 task 中明确写出
+
+## 宪法级规则更新
+
+### AGENTS.md 更新
+1. 指令包 6 层结构（新增第 6 层：必须使用的技能）
+2. 子 Agent 巡查机制：有任务时每 5 分钟，连续 2 次（10 分钟）无输出→终止+拆分
+3. ACP 开发任务监控铁律：每 5-10 分钟检查文件产出/设计遵循/build 状态
+
+### 教训：记忆 ≠ 宪法
+- 写入 MEMORY.md 不等于强制执行，必须写入 AGENTS.md
+
+## V4 官网 Phase 2 开发与审查
+
+### ACP 开发完成
+- 8 个区块组件 + React Islands + 动画系统 + 204 个 CSS 变量
+- Build 产物：dist/（8 文件，453KB）
+
+### 6 人双层审查
+- 合计：7 🔴阻断 / 21 🟡建议 / 38 🟢通过
+- **根因**：React TSX 组件违规重灾区（inline style 硬编码，未用 Token）
+
+### 7 阻断修复完成
+- Claude Code 修复 5 个文件（section-triggers.ts、TopologyGraph.tsx、TimelineAccordion.tsx、global.css、S2RevealSection.astro）
+- Build 成功
+
+### 监控失职记录
+- 第一次开发完全没监控，修复开发迟报 19 分钟
+- 已修复：HEARTBEAT.md 加入活跃任务巡查为最高优先级
+
+### 待验收
+- 修复后未做第二轮审查验证
+- 需启动预览服务供老板验收
+
+## 心跳配置优化
+- heartbeat.model 设为 `ndhy-gateway/claude-sonnet-4-6`（例行巡查省成本）
+- claude-sonnet-4-6 已加入 openclaw.json models
+- 均待 Gateway 重启生效
+
+## 后端进程
+- session: `gentle-orbit`，端口 8000，auto-reload 开启
+- 数据库：`backend/data/prompt_engineering.db`（foreign_keys=OFF）
+
+## 待办（截至 EOD）
+- [ ] V4 官网修复版二轮审查验证 + 预览服务启动
+- [ ] Gateway 重启使 sonnet/BGE-M3 生效
+- [ ] `prompt-evaluation` Skill 创建（promptfoo）
+- [ ] `.gitignore` 补充 `node_modules/` + git 历史清理（待老板确认）
+- [ ] BAML 模板思路吸收
+
+## 每日收盘（最终）
+- **备份**：✅ 多次 commit + push 成功（最终 commit 9eede29f，184 文件 +30338 行）
+- **记忆变更**：无晋升/降级（系统建立 5 天，全部有效）
+- **今日重大产出**：ACP 配置完成 ✅ | 专家技能审计+宪法更新 ✅ | V4 官网 Phase 2 开发+审查+7阻断修复 ✅ | 心跳巡查机制升级 ✅
