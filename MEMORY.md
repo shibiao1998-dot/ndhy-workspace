@@ -113,6 +113,8 @@
 - **Nano Banana 2（gemini-3.1-flash-image-preview）= 2026 SOTA 图像生成**：Image Arena #1，4K，文字渲染最强，价格仅 Pro 一半。UI Mockup 首选。（2026-03-18 调研）
 - **Doubao Seed 2.0 Pro = 中文旗舰**：SuperCLUE 国内第一、AIME25 98.3（数学全球顶级）。中文创作首选。（2026-03-18 调研）
 - **模型选用核心策略**：Claude Opus 4.6 仍是编程/Agentic 首选（SWE-Bench 81.4%）；中文任务用国产模型省钱提质；推理任务用 o3/o4-mini；图像用 Gemini Flash Image。（2026-03-18）
+- **图像生成实测成本**：Nano Banana 2 ≈ ¥0.52/张（包含思考 token）；Seedream 5.0 = ¥0.22/张（最小 2048x2048）；GPT Image 1 ≈ ¥0.17/张（1024x1024）。（2026-03-18 实测）
+- **Seedream 最小分辨率限制**：≥3686400 像素（约 1920x1920），用 `2048x2048` 或更大。1024x1024 会报错。（2026-03-18 实测）
 - **browser evaluate 的 fn 必须是表达式**：用箭头函数 `() => { ... }`，不能裸语句。（2026-03-16）
 - **ACP Runtime 已配置**：acpx 0.3.0，defaultAgent=claude，permissionMode=approve-all。（2026-03-16）
 - **acpx Windows 安装注意**：需全局 `npm install -g acpx`，插件配置设 `command: "acpx"` + `expectedVersion: "any"`。（2026-03-16）
