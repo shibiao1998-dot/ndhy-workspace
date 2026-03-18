@@ -59,6 +59,8 @@
   - tmux 不兼容 Windows，跳过
 
 ## 核心偏好
+- **语音交互规则**：默认文字回复。只有老板明确要求"发语音"时才发语音消息。语音识别（听）始终自动执行。（2026-03-18 老板明确要求）
+- **语音默认音色**：`zh-CN-XiaoxiaoNeural`（晓晓，温暖女声）。（2026-03-18 老板选定）
 - **不限 token 消耗，永远遵循三高规则**（高价值、高复用、高质量）。不因省钱降低质量。（2026-03-14 老板明确声明）
 - **Claude Code 为主力开发工具**，接入官方 API Key（非 Pro 订阅），利用其 sub-agent 功能支持分布式开发。根据 API 负载动态调整 sub-agent 数量。（2026-03-14 老板决策+纠正）
 - **Claude Code 默认使用 GSD（Get Shit Done）模式**：所有通过 Claude Code 执行的开发任务默认使用 GSD 工作流。GSD = context engineering + spec-driven development，解决 context rot 问题。核心流程：new-project → discuss-phase → plan-phase → execute-phase → verify-work。已开启 Sub-Agent 和 Agent Team 功能。（2026-03-15 老板决策）
@@ -167,8 +169,12 @@
 - **GSD-2（1,741⭐）值得评估**：从 prompt 框架进化为真正 Agent 应用（Pi SDK TypeScript CLI）。核心能力：每任务新 session + 编程控制上下文 + worktree 隔离 + token/cost 账本 + 卡死检测 + 超时恢复。对标我们 ACP 架构，成本追踪和 token 优化 profile 是我们缺的能力。（2026-03-18 调研）
 - **Instruction Fade-Out 是真实问题**：OPENDEV 论文用事件驱动提醒对抗。我们心跳部分覆盖，长任务应增加指令重注入。（2026-03-17）
 - **"AGENTS.md 谬误"**：单 Markdown 规则文件会腐化。我们四层架构比单文件好，但仍需增加意图偏差检测。（2026-03-17）
+- **OpenMAIC（清华开源 L4 AI 课堂）**：github.com/THU-MAIC/OpenMAIC。多 Agent 课堂引擎（AI 老师+AI 助教+AI 同学），上传 PDF 自动生成互动课。随机对照实验证明效果>传统 MOOC，结业率 40%（MOOC <5%）。1 课件+2 美元+30 分钟。已上线教育部平台。与 NDHY 教育产品方向高度相关。（2026-03-18 调研）
 - **角色化子 Agent 的反面证据**：HumanLayer 实测"前端/后端/数据分析师子Agent不work"。需评估角色化深度 vs 上下文隔离平衡。（2026-03-17）
 - **教育 AI 市场 5 年增 4.6 倍**：$70.5亿→$322.7亿。中国市场 380 亿，CAGR 27.6%。（2026-03-16/17）
+- **清华 OpenMAIC = L4 级 AI 课堂（重大发现）**：多 Agent 课堂引擎（AI 老师+助教+同学），PDF→互动课，结业率 40%（传统 MOOC 不到 5%），成本 1 课件+2 美元+30 分钟。RCT 实验证明效果>传统 MOOC，讨论激发甚至>真人授课。**与华渔教育方向高度相关。**（2026-03-18 调研）
+- **Claude Code Agent Teams Token 消耗 ~15x**：需建立 subagent vs team 消耗基线，精细区分使用场景。（2026-03-18 调研）
+- **Figma-Context-MCP（13.7K⭐）**：Figma 布局→AI 编码 Agent 的 MCP 桥梁，可加速设计到代码链路。（2026-03-18 调研）
 - **AI Agent 市场 2024→2030 增长 9 倍**：$51亿→$471亿，CAGR 44.8%。（2026-03-14）
 - **Context Engineering 成为独立学科**：arXiv:2603.09619，4 层成熟度金字塔 + 5 质量标准。我们的四层架构与论文高度吻合。（2026-03-16/17）
 
