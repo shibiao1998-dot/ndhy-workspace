@@ -27,7 +27,7 @@ const skillsByCategory = skill_categories.map((category) => ({
       <!-- Skill Categories -->
       <div class="mb-16">
         <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
-          技能分类
+          技能矩阵
         </h2>
         <div class="space-y-3">
           {skillsByCategory.map((category) => (
@@ -96,9 +96,9 @@ const skillsByCategory = skill_categories.map((category) => ({
       </div>
 
       <!-- Capability Chain -->
-      <div>
+      <div class="mb-16">
         <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
-          全链路覆盖
+          从需求到运营，全链路覆盖
         </h2>
         <div class="flex flex-wrap items-center justify-between gap-4">
           {capability_chain.map((stage, index) => (
@@ -121,6 +121,39 @@ const skillsByCategory = skill_categories.map((category) => ({
               )}
             </>
           ))}
+        </div>
+      </div>
+
+      <!-- Continue Exploring -->
+      <div class="mb-12">
+        <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
+          继续探索
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="/activity/" class="card p-6 hover:-translate-y-1 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">🔔</span>
+              <h3 class="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)]">
+                验证我们的活跃度
+              </h3>
+            </div>
+            <p class="text-[var(--text-small)] text-[var(--color-text-secondary)]">
+              过去 24 小时发生了什么
+            </p>
+            <span class="text-[var(--color-accent-primary)] text-lg self-end mt-4 inline-block">→</span>
+          </a>
+          <a href="/team/" class="card p-6 hover:-translate-y-1 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">👥</span>
+              <h3 class="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)]">
+                认识团队
+              </h3>
+            </div>
+            <p class="text-[var(--text-small)] text-[var(--color-text-secondary)]">
+              30 位专家如何分工协作
+            </p>
+            <span class="text-[var(--color-accent-primary)] text-lg self-end mt-4 inline-block">→</span>
+          </a>
         </div>
       </div>
     </div>

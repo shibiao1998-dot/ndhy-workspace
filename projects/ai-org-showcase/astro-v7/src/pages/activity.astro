@@ -26,23 +26,23 @@ function getHeatmapColor(commits: number): string {
 }
 ---
 
-<BaseLayout title="活动流">
+<BaseLayout title="活动">
   <section class="py-12">
     <div class="container">
       <!-- Page Header -->
       <div class="mb-12">
         <h1 class="text-[var(--text-h2)] font-bold text-[var(--color-text-primary)] mb-4">
-          活动流
+          实时活动
         </h1>
         <p class="text-[var(--text-body)] text-[var(--color-text-secondary)]">
-          追踪最近 24 小时的组织活动与 Git 提交
+          累计 <span class="text-[var(--color-accent-primary)] font-semibold">{git_stats.total_commits}</span> 次代码提交
         </p>
       </div>
 
       <!-- Activity Timeline -->
       <div class="mb-16">
         <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
-          最近活动
+          过去 24 小时
         </h2>
         <div class="relative border-l-2 border-[var(--color-border-default)] ml-3 space-y-4">
           {recent_activity.slice(0, 20).map((activity) => (
@@ -78,7 +78,7 @@ function getHeatmapColor(commits: number): string {
       <!-- Git Heatmap -->
       <div class="mb-16">
         <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
-          Git 提交热力图
+          最近 90 天提交频率
         </h2>
         <div class="overflow-x-auto">
           <div class="flex gap-1 min-w-[600px]">
@@ -103,9 +103,9 @@ function getHeatmapColor(commits: number): string {
       </div>
 
       <!-- Recent Commits -->
-      <div>
+      <div class="mb-16">
         <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
-          最近提交
+          最近代码提交
         </h2>
         <div class="space-y-3">
           {git_stats.recent_commits.map((commit) => (
@@ -121,6 +121,39 @@ function getHeatmapColor(commits: number): string {
               </span>
             </div>
           ))}
+        </div>
+      </div>
+
+      <!-- Continue Exploring -->
+      <div class="mb-12">
+        <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
+          继续探索
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="/team/" class="card p-6 hover:-translate-y-1 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">👥</span>
+              <h3 class="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)]">
+                认识团队
+              </h3>
+            </div>
+            <p class="text-[var(--text-small)] text-[var(--color-text-secondary)]">
+              30 位专家如何分工协作
+            </p>
+            <span class="text-[var(--color-accent-primary)] text-lg self-end mt-4 inline-block">→</span>
+          </a>
+          <a href="/capabilities/" class="card p-6 hover:-translate-y-1 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">⚡</span>
+              <h3 class="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)]">
+                查看能力矩阵
+              </h3>
+            </div>
+            <p class="text-[var(--text-small)] text-[var(--color-text-secondary)]">
+              51 技能 × 142 模型的全栈覆盖
+            </p>
+            <span class="text-[var(--color-accent-primary)] text-lg self-end mt-4 inline-block">→</span>
+          </a>
         </div>
       </div>
     </div>
