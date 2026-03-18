@@ -1,57 +1,32 @@
-# PROJECT.md — ai-org-showcase V3
+# PROJECT.md — NDHY AI Org 产品官网 V7
 
-## 概述
-NDHY AI Agent Team 产品官网 V3。从 V2（平铺罗列式）升级为 V3（电影式叙事，S 级策略）。老板亲自撰写设计方案（design-v3.md），是最高权威文档。
+## 定位
+**Live Org Dashboard** — 不是营销页，是 AI 组织的实时运行仪表盘。
 
-## 目标
-- **定位**：产品官网，创造认知震撼，证明 AI 组织化是正在发生的范式转移
-- **核心策略**：S 级——不卖，证明。网站本身就是最强证据
-- **技术栈**：纯 HTML/CSS/JS，零框架零依赖，单文件 index.html
-- **视觉风格**：极致克制，对标 Cognition.ai / Anthropic / Linear
+## 核心理念
+> 用 AI 组织做出来的网站，本身就是 AI 组织的活体证明。
+> 传统官网 = 做一次就死了。我们的官网 = 每天自动更新，因为组织每天在运转。
 
-## 品牌参数
-- 品牌名：NDHY-AI-TEAM
-- 联系邮箱：shibiao1998@gmail.com
-- CTA：联系邮件 + GitHub 关注
-- 组织规模：1 人类 + Leader + 27 位 AI 专家 = 28 个 AI 角色，43 个专业技能
-- 视觉：纯黑白 + 靛蓝强调色 #818cf8
+## V7 vs V1-V6 的根本区别
+- V1-V6：讲故事（需要人类相信）
+- V7：**展示事实**（数字自己说话）
 
-## 核心交付物
-1. 7 个叙事区块的单页网站（index.html）
-2. GitHub 公开仓库 + README
-3. 每日自动更新脚本
-4. Docker 化部署方案（Dockerfile + Caddy）
+## MVP 功能
+1. **The Hook** — 一句话 + 实时运行天数/任务数
+2. **活动流** — 最近 24h 组织活动
+3. **组织全景** — 31 专家 × 6 层级
+4. **能力矩阵** — 51 技能 + 142 模型 + 语音 + 图像
+5. **成本透明** — 今日/累计花费
+6. **Git 脉搏** — 提交热力图
 
-## 执行拓扑（6 Phase 串行链）
-```
-Phase 1 — 内容文案 v3         📝 技术文档专家
-Phase 2 — 交互方案 v3         🎨 体验设计专家
-Phase 3 — 视觉规范 + Token    🎨 视觉设计专家
-Phase 4 — 前端实现             🖥️ 前端开发专家
-Phase 5 — 代码审查             🔍 代码审查专家
-Phase 6 — 部署 + GitHub + 自动更新  🚀 部署运维专家
-```
+## 技术方案
+- 数据层：Python 脚本扫描 workspace → 生成 data.json
+- 展示层：静态 HTML + JS 读取 data.json
+- 部署层：GitHub Pages / Docker
+- 更新：cron 定时 → data.json 更新 → git push
 
-## 任务状态
+## 状态
+- ⏳ V7 MVP 开发中
 
-| 任务 | 负责专家 | 状态 | 产出 |
-|------|---------|------|------|
-| 内容文案 v3 | 📝 技术文档专家 | ✅ done | content-v3.md (7KB) |
-| 交互方案 v3 | 🎨 体验设计专家 | ✅ done | experience-design-v3.md |
-| 视觉规范 + Token | 🎨 视觉设计专家 | ✅ done | visual-spec-v3.md |
-| 前端实现 | 🖥️ 前端开发专家 | ✅ done | index.html (70KB) |
-| 代码审查 | 🔍 代码审查专家 | ⏳ pending | — |
-| 部署 + GitHub + 自动更新 | 🚀 部署运维专家 | ⏳ pending | — |
-
-## 关键决策
-- [2026-03-16] V3 执行启动，6 Phase 串行链（每个 Phase 产出是下游输入）
-- [2026-03-16] 区块三"运转揭秘"先用占位数据，最后回填 V3 真实制作数据
-- [2026-03-16] Leader 建议区块五第三张剖面图改为"持续进化"，交体验设计专家判断
-
-## 迭代记录
-- [2026-03-16] V3 项目启动，项目管理专家接手全流程调度
-- [2026-03-16] Phase 4 前端实现完成：index.html 70KB，纯 HTML/CSS/JS 单文件，7 个叙事区块全部实现
-- [2026-03-16] UI 设计走查完成：识别 10 个设计问题（3 个致命/2 个重大/4 个中等/1 个轻微），核心问题是"视觉能量密度不足"而非对比度
-- [2026-03-16] UI 重设计方案输出：ui-redesign-spec.md (15KB)，覆盖全局 Token 更新 + 7 区块逐一重设计方案 + 可访问性 + 实现优先级
-- [2026-03-16] 拓扑图原型输出：prototype-topology.html (31KB)，同心环辐射布局替代网格布局，30 个节点含完整动画序列和 tooltip 交互
-- [2026-03-16] V4 前端技术架构方案输出：tech-architecture-v4.md，技术架构专家产出。选型：Astro + React Islands + Tailwind v4 + GSAP ScrollTrigger + Lenis。解决 V3 全部架构问题。
+## 历史
+- V1-V6 文件已归档至 `_archive_v1-v6/`
