@@ -1,0 +1,86 @@
+---
+const currentPage = Astro.url.pathname;
+
+const navItems = [
+  { href: '/', label: '首页' },
+  { href: '/team/', label: '团队' },
+  { href: '/capabilities/', label: '能力' },
+  { href: '/activity/', label: '活动' },
+];
+---
+
+<nav class="sticky top-0 z-50 h-16 backdrop-blur-[12px] bg-[var(--color-bg-base)]/80 border-b border-[var(--color-border-default)]">
+  <div class="container h-full flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="text-[var(--text-h4)] font-semibold text-[var(--color-text-primary)] hover:text-[var(--color-accent-primary)] transition-colors">
+      NDHY AI Agent Team
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`text-[var(--text-small)] font-medium transition-colors ${
+            currentPage === item.href
+              ? 'text-[var(--color-accent-primary)] border-b-2 border-[var(--color-accent-primary)]'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+      aria-label="Toggle menu"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-[var(--color-border-default)] bg-[var(--color-bg-surface)]"
+  >
+    <div class="flex flex-col py-4">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`px-8 py-3 text-[var(--text-small)] font-medium transition-colors ${
+            currentPage === item.href
+              ? 'text-[var(--color-accent-primary)] bg-[var(--color-accent-primary-muted)]'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-elevated)]'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>
+
+<style>
+  /* Navbar scroll effect */
+  @media (min-width: 768px) {
+    nav.scrolled {
+      background-color: var(--color-bg-base);
+    }
+  }
+</style>

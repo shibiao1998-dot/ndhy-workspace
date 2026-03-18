@@ -1,0 +1,49 @@
+---
+import data from '../data/data.json';
+import Navbar from '../components/Navbar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'NDHY AI Agent Team 产品官网' } = Astro.props;
+const generatedAt = data._meta.generated_at;
+const formattedDate = new Date(generatedAt).toLocaleString('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+});
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={data._meta.generator} />
+    <title>{title} | NDHY AI Agent Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body class="page-gradient">
+    <Navbar />
+    <main>
+      <slot />
+    </main>
+    <footer class="border-t border-[var(--color-border-default)] bg-[var(--color-bg-inset)] py-8 mt-20">
+      <div class="container flex flex-col md:flex-row justify-between items-center gap-4 text-[var(--text-caption)] text-[var(--color-text-tertiary)]">
+        <p>数据更新于 {formattedDate}</p>
+        <p>NDHY AI Agent Team · Powered by AI</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/data.json';
+
+const { recent_activity, git_heatmap, git_stats } = data;
+
+// Get type badge color
+function getTypeBadgeColor(type: string): string {
+  const colors: Record<string, string> = {
+    dev: 'var(--color-accent-primary)',
+    design: 'var(--color-accent-secondary)',
+    research: 'var(--color-text-tertiary)',
+    ops: 'var(--color-status-success)',
+    general: 'var(--color-text-tertiary)',
+  };
+  return colors[type] || 'var(--color-text-tertiary)';
+}
+
+// Format heatmap commits to color level
+function getHeatmapColor(commits: number): string {
+  if (commits === 0) return '#161B22';
+  if (commits <= 2) return '#0E4429';
+  if (commits <= 5) return '#006D32';
+  if (commits <= 9) return '#26A641';
+  return '#39D353';
+}
+---
+
+<BaseLayout title="活动流">
+  <section class="py-12">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="mb-12">
+        <h1 class="text-[var(--text-h2)] font-bold text-[var(--color-text-primary)] mb-4">
+          活动流
+        </h1>
+        <p class="text-[var(--text-body)] text-[var(--color-text-secondary)]">
+          追踪最近 24 小时的组织活动与 Git 提交
+        </p>
+      </div>
+
+      <!-- Activity Timeline -->
+      <div class="mb-16">
+        <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
+          最近活动
+        </h2>
+        <div class="relative border-l-2 border-[var(--color-border-default)] ml-3 space-y-4">
+          {recent_activity.slice(0, 20).map((activity) => (
+            <div class="relative pl-8">
+              <!-- Timeline dot -->
+              <div
+                class="absolute left-[-5px] top-1 w-2.5 h-2.5 rounded-full bg-[var(--color-accent-primary)]"
+              ></div>
+              <!-- Activity card -->
+              <div class="card p-4 hover:bg-[var(--color-bg-elevated)] transition-colors">
+                <div class="flex items-center gap-3 mb-2">
+                  <span
+                    class="text-[var(--text-caption)] text-[var(--color-text-tertiary)] font-mono"
+                  >
+                    {activity.date}
+                  </span>
+                  <span
+                    class="badge"
+                    style={`background-color: ${getTypeBadgeColor(activity.type)}26; color: ${getTypeBadgeColor(activity.type)}`}
+                  >
+                    {activity.type}
+                  </span>
+                </div>
+                <h3 class="text-[var(--text-body)] font-medium text-[var(--color-text-primary)]">
+                  {activity.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Git Heatmap -->
+      <div class="mb-16">
+        <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
+          Git 提交热力图
+        </h2>
+        <div class="overflow-x-auto">
+          <div class="flex gap-1 min-w-[600px]">
+            {git_heatmap.map((day) => (
+              <div
+                class="w-[14px] h-[14px] rounded-[2px]"
+                style={`background-color: ${getHeatmapColor(day.commits)}`}
+                title={`${day.date}: ${day.commits} 次提交`}
+              ></div>
+            ))}
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-2 mt-2 text-[var(--text-caption)] text-[var(--color-text-tertiary)]">
+          <span>Less</span>
+          <div class="w-[14px] h-[14px] rounded-[2px] bg-[#161B22]"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] bg-[#0E4429]"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] bg-[#006D32]"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] bg-[#26A641]"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] bg-[#39D353]"></div>
+          <span>More</span>
+        </div>
+      </div>
+
+      <!-- Recent Commits -->
+      <div>
+        <h2 class="text-[var(--text-h3)] font-semibold text-[var(--color-text-primary)] mb-6">
+          最近提交
+        </h2>
+        <div class="space-y-3">
+          {git_stats.recent_commits.map((commit) => (
+            <div class="flex items-start gap-4 hover:bg-[var(--color-bg-elevated)] p-2 rounded transition-colors">
+              <code class="text-[var(--text-small)] text-[var(--color-accent-primary)] font-mono">
+                {commit.hash.substring(0, 7)}
+              </code>
+              <span class="text-[var(--text-small)] text-[var(--color-text-primary)] flex-1">
+                {commit.message}
+              </span>
+              <span class="text-[var(--text-caption)] text-[var(--color-text-tertiary)] whitespace-nowrap">
+                {commit.date.substring(0, 10)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

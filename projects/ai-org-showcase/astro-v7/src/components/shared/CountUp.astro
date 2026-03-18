@@ -1,0 +1,23 @@
+---
+// Empty frontmatter for Astro component
+interface Props {
+  value: number;
+  duration?: number;
+  delay?: number;
+  prefix?: string;
+  suffix?: string;
+}
+
+const { value, duration = 800, delay = 0, prefix = '', suffix = '' } = Astro.props;
+---
+
+<span class="countup" data-value={value} data-duration={duration} data-delay={delay} data-prefix={prefix} data-suffix={suffix}>
+  {prefix}{value}{suffix}
+</span>
+
+<style>
+  .countup {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

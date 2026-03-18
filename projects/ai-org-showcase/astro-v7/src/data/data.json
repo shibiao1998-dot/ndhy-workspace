@@ -1,0 +1,1403 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "generated_at": "2026-03-18T18:55:42.299108+08:00",
+    "generator": "generate_data.py v2.0"
+  },
+  "org_info": {
+    "name": "NDHY AI Agent Team",
+    "tagline": "一个人 + 30 个 AI 专家 = 一支完整产品团队",
+    "start_date": "2026-03-12",
+    "running_days": 6,
+    "human_count": 1,
+    "ai_leader": 1,
+    "ai_experts": 30,
+    "total_skills": 51,
+    "total_models": 142,
+    "total_tasks": 93
+  },
+  "experts": [
+    {
+      "emoji": "🎯",
+      "name": "需求分析专家",
+      "english_id": "requirement-analyst",
+      "capability": "穿透表达找真实需求，10 维扫描，5 轮迭代对话，结构化需求文档",
+      "layer": "需求洞察层",
+      "layer_order": 1
+    },
+    {
+      "emoji": "🔍",
+      "name": "用户研究专家",
+      "english_id": "user-researcher",
+      "capability": "用户画像、旅程地图、需求洞察、用户行为分析",
+      "layer": "需求洞察层",
+      "layer_order": 1
+    },
+    {
+      "emoji": "📊",
+      "name": "市场评估专家",
+      "english_id": "market-assessor",
+      "capability": "TAM/SAM/SOM、竞争格局、商业可行性评估",
+      "layer": "需求洞察层",
+      "layer_order": 1
+    },
+    {
+      "emoji": "🔭",
+      "name": "竞品调研专家",
+      "english_id": "competitive-analyst",
+      "capability": "单个竞品深度拆解、策略分析、差异化方向",
+      "layer": "需求洞察层",
+      "layer_order": 1
+    },
+    {
+      "emoji": "🧭",
+      "name": "战略定位专家",
+      "english_id": "strategic-positioner",
+      "capability": "战略方向选择、竞争定位、价值主张定义",
+      "layer": "战略与定义层",
+      "layer_order": 2
+    },
+    {
+      "emoji": "📐",
+      "name": "产品定义专家",
+      "english_id": "product-definer",
+      "capability": "产品形态、功能范围、MVP 界定、产品规则",
+      "layer": "战略与定义层",
+      "layer_order": 2
+    },
+    {
+      "emoji": "🔩",
+      "name": "流程设计专家",
+      "english_id": "process-designer",
+      "capability": "执行流程编排、角色协作设计、依赖分析",
+      "layer": "流程与角色层",
+      "layer_order": 3
+    },
+    {
+      "emoji": "🧬",
+      "name": "角色创造专家",
+      "english_id": "role-creator",
+      "capability": "AI 专家角色创造（SOUL.md + STANDARDS.md）、团队组建",
+      "layer": "流程与角色层",
+      "layer_order": 3
+    },
+    {
+      "emoji": "🔧",
+      "name": "Skill 开发专家",
+      "english_id": "skill-developer",
+      "capability": "OpenClaw Skill 开发、SKILL.md 规范、发布管理",
+      "layer": "流程与角色层",
+      "layer_order": 3
+    },
+    {
+      "emoji": "📝",
+      "name": "技术文档专家",
+      "english_id": "technical-writer",
+      "capability": "信息→知识体系转化、文档架构、技术写作",
+      "layer": "文档与调研层",
+      "layer_order": 4
+    },
+    {
+      "emoji": "🔬",
+      "name": "技术调研专家",
+      "english_id": "researcher",
+      "capability": "技术选型评估、可行性分析、方案对比、社区生态",
+      "layer": "文档与调研层",
+      "layer_order": 4
+    },
+    {
+      "emoji": "📖",
+      "name": "叙事策略专家",
+      "english_id": "narrative-strategist",
+      "capability": "叙事结构设计、品牌传达策略、内容架构、情绪曲线、受众心理",
+      "layer": "设计层",
+      "layer_order": 5
+    },
+    {
+      "emoji": "🎨",
+      "name": "体验设计专家",
+      "english_id": "experience-designer",
+      "capability": "信息架构、任务流程、交互模式、体验地图",
+      "layer": "设计层",
+      "layer_order": 5
+    },
+    {
+      "emoji": "🎨",
+      "name": "视觉设计专家",
+      "english_id": "visual-designer",
+      "capability": "品牌视觉、配色、排印、Design Token、视觉规范",
+      "layer": "设计层",
+      "layer_order": 5
+    },
+    {
+      "emoji": "🖌️",
+      "name": "UI 设计专家",
+      "english_id": "ui-designer",
+      "capability": "页面布局、组件状态、响应式设计、UI 走查",
+      "layer": "设计层",
+      "layer_order": 5
+    },
+    {
+      "emoji": "🏛️",
+      "name": "技术架构专家",
+      "english_id": "technical-architect",
+      "capability": "系统分层、模块边界、技术选型、AI 集成、NFR",
+      "layer": "架构与数据层",
+      "layer_order": 6
+    },
+    {
+      "emoji": "🗄️",
+      "name": "数据库设计专家",
+      "english_id": "database-architect",
+      "capability": "数据建模、表结构、字段字典、索引策略",
+      "layer": "架构与数据层",
+      "layer_order": 6
+    },
+    {
+      "emoji": "📜",
+      "name": "API 设计专家",
+      "english_id": "api-architect",
+      "capability": "接口契约、错误模型、分页规范、幂等语义",
+      "layer": "架构与数据层",
+      "layer_order": 6
+    },
+    {
+      "emoji": "⚙️",
+      "name": "后端开发专家",
+      "english_id": "backend-developer",
+      "capability": "Controller/Service/Repository 全栈实现",
+      "layer": "开发层",
+      "layer_order": 7
+    },
+    {
+      "emoji": "🖥️",
+      "name": "前端开发专家",
+      "english_id": "frontend-developer",
+      "capability": "组件拆分、状态管理、API 接入、全态处理",
+      "layer": "开发层",
+      "layer_order": 7
+    },
+    {
+      "emoji": "🔍",
+      "name": "代码审查专家",
+      "english_id": "code-reviewer",
+      "capability": "代码质量审查、架构评审、安全审计、放行决策",
+      "layer": "质量层",
+      "layer_order": 8
+    },
+    {
+      "emoji": "🔗",
+      "name": "联调集成专家",
+      "english_id": "integration-expert",
+      "capability": "跨模块契约对齐、端到端验证、时序问题识别",
+      "layer": "质量层",
+      "layer_order": 8
+    },
+    {
+      "emoji": "🧪",
+      "name": "测试专家",
+      "english_id": "testing-expert",
+      "capability": "测试策略、用例设计、缺陷管理、发布就绪评估",
+      "layer": "质量层",
+      "layer_order": 8
+    },
+    {
+      "emoji": "🚀",
+      "name": "部署运维专家",
+      "english_id": "deployment-ops",
+      "capability": "发布保障、监控告警、回滚方案、环境管理",
+      "layer": "交付层",
+      "layer_order": 9
+    },
+    {
+      "emoji": "📦",
+      "name": "发布策略专家",
+      "english_id": "release-strategist",
+      "capability": "灰度发布、版本规划、用户培训、数据迁移",
+      "layer": "交付层",
+      "layer_order": 9
+    },
+    {
+      "emoji": "📈",
+      "name": "增长运营专家",
+      "english_id": "growth-operator",
+      "capability": "用户获取/激活/留存、AARRR、增长实验、运营策略",
+      "layer": "增长与迭代层",
+      "layer_order": 10
+    },
+    {
+      "emoji": "🔄",
+      "name": "迭代优化专家",
+      "english_id": "iteration-optimizer",
+      "capability": "优先级排序、版本规划、迭代复盘、MVP 拆解",
+      "layer": "增长与迭代层",
+      "layer_order": 10
+    },
+    {
+      "emoji": "📊",
+      "name": "数据分析专家",
+      "english_id": "data-analyst",
+      "capability": "指标体系、A/B 测试、漏斗分析、数据可视化",
+      "layer": "增长与迭代层",
+      "layer_order": 10
+    },
+    {
+      "emoji": "🏗️",
+      "name": "组织设计专家",
+      "english_id": "org-designer",
+      "capability": "职级体系设计、胜任力建模、绩效评估框架、晋升流程设计",
+      "layer": "组织治理层",
+      "layer_order": 11
+    },
+    {
+      "emoji": "🎓",
+      "name": "教育领域专家",
+      "english_id": "education-specialist",
+      "capability": "K12 教育理论、学习心理学、教学设计、课程标准",
+      "layer": "教育专业层",
+      "layer_order": 12
+    }
+  ],
+  "org_layers": [
+    {
+      "name": "需求洞察层",
+      "order": 1,
+      "expert_count": 4,
+      "expert_ids": [
+        "requirement-analyst",
+        "user-researcher",
+        "market-assessor",
+        "competitive-analyst"
+      ]
+    },
+    {
+      "name": "战略与定义层",
+      "order": 2,
+      "expert_count": 2,
+      "expert_ids": [
+        "strategic-positioner",
+        "product-definer"
+      ]
+    },
+    {
+      "name": "流程与角色层",
+      "order": 3,
+      "expert_count": 3,
+      "expert_ids": [
+        "process-designer",
+        "role-creator",
+        "skill-developer"
+      ]
+    },
+    {
+      "name": "文档与调研层",
+      "order": 4,
+      "expert_count": 2,
+      "expert_ids": [
+        "technical-writer",
+        "researcher"
+      ]
+    },
+    {
+      "name": "设计层",
+      "order": 5,
+      "expert_count": 4,
+      "expert_ids": [
+        "narrative-strategist",
+        "experience-designer",
+        "visual-designer",
+        "ui-designer"
+      ]
+    },
+    {
+      "name": "架构与数据层",
+      "order": 6,
+      "expert_count": 3,
+      "expert_ids": [
+        "technical-architect",
+        "database-architect",
+        "api-architect"
+      ]
+    },
+    {
+      "name": "开发层",
+      "order": 7,
+      "expert_count": 2,
+      "expert_ids": [
+        "backend-developer",
+        "frontend-developer"
+      ]
+    },
+    {
+      "name": "质量层",
+      "order": 8,
+      "expert_count": 3,
+      "expert_ids": [
+        "code-reviewer",
+        "integration-expert",
+        "testing-expert"
+      ]
+    },
+    {
+      "name": "交付层",
+      "order": 9,
+      "expert_count": 2,
+      "expert_ids": [
+        "deployment-ops",
+        "release-strategist"
+      ]
+    },
+    {
+      "name": "增长与迭代层",
+      "order": 10,
+      "expert_count": 3,
+      "expert_ids": [
+        "growth-operator",
+        "iteration-optimizer",
+        "data-analyst"
+      ]
+    },
+    {
+      "name": "组织治理层",
+      "order": 11,
+      "expert_count": 1,
+      "expert_ids": [
+        "org-designer"
+      ]
+    },
+    {
+      "name": "教育专业层",
+      "order": 12,
+      "expert_count": 1,
+      "expert_ids": [
+        "education-specialist"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "agent-browser",
+      "display_name": "A fast Rust-based headless browser automation CLI with Node.js fallback that ...",
+      "category": "research"
+    },
+    {
+      "name": "api-design",
+      "display_name": "Use when 需要设计 API 接口契约、资源模型、错误码、分页规范，或审查接口一致性和向后兼容性。 触发词：API设计、接口契约、OpenAPI、资源模型",
+      "category": "architecture"
+    },
+    {
+      "name": "backend-development",
+      "display_name": "Use when 需要实现后端 handler/service/repository 层、添加输入校验/权限控制/错误处理，或编写后端测试。 触发词：后端开发、",
+      "category": "dev"
+    },
+    {
+      "name": "claude-best-practices",
+      "display_name": "Claude API 提示词工程最佳实践",
+      "category": "dev"
+    },
+    {
+      "name": "code-quality-gate",
+      "display_name": "\"Code quality assurance and review workflows for NDHY AI Agent Team.",
+      "category": "dev"
+    },
+    {
+      "name": "code-review",
+      "display_name": "Use when 需要对代码变更进行系统性审查，检查正确性、契约一致性、安全和性能风险，或生成放行决策。 触发词：代码审查、code review、审查报告、放",
+      "category": "quality"
+    },
+    {
+      "name": "competitive-analysis",
+      "display_name": "Use when 需要竞品调研、竞争格局分析、产品对比，或输出竞品分析报告。 触发词：竞品、竞争对手、市场调研、行业分析、产品对比、竞品报告、差异化分析。",
+      "category": "research"
+    },
+    {
+      "name": "content-extract",
+      "display_name": "Use when extracting/summarizing/converting a webpage to markdown, especially for",
+      "category": "research"
+    },
+    {
+      "name": "context-management",
+      "display_name": "Use when 上下文使用率偏高需要压缩、需要捕获学习信号写入记忆、或需要管理 MEMORY.md 条目的晋升/降级。 NOT for: 常规对话或任务执行。",
+      "category": "general"
+    },
+    {
+      "name": "cost-tracker",
+      "display_name": "AI 组织成本追踪",
+      "category": "general"
+    },
+    {
+      "name": "data-analysis",
+      "display_name": "Use when 需要数据分析、指标体系设计、A/B测试、埋点规划、分析报告或数据看板。含教育行业专项分析。 触发词：数据分析、北极星指标、漏斗分析、留存分析、",
+      "category": "general"
+    },
+    {
+      "name": "database-design",
+      "display_name": "Use when 需要数据库设计、数据建模、表结构设计，或审查 schema 质量。 触发词：数据库设计、数据建模、表结构、字段设计、schema、索引策略、实",
+      "category": "architecture"
+    },
+    {
+      "name": "deployment-ops",
+      "display_name": "Use when 需要部署发布、运维监控、回滚操作，或执行发布前检查。 触发词：部署、发布、上线、运维、回滚、监控告警、发布检查、健康检查、环境校验。",
+      "category": "ops"
+    },
+    {
+      "name": "design-to-code-prototype",
+      "display_name": "Use when 需要将设计规范转化为可预览的 HTML/CSS 原型代码，或为评审生成可交互页面预览。 触发词：原型、prototype、HTML原型、设计转",
+      "category": "dev"
+    },
+    {
+      "name": "education-domain",
+      "display_name": "Use when 教育产品设计需要专业知识支撑：教育理论、学习心理学、教学设计、学科教学法、教育政策、教育评价等。 触发词：教育理论、建构主义、布鲁姆、新课标、",
+      "category": "general"
+    },
+    {
+      "name": "experience-design",
+      "display_name": "Use when 产品定义已完成、需要设计用户体验，包括信息架构、交互模式、体验语言和页面布局。 触发词：体验设计、信息架构、交互模式、体验地图、可用性、体验语",
+      "category": "design"
+    },
+    {
+      "name": "expert-leveling",
+      "display_name": "Use when 任务完成后需要记录专家产出评估、执行月度评审、生成晋升提案，或更新专家设定文件。 触发词：评估、晋升、等级、评审、产出记录、P0-P12、胜任",
+      "category": "general"
+    },
+    {
+      "name": "find-skills",
+      "display_name": "Helps users discover and install agent skills when they ask questions like \"h...",
+      "category": "general"
+    },
+    {
+      "name": "frontend-development",
+      "display_name": "Use when 需要实现前端页面、组件拆分、状态管理、API接入，或编写组件测试。 触发词：前端开发、页面实现、组件拆分、状态管理、表单校验、列表分页、loa",
+      "category": "dev"
+    },
+    {
+      "name": "growth-operations",
+      "display_name": "Use when 需要增长运营策略、用户获取/激活/留存方案，或增长实验设计。 触发词：增长运营、AARRR、用户获取、用户留存、增长实验、增长飞轮、用户分层。",
+      "category": "general"
+    },
+    {
+      "name": "heartbeat-ops",
+      "display_name": "Use when 处理心跳事件、监控子Agent健康状态、执行异常恢复，或执行日终收尾操作。 NOT for: 常规任务执行或沟通。",
+      "category": "ops"
+    },
+    {
+      "name": "integration-testing",
+      "display_name": "Use when 需要前后端联调、端到端验证、契约对齐、集成问题归因，或判断是否可进入下一阶段。 触发词：联调、集成测试、端到端验证、契约对齐、联调归因、回归验",
+      "category": "quality"
+    },
+    {
+      "name": "iteration-optimization",
+      "display_name": "Use when 需要迭代优化、版本规划、需求优先级排序、MVP拆解，或迭代复盘。 触发词：迭代优化、优先级排序、版本规划、MVP拆解、迭代复盘、渐进式交付、止",
+      "category": "product"
+    },
+    {
+      "name": "leader-preflight",
+      "display_name": "Use when 收到任何需求时，强制执行门控流程 V2 的预检和制品生成。触发词：需求、任务、做一个、帮我、开发、设计、分析。",
+      "category": "general"
+    },
+    {
+      "name": "leader-workflow",
+      "display_name": "Use when: (1) 收到新需求需要验证和调度, (2) 需要判断需求规模选择调度模式, (3) 需要 spawn 子 Agent 执行任务, (4) 需",
+      "category": "general"
+    },
+    {
+      "name": "market-assessment",
+      "display_name": "Use when 新项目需要市场可行性验证、TAM/SAM/SOM 市场规模分析、竞争格局评估，或商业可行性初判。 触发词：市场评估、market sizing",
+      "category": "product"
+    },
+    {
+      "name": "model-router",
+      "display_name": "AIAE 网关多模型智能路由",
+      "category": "general"
+    },
+    {
+      "name": "page-layout-design",
+      "display_name": "Use when 需要设计页面布局、栅格系统、响应式适配，或处理视觉层级和留白策略。 触发词：页面布局、栅格系统、响应式、断点、布局模式、视觉层级。",
+      "category": "design"
+    },
+    {
+      "name": "process-design",
+      "display_name": "Use when 方案已确定、需要拆解执行所需的专家角色、协作关系和执行流程。 触发词：流程设计、角色拆解、谁来做、怎么配合、执行流程、团队组建。",
+      "category": "product"
+    },
+    {
+      "name": "product-definition",
+      "display_name": "Use when 战略定位已完成、需要转化为具体产品定义，包括产品概念、场景、功能范围、MVP和成功标准。 触发词：产品定义、产品概念、功能范围、MVP、产品蓝",
+      "category": "product"
+    },
+    {
+      "name": "project-execution",
+      "display_name": "Use when 管理多节点项目执行：组装指令包、调度子Agent、质量检查、异常处理、进度报告或复盘。 触发词：项目执行、指令包、调度、质量检查、异常处理、进",
+      "category": "general"
+    },
+    {
+      "name": "project-management",
+      "display_name": "Use when 创建或更新 PROJECT.md、管理任务状态跟踪、分解大需求为子任务，或管理项目文件结构。 NOT for: 简单文件编辑或非项目任务。",
+      "category": "general"
+    },
+    {
+      "name": "quality-testing",
+      "display_name": "Use when 需要制定测试策略、设计测试用例、记录缺陷、回归验证，或评估发布风险和验收结论。 触发词：测试、测试用例、缺陷、回归、发布风险、验收、bug、质",
+      "category": "quality"
+    },
+    {
+      "name": "react-best-practices",
+      "display_name": "React and Next.js performance optimization guidelines from Vercel Engineering...",
+      "category": "dev"
+    },
+    {
+      "name": "relay-protocol",
+      "display_name": "\"Sub-agent communication relay and structured messaging protocol for NDHY AI ...",
+      "category": "ops"
+    },
+    {
+      "name": "release-strategy",
+      "display_name": "Use when 需要发布策略、灰度发布方案、用户培训计划、数据迁移，或发布复盘。 触发词：发布策略、灰度发布、版本规划、变更管理、hotfix、发布检查清单。",
+      "category": "ops"
+    },
+    {
+      "name": "requirement-mining",
+      "display_name": "Use when 收到模糊需求需要系统性挖掘，用户描述不清需要提问澄清，或需要输出结构化需求文档。 触发词：需求、想做、能不能做、我有个想法、帮我分析、需求边界",
+      "category": "product"
+    },
+    {
+      "name": "role-creation",
+      "display_name": "Use when 需要匹配或创造专家角色、编写角色设定（SOUL.md + STANDARDS.md），或组建项目团队。 触发词：创造角色、角色设定、专家池匹配",
+      "category": "dev"
+    },
+    {
+      "name": "search-layer",
+      "display_name": "DEFAULT search tool for ALL web search and lookup needs. Use instead of raw w...",
+      "category": "research"
+    },
+    {
+      "name": "skill-vetter",
+      "display_name": "Security-first skill vetting for AI agents. Use before installing any skill f...",
+      "category": "dev"
+    },
+    {
+      "name": "skillforge",
+      "display_name": "Use when creating skills systematically from scratch, fixing/improving existing ",
+      "category": "dev"
+    },
+    {
+      "name": "strategic-positioning",
+      "display_name": "战略定位执行工具箱：在Phase 1输出基础上收敛产品战略方向和竞争定位",
+      "category": "product"
+    },
+    {
+      "name": "technical-architecture",
+      "display_name": "技术架构设计执行工具箱：将产品目标和体验方案转化为可交付、可演进、可治理的技术实现蓝图",
+      "category": "architecture"
+    },
+    {
+      "name": "technical-research",
+      "display_name": "技术调研执行工具箱：在技术信息洪流中快速定位关键情报，把零散的技术数据点串成有决策价值的选型结论",
+      "category": "research"
+    },
+    {
+      "name": "technical-writing",
+      "display_name": "技术文档编写执行工具箱：把混乱的信息变成清晰的知识体系，让文档成为团队真正会用的工具",
+      "category": "general"
+    },
+    {
+      "name": "ui-design-system",
+      "display_name": "设计系统执行工具箱：定义 Design Tokens、规划组件库、管理设计系统全生命周期",
+      "category": "design"
+    },
+    {
+      "name": "user-research",
+      "display_name": "用户研究执行工具箱：覆盖从研究界定到洞察交付的完整流程",
+      "category": "research"
+    },
+    {
+      "name": "visual-design",
+      "display_name": "视觉设计执行工具箱：将体验方案转化为精确的视觉规范和设计 Token 体系",
+      "category": "design"
+    },
+    {
+      "name": "voice-transcribe",
+      "display_name": "飞书语音消息处理：自动转文字 + 语音回复",
+      "category": "general"
+    },
+    {
+      "name": "web-fetch",
+      "display_name": "Fetch and extract content from web pages, converting HTML to readable Markdown.",
+      "category": "research"
+    },
+    {
+      "name": "web-search",
+      "display_name": "Free web search using DuckDuckGo (no API key needed).",
+      "category": "research"
+    }
+  ],
+  "skill_categories": [
+    {
+      "id": "general",
+      "name": "通用",
+      "count": 14,
+      "icon": "⚙️"
+    },
+    {
+      "id": "dev",
+      "name": "开发",
+      "count": 9,
+      "icon": "💻"
+    },
+    {
+      "id": "research",
+      "name": "调研",
+      "count": 8,
+      "icon": "🔬"
+    },
+    {
+      "id": "product",
+      "name": "产品与需求",
+      "count": 6,
+      "icon": "📐"
+    },
+    {
+      "id": "design",
+      "name": "设计",
+      "count": 4,
+      "icon": "🎨"
+    },
+    {
+      "id": "ops",
+      "name": "运维与发布",
+      "count": 4,
+      "icon": "🚀"
+    },
+    {
+      "id": "architecture",
+      "name": "架构与数据",
+      "count": 3,
+      "icon": "🏛️"
+    },
+    {
+      "id": "quality",
+      "name": "质量",
+      "count": 3,
+      "icon": "🧪"
+    }
+  ],
+  "models": {
+    "total": 142,
+    "by_type": [
+      {
+        "type": "text",
+        "name": "文本对话",
+        "count": 45,
+        "icon": "💬"
+      },
+      {
+        "type": "reasoning",
+        "name": "深度推理",
+        "count": 8,
+        "icon": "🧠"
+      },
+      {
+        "type": "image_gen",
+        "name": "图像生成",
+        "count": 15,
+        "icon": "🎨"
+      },
+      {
+        "type": "video_gen",
+        "name": "视频生成",
+        "count": 10,
+        "icon": "🎬"
+      },
+      {
+        "type": "voice",
+        "name": "语音",
+        "count": 12,
+        "icon": "🔊"
+      },
+      {
+        "type": "embedding",
+        "name": "嵌入",
+        "count": 8,
+        "icon": "📊"
+      },
+      {
+        "type": "vision",
+        "name": "视觉理解",
+        "count": 20,
+        "icon": "👁️"
+      },
+      {
+        "type": "3d",
+        "name": "3D/数字人",
+        "count": 5,
+        "icon": "🧊"
+      },
+      {
+        "type": "other",
+        "name": "其他",
+        "count": 19,
+        "icon": "🔧"
+      }
+    ],
+    "highlights": [
+      {
+        "name": "Claude Opus 4.6",
+        "tag": "编程 #1",
+        "type": "text"
+      },
+      {
+        "name": "GPT-5.4",
+        "tag": "通用 #1",
+        "type": "text"
+      },
+      {
+        "name": "Doubao Seed 2.0 Pro",
+        "tag": "中文 #1",
+        "type": "text"
+      },
+      {
+        "name": "O3",
+        "tag": "推理 #1",
+        "type": "reasoning"
+      },
+      {
+        "name": "Nano Banana 2",
+        "tag": "图像 #1",
+        "type": "image_gen"
+      },
+      {
+        "name": "Sora 2",
+        "tag": "视频 #1",
+        "type": "video_gen"
+      }
+    ]
+  },
+  "capability_chain": [
+    {
+      "stage": "需求",
+      "skills": 6,
+      "experts": 6
+    },
+    {
+      "stage": "设计",
+      "skills": 7,
+      "experts": 7
+    },
+    {
+      "stage": "开发",
+      "skills": 10,
+      "experts": 5
+    },
+    {
+      "stage": "测试",
+      "skills": 4,
+      "experts": 3
+    },
+    {
+      "stage": "部署",
+      "skills": 4,
+      "experts": 2
+    },
+    {
+      "stage": "运营",
+      "skills": 5,
+      "experts": 3
+    }
+  ],
+  "recent_activity": [
+    {
+      "date": "2026-03-18",
+      "title": "AIAE 网关多模型路由 Skill 创建",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "06:06 周度调研速报处理",
+      "type": "research"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "09:09 周度调研速报 #2 处理",
+      "type": "research"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "组织进化重大变更",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "工具使用教训",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "ACP 连通性测试",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "重要教训（V6 第二轮修复失败）",
+      "type": "design"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "V7 官网三文档门控执行（14:43 - 15:22）",
+      "type": "design"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "Gateway OOM 事件排查（14:55 - 15:04）",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "调研速报 #2 关键发现（15:08）",
+      "type": "research"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "专家数量修正",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "系统配置变更（17:37 - 18:26）",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "VS Code Claude Code 故障修复（17:37 - 17:45）",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-18",
+      "title": "外网访问修复（18:21 - 18:26）",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "日终收盘（来自 2026-03-16）",
+      "type": "ops"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "组织重大进化（宪法级变更，老板批准）",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "V5 官网进度",
+      "type": "design"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "教训",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "调研发现归档（从 MEMORY.md HOT 层降级，2026-03-18 压缩）",
+      "type": "research"
+    },
+    {
+      "date": "2026-03-17",
+      "title": "每日收盘（00:03，心跳 session 执行）",
+      "type": "ops"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "v2 UI 暗色主题修复",
+      "type": "design"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "Cloudflare Tunnel",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "Brave Search API 配置",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "调研成果落地",
+      "type": "research"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "ACP Runtime 配置（16:55-17:04）",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "专家技能使用审计（21:10-21:20）",
+      "type": "general"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "宪法级规则更新",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "V4 官网 Phase 2 开发与审查",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "心跳配置优化",
+      "type": "dev"
+    },
+    {
+      "date": "2026-03-16",
+      "title": "后端进程",
+      "type": "dev"
+    }
+  ],
+  "git_heatmap": [
+    {
+      "date": "2025-12-18",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-19",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-20",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-21",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-22",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-23",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-24",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-25",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-26",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-27",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-28",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-29",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-30",
+      "commits": 0
+    },
+    {
+      "date": "2025-12-31",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-01",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-02",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-03",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-04",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-05",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-06",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-07",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-08",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-09",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-10",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-11",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-12",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-13",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-14",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-15",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-16",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-17",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-18",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-19",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-20",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-21",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-22",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-23",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-24",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-25",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-26",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-27",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-28",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-29",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-30",
+      "commits": 0
+    },
+    {
+      "date": "2026-01-31",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-01",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-02",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-03",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-04",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-05",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-06",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-07",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-08",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-09",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-10",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-11",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-12",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-13",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-14",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-15",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-16",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-17",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-18",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-19",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-20",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-21",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-22",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-23",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-24",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-25",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-26",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-27",
+      "commits": 0
+    },
+    {
+      "date": "2026-02-28",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-01",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-02",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-03",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-04",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-05",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-06",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-07",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-08",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-09",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-10",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-11",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-12",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-13",
+      "commits": 0
+    },
+    {
+      "date": "2026-03-14",
+      "commits": 8
+    },
+    {
+      "date": "2026-03-15",
+      "commits": 24
+    },
+    {
+      "date": "2026-03-16",
+      "commits": 12
+    },
+    {
+      "date": "2026-03-17",
+      "commits": 4
+    },
+    {
+      "date": "2026-03-18",
+      "commits": 13
+    }
+  ],
+  "git_stats": {
+    "total_commits": 61,
+    "recent_commits": [
+      {
+        "hash": "9a51eadac5c7285981d2411ad0de8dd3c0eb894f",
+        "date": "2026-03-18 14:04:39 +0800",
+        "message": "chore: archive V1-V6 website files, start V7 fresh"
+      },
+      {
+        "hash": "774be9cd32fd5172c3ef9a74e8e52f4a6422082f",
+        "date": "2026-03-18 13:53:42 +0800",
+        "message": "feat: cost-tracker skill + ledger with today's data"
+      },
+      {
+        "hash": "c3034908c2427958edb0a1f463f197154184fc90",
+        "date": "2026-03-18 13:43:27 +0800",
+        "message": "pref: voice reply only on demand, default text. Voice=XiaoxiaoNeural"
+      },
+      {
+        "hash": "03def2f8fd2ccb18ffa6c129824461ec00b1e110",
+        "date": "2026-03-18 13:25:55 +0800",
+        "message": "feat: voice skill v2 - add TTS reply via edge-tts"
+      },
+      {
+        "hash": "5b644f18c7a5c0143edc9423354cf05be9eef8ed",
+        "date": "2026-03-18 12:56:03 +0800",
+        "message": "feat: add voice-transcribe skill - auto ASR for Feishu voice messages"
+      },
+      {
+        "hash": "f7c3a7a82fdd1395adf62c51c6be0cb8e4391825",
+        "date": "2026-03-18 12:01:12 +0800",
+        "message": "feat: AIAE provider added to OpenClaw + instruction package L5 enhanced"
+      },
+      {
+        "hash": "2e2ed50c0bc0458d6cebd1612d22ae1919ca1b57",
+        "date": "2026-03-18 09:10:41 +0800",
+        "message": "chore: process research report #2 - Agent Teams + GSD-2 findings"
+      },
+      {
+        "hash": "009339d72bbb8334f5470683d34ad5c640495ac0",
+        "date": "2026-03-18 06:12:09 +0800",
+        "message": "feat: AIAE integration plan + daily log update"
+      },
+      {
+        "hash": "f1164b9993ecf3443bb724f642d82a0a21b4ed7c",
+        "date": "2026-03-18 06:09:07 +0800",
+        "message": "chore: update memory with weekly research findings + CE trend"
+      },
+      {
+        "hash": "210aa83ad9c886adb84d52836a231390f49ba66f",
+        "date": "2026-03-18 04:23:13 +0800",
+        "message": "feat: model-router v1.1 - add real-world cost data, Seedream min resolution fix"
+      }
+    ]
+  },
+  "cost_summary": {
+    "today_cost": 43.7785,
+    "total_cost": 43.7785,
+    "by_model": {
+      "claude-opus-4-6": 42.3,
+      "gemini-3.1-flash-image-preview": 1.04,
+      "doubao-seedream-5-0-260128": 0.22,
+      "gpt-image-1": 0.17,
+      "gemini-3.1-pro-preview": 0.04,
+      "doubao-seed-2-0-pro-260215": 0.005,
+      "qwen3-omni-flash-2025-12-01": 0.0034,
+      "deepseek-v3.2-1201": 0.0001
+    },
+    "by_expert": {
+      "Leader": 43.7785
+    },
+    "daily_costs": [
+      {
+        "date": "2026-03-18",
+        "cost": 43.7785
+      }
+    ]
+  }
+}

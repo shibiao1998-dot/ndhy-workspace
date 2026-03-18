@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  /* ══ 背景色系（4 级深度递进）══ */
+  --color-bg-base: #0B0E14;          /* 页面底色 — 最深 */
+  --color-bg-surface: #111827;       /* 区块/卡片背景 */
+  --color-bg-elevated: #1A2233;      /* 浮层/hover 卡片 */
+  --color-bg-inset: #0D1117;         /* 内嵌区域（代码块、热力图底）*/
+
+  /* ══ 文字色系（3 级）══ */
+  --color-text-primary: #F1F5F9;     /* 主文字 — 与 bg-base 对比 17.4:1 ✅ */
+  --color-text-secondary: #94A3B8;   /* 次要文字 — 与 bg-base 对比 7.2:1 ✅ */
+  --color-text-tertiary: #64748B;    /* 辅助文字 — 与 bg-surface 对比 4.6:1 ✅ */
+
+  /* ══ 强调色 ══ */
+  --color-accent-primary: #38BDF8;   /* 主色 — 天际蓝 */
+  --color-accent-primary-hover: #7DD3FC;
+  --color-accent-primary-muted: rgba(56, 189, 248, 0.15);
+  --color-accent-secondary: #A78BFA; /* 辅色 — 星云紫 */
+  --color-accent-secondary-muted: rgba(167, 139, 250, 0.15);
+
+  /* ══ 状态色 ══ */
+  --color-status-success: #34D399;
+  --color-status-success-muted: rgba(52, 211, 153, 0.15);
+  --color-status-warning: #FBBF24;
+  --color-status-warning-muted: rgba(251, 191, 36, 0.15);
+  --color-status-error: #F87171;
+  --color-status-error-muted: rgba(248, 113, 113, 0.15);
+
+  /* ══ 卡片 / 边框 ══ */
+  --color-border-default: rgba(148, 163, 184, 0.12);
+  --color-border-hover: rgba(56, 189, 248, 0.30);
+  --color-card-bg: var(--color-bg-surface);
+  --color-card-bg-hover: var(--color-bg-elevated);
+
+  /* ══ 字体栈 ══ */
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  /* ══ 字号层级 ══ */
+  --text-h1: 3rem;       /* 48px — Hero 主标题 */
+  --text-h2: 2rem;       /* 32px — 页面标题 */
+  --text-h3: 1.5rem;     /* 24px — 区块标题 */
+  --text-h4: 1.125rem;   /* 18px — 卡片标题 */
+  --text-body: 1rem;     /* 16px — 正文 */
+  --text-small: 0.875rem;/* 14px — 次要信息 */
+  --text-caption: 0.75rem;/* 12px — 标签/badge */
+
+  /* ══ 行高 ══ */
+  --leading-tight: 1.2;   /* 标题 */
+  --leading-normal: 1.6;  /* 正文 */
+  --leading-relaxed: 1.8; /* 长段落 */
+
+  /* ══ 字重 ══ */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ══ 间距（4px 网格）══ */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+
+  /* ══ 圆角 ══ */
+  --radius-sm: 0.375rem;   /* 6px — badge / 小元素 */
+  --radius-md: 0.5rem;     /* 8px — 按钮 */
+  --radius-lg: 0.75rem;    /* 12px — 卡片 */
+  --radius-xl: 1rem;       /* 16px — 大卡片/导航卡片 */
+
+  /* ══ 阴影（深色主题用微光 + 边框代替传统阴影）══ */
+  --shadow-card: 0 0 0 1px var(--color-border-default);
+  --shadow-card-hover: 0 0 0 1px var(--color-border-hover),
+                       0 4px 24px rgba(56, 189, 248, 0.06);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* ══ 断点 ══ */
+  --breakpoint-desktop: 1024px; /* 桌面端最小宽度 */
+}
+
+/* ══ 全局样式 ══ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 页面背景光晕 */
+.page-gradient {
+  background: radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.03) 0%, transparent 60%);
+}
+
+/* 内容容器 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+/* 通用卡片样式 */
+.card {
+  background-color: var(--color-card-bg);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  background-color: var(--color-card-bg-hover);
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* 通用按钮样式 */
+.btn-primary {
+  display: inline-block;
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-base);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+/* 通用徽章样式 */
+.badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: var(--text-caption);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-sm);
+}
+
+.badge-accent {
+  background-color: var(--color-accent-primary-muted);
+  color: var(--color-accent-primary);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-primary);
+}
