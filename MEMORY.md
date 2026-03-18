@@ -157,11 +157,14 @@
 - **OpenViking（15K⭐，字节出品）**：开源上下文数据库，文件系统范式管理 Agent 上下文，L0/L1/L2 三级加载+可视化检索轨迹。与我们的 HOT/WARM/项目级架构类似但更系统化。（2026-03-18 调研）
 - **forge-orchestrator 契约先行模式**：先生成接口契约再让 Agent 并行编码，多级审查门（build→lint→test→LLM review→契约合规→merge）。与我们"对抗式协作"高度一致。（2026-03-18 调研）
 - **功能正确性验证是行业盲区**：Harness Engineering 论文指出"内部质量好≠业务功能正确"，当前 Agent 系统过度关注 lint/doc 而忽视端到端业务验证。我们也需警惕。（2026-03-18 调研）
+- **Agent Teams 实战经验（blockedBy + 禁区规则）**：5 Agent 并行游戏工作室案例，`blockedBy` 自动阻塞未就绪任务 + 每个 Agent 有文件"禁区"消除冲突。并行速度约串行 1/5。建议指令包增加"禁止操作"清单。（2026-03-18 调研）
+- **GSD-2（1.7K⭐）是 ACP 监控参考实现**：Token/cost 账本+仪表盘、卡死检测+三级超时恢复（软/空闲/硬）、Git worktree 隔离。补齐我们 ACP 的监控短板。（2026-03-18 调研）
 - **Context Engineering 正式取代 Prompt Engineering（行业共识 2026）**：从单条指令到管理系统指令+检索知识+工具定义+对话摘要+任务元数据的完整上下文。我们的四层架构就是 CE 实践。（2026-03-18 调研）
 - **Harness Engineering = 行业新范式**：Agent = Model + Harness。我们的 SOUL+STANDARDS+Skills = Harness 实践。（2026-03-17）
 - **Sub-Agent = Context Firewall**：隔离上下文窗口防噪音累积。验证 ACP-First 架构。（2026-03-17）
 - **Skills = Instruction Modules**：行业视 Skills 为知识渐进式披露机制。与我们"设定=宪法，技能=操作手册"一致。（2026-03-17）
-- **Claude Code Agent Teams 进入实用**：共享任务列表 + Agent-to-Agent 通信 + Git worktree 隔离。ClaudeFast 5级复杂度自动分级。（2026-03-17）
+- **Claude Code Agent Teams 实战验证**：5-Agent 游戏工作室（dev.to 案例）同时运行 builder/designer/researcher/grower/shipper，单 session 完成 53% 任务。关键经验：blockedBy 依赖自动阻塞 + 每 Agent "禁区"消除文件冲突 + 并行速度约 1/5 串行。权限瓶颈需 --dangerously-skip-permissions。（2026-03-17→18 持续跟踪）
+- **GSD-2（1,741⭐）值得评估**：从 prompt 框架进化为真正 Agent 应用（Pi SDK TypeScript CLI）。核心能力：每任务新 session + 编程控制上下文 + worktree 隔离 + token/cost 账本 + 卡死检测 + 超时恢复。对标我们 ACP 架构，成本追踪和 token 优化 profile 是我们缺的能力。（2026-03-18 调研）
 - **Instruction Fade-Out 是真实问题**：OPENDEV 论文用事件驱动提醒对抗。我们心跳部分覆盖，长任务应增加指令重注入。（2026-03-17）
 - **"AGENTS.md 谬误"**：单 Markdown 规则文件会腐化。我们四层架构比单文件好，但仍需增加意图偏差检测。（2026-03-17）
 - **角色化子 Agent 的反面证据**：HumanLayer 实测"前端/后端/数据分析师子Agent不work"。需评估角色化深度 vs 上下文隔离平衡。（2026-03-17）
